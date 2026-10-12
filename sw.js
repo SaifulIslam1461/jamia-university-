@@ -1,4 +1,4 @@
-const CACHE_NAME = 'madrasa-enterprise-cache-v4';
+const CACHE_NAME = 'madrasa-enterprise-cache-v5';
 const urlsToCache = [
   './index.html',
   './manifest.json'
