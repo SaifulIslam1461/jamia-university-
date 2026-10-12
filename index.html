@@ -16,6 +16,9 @@
         
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        .profile-tab-content { display: none; }
+        .profile-tab-content.active { display: block; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Custom Scrollbar */
@@ -30,25 +33,157 @@
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 space-y-2"></div>
 
-    <!-- GLOBAL MODAL FOR ADD/EDIT -->
-    <div id="global-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl border border-slate-200 space-y-4 animate-fadeIn">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 id="modal-title" class="text-base font-bold text-slate-800">তথ্য ইনপুট করুন</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+    <!-- STUDENT 360 FULL PROFILE MODAL -->
+    <div id="student-profile-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 md:p-6">
+        <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-fadeIn">
+            
+            <!-- Modal Header -->
+            <div class="app-header p-5 text-white flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center text-xl shadow-lg border-2 border-white">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h2 id="sp-name" class="text-lg font-bold">আব্দুল্লাহ আল মামুন</h2>
+                        <p class="text-xs text-amber-300 font-medium">রোল: <span id="sp-roll">১০১</span> | জামাত: <span id="sp-class">হিফজুল কুরআন</span></p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="printStudentProfile()" class="px-3.5 py-1.5 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-solid fa-print"></i> প্রিন্ট / PDF</button>
+                    <button onclick="closeProfileModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-base"><i class="fa-solid fa-xmark"></i></button>
+                </div>
             </div>
-            <form id="modal-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                <div id="modal-fields" class="space-y-3">
-                    <!-- Dynamic Inputs injected via JS -->
+
+            <!-- Profile Nav Tabs -->
+            <div class="bg-slate-100 border-b border-slate-200 px-4 pt-3 flex gap-2 overflow-x-auto text-xs font-bold text-slate-600">
+                <button onclick="switchProfileTab('p-personal')" id="ptab-p-personal" class="ptab bg-white border-t border-x border-slate-300 text-emerald-800 px-3.5 py-2 rounded-t-xl">ব্যক্তিগত ও অভিভাবক</button>
+                <button onclick="switchProfileTab('p-history')" id="ptab-p-history" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">ভর্তি ও জামাত</button>
+                <button onclick="switchProfileTab('p-attendance')" id="ptab-p-attendance" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">উপস্থিতি</button>
+                <button onclick="switchProfileTab('p-fees')" id="ptab-p-fees" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">ফি ও লেনদেন</button>
+                <button onclick="switchProfileTab('p-exams')" id="ptab-p-exams" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">পরীক্ষার ফলাফল</button>
+                <button onclick="switchProfileTab('p-boarding')" id="ptab-p-boarding" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">বোর্ডিং ও খাবার</button>
+                <button onclick="switchProfileTab('p-leaves')" id="ptab-p-leaves" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">ছুটি</button>
+                <button onclick="switchProfileTab('p-docs')" id="ptab-p-docs" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">নথিপত্র</button>
+                <button onclick="switchProfileTab('p-discipline')" id="ptab-p-discipline" class="ptab hover:bg-white/50 px-3.5 py-2 rounded-t-xl">আচরণ ও শৃঙ্খলা</button>
+            </div>
+
+            <!-- Modal Content Area -->
+            <div id="student-printable-area" class="p-6 overflow-y-auto flex-1 space-y-4 text-xs text-slate-700">
+                
+                <!-- 1. Personal Info Tab -->
+                <div id="p-personal" class="profile-tab-content active space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                            <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-user"></i> ছাত্রের তথ্য</h4>
+                            <p><strong>পূর্ণ নাম:</strong> আব্দুল্লাহ আল মামুন</p>
+                            <p><strong>জন্ম তারিখ:</strong> ১০ জানুয়ারি, २०१২</p>
+                            <p><strong>জন্ম নিবন্ধন নং:</strong> 201239128391203</p>
+                            <p><strong>রক্তের গ্রুপ:</strong> B+</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                            <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-users"></i> অভিভাবকের তথ্য</h4>
+                            <p><strong>পিতার নাম:</strong> মোঃ রফিকুল ইসলাম</p>
+                            <p><strong>পিতার এনআইডি:</strong> 1983391283912</p>
+                            <p><strong>অভিভাবকের মোবাইল:</strong> 01812-345678</p>
+                            <p><strong>ঠিকানা:</strong> গ্রাম: উত্তর সাহেব নগর, পরশুরাম, ফেনী।</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex justify-end gap-2 pt-2 border-t">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">বাতিল</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow">সংরক্ষণ করুন</button>
+
+                <!-- 2. Admission History Tab -->
+                <div id="p-history" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-graduation-cap"></i> শিক্ষা জীবনের ইতিহাস</h4>
+                        <p><strong>ভর্তির তারিখ:</strong> ১৫ জানুয়ারি, ২০২৪</p>
+                        <p><strong>বর্তমান জামাত:</strong> হিফজুল কুরআন (সেকশন: ক)</p>
+                        <p><strong>পূর্ববর্তী জামাত:</strong> নূরানী ৩য় শ্রেণী (উত্তীর্ণ)</p>
+                    </div>
                 </div>
-            </form>
+
+                <!-- 3. Attendance Tab -->
+                <div id="p-attendance" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-calendar-check"></i> উপস্থিতির রেকর্ড (চলতি শিক্ষাবর্ষ)</h4>
+                        <div class="flex items-center gap-4 py-2">
+                            <div class="text-center p-3 bg-emerald-100 text-emerald-900 rounded-2xl font-bold">
+                                <span class="text-lg">৯৫%</span><br>উপস্থিতি
+                            </div>
+                            <div>
+                                <p>মোট কার্যদিবস: ১৫০ দিন</p>
+                                <p>উপস্থিতি: ১৪২ দিন | অনুপস্থিত: ৮ দিন</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Fees & Transactions Tab -->
+                <div id="p-fees" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h4 class="font-bold text-emerald-800"><i class="fa-solid fa-receipt"></i> ফি ও বকেয়া হিসেব</h4>
+                            <span class="px-2.5 py-1 bg-rose-100 text-rose-700 font-bold rounded-full">বকেয়া: ৳ ৩,০০০</span>
+                        </div>
+                        <p>মাসিক বেতন: ৳ ১,৫০০</p>
+                        <table class="w-full text-left border-collapse mt-2">
+                            <thead><tr class="border-b font-bold"><th class="pb-1">মাস</th><th class="pb-1">রসিদ নং</th><th class="pb-1">পরিমাণ</th><th class="pb-1 text-right">স্ট্যাটাস</th></tr></thead>
+                            <tbody>
+                                <tr class="border-b"><td class="py-1">সেপ্টেম্বর ২০২৬</td><td>VCH-1092</td><td>৳ ১,৫০০</td><td class="text-right text-emerald-600 font-bold">পরিশোধিত</td></tr>
+                                <tr class="border-b"><td class="py-1">অক্টোবর ২০২৬</td><td>-</td><td>৳ ১,৫০০</td><td class="text-right text-rose-600 font-bold">বকেয়া</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 5. Exam Results Tab -->
+                <div id="p-exams" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-file-signature"></i> পরীক্ষার ফলাফল (প্রথম সাময়িক)</h4>
+                        <p><strong>মোট নম্বর:</strong> ৮৮৫ / ১০০০</p>
+                        <p><strong>গ্রেড / ফলাফল:</strong> মুমতাজ (মেধা স্থান: ৩য়)</p>
+                    </div>
+                </div>
+
+                <!-- 6. Boarding & Food Tab -->
+                <div id="p-boarding" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-utensils"></i> বোর্ডিং তথ্য</h4>
+                        <p><strong>বোর্ডিং স্ট্যাটাস:</strong> লিল্লাহ বোর্ডিং (আবাসিক)</p>
+                        <p><strong>সিট / রুম নং:</strong> ১০৪ (ভবন-২)</p>
+                    </div>
+                </div>
+
+                <!-- 7. Leave Records Tab -->
+                <div id="p-leaves" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-bed"></i> ছুটির হিসেব</h4>
+                        <p>মোট ছুটি ভোগ: ৪ দিন (অসুস্থতাজনিত)</p>
+                    </div>
+                </div>
+
+                <!-- 8. Documents Tab -->
+                <div id="p-docs" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-paperclip"></i> সংযুক্ত নথিপত্র</h4>
+                        <ul class="list-disc pl-4 space-y-1 text-blue-600 font-medium">
+                            <li><a href="#">জন্ম নিবন্ধন সনদ.pdf</a></li>
+                            <li><a href="#">অভিভাবকের এনআইডি কার্ড.jpg</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 9. Discipline Tab -->
+                <div id="p-discipline" class="profile-tab-content space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-emerald-800 border-b pb-2"><i class="fa-solid fa-shield"></i> আচরণ ও মন্তব্য</h4>
+                        <p><strong>শিক্ষকের মন্তব্য:</strong> ছাত্রটি অত্যন্ত নম্র, মেধান্বিত এবং নিয়মিত পড়া আদায় করে।</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
+    <!-- MAIN WRAPPER -->
     <div class="min-h-screen flex flex-col">
         
         <!-- TOP APP HEADER -->
@@ -83,9 +218,8 @@
         <!-- MAIN WORKSPACE -->
         <main class="flex-1 p-4 md:p-8 space-y-5 max-w-7xl mx-auto w-full">
             
-            <!-- ================= HOME / DASHBOARD PAGE ================= -->
+            <!-- DASHBOARD SECTION -->
             <section id="sec-dashboard" class="page-section active space-y-6">
-                
                 <!-- ISLAMIC BANNER -->
                 <div class="relative rounded-3xl overflow-hidden shadow-md border border-emerald-900/20 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white p-6 md:p-8 flex flex-col items-center text-center space-y-3">
                     <div class="text-amber-300 font-serif text-xl tracking-widest opacity-95">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
@@ -93,272 +227,91 @@
                     <div class="w-24 h-0.5 bg-amber-400/60 rounded-full my-1"></div>
                 </div>
 
-                <!-- DASHBOARD MODULE CARDS GRID -->
+                <!-- MODULE CARDS -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    
-                    <!-- Card 1: Admin & Info -->
-                    <div onclick="switchTab('info')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-mosque"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">মাদ্রাসার পরিচিতি ও প্রশাসন</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                    <div onclick="switchTab('info')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4">
+                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-3xl"><i class="fa-solid fa-mosque"></i></div>
+                        <h3 class="font-bold text-slate-900 text-base">মাদ্রাসার পরিচিতি ও প্রশাসন</h3>
                     </div>
 
-                    <!-- Card 2: Students -->
-                    <div onclick="switchTab('students')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-user-graduate"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">ছাত্র ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                    <div onclick="switchTab('students')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4">
+                        <div class="w-20 h-20 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-3xl"><i class="fa-solid fa-user-graduate"></i></div>
+                        <h3 class="font-bold text-slate-900 text-base">ছাত্র ব্যবস্থাপনা ও প্রোফাইল</h3>
                     </div>
 
-                    <!-- Card 3: Staff -->
-                    <div onclick="switchTab('staff')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-chalkboard-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                    <div onclick="switchTab('staff')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4">
+                        <div class="w-20 h-20 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-3xl"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <h3 class="font-bold text-slate-900 text-base">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h3>
                     </div>
-
-                    <!-- Card 4: Accounting -->
-                    <div onclick="switchTab('accounting')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-sack-dollar"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 5: Donations -->
-                    <div onclick="switchTab('donations')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-hand-holding-heart"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">দান-অনুদান ও তহবিল ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 6: Lillah Boarding -->
-                    <div onclick="switchTab('lillah')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-utensils"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">লিল্লাহ বোর্ডিং ও খাবার ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 7: Exams -->
-                    <div onclick="switchTab('exams')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-book-open-reader"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">শিক্ষা ও পরীক্ষা ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 8: Assets & Development -->
-                    <div onclick="switchTab('assets')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-building-shield"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">ভবন, সম্পদ ও উন্নয়ন পরিকল্পনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 9: Dena-Paona & Budget -->
-                    <div onclick="switchTab('reports')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-handshake-angle"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">দেনা-পাওনা, ঋণ, বাজেট ও আর্থিক নিয়ন্ত্রণ</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 10: Audit & Summary Report -->
-                    <div onclick="switchTab('reports')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-violet-50 text-violet-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-file-signature"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">অডিট ও সামারি রিপোর্ট</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 11: Others -->
-                    <div onclick="switchTab('settings')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">অন্যান্য</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-slate-700 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-
                 </div>
             </section>
 
-            <!-- ================= 1. MADRASA INFO & ADMINISTRATION MODULE ================= -->
-            <section id="sec-info" class="page-section space-y-6">
-                <!-- Header Controls -->
+            <!-- STUDENTS MANAGEMENT SECTION -->
+            <section id="sec-students" class="page-section space-y-6">
+                <!-- Header Actions -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
                     <div class="flex items-center gap-3">
                         <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
                         <div>
-                            <h2 class="text-lg font-bold text-slate-900">মাদ্রাসার পরিচিতি ও প্রশাসন</h2>
-                            <p class="text-xs text-slate-500">প্রশাসনিক তথ্যাবলী, পরিচালন কমিটি ও বিভাগ নিয়ন্ত্রণ</p>
+                            <h2 class="text-lg font-bold text-slate-900">ছাত্র রেজিস্টার ও পূর্ণাঙ্গ প্রোফাইল</h2>
+                            <p class="text-xs text-slate-500">যে কোনো ছাত্রের নামের ওপর ক্লিক করে পূর্ণাঙ্গ ৩৬০° প্রোফাইল খুলুন</p>
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="window.print()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2"><i class="fa-solid fa-print"></i> প্রিন্ট</button>
-                        <button onclick="openAddModal('info')" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-plus"></i> নতুন যোগ করুন</button>
+                        <!-- Excel/CSV Export Button -->
+                        <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-excel text-emerald-700"></i> Excel/CSV রপ্তানি
+                        </button>
+                        <button onclick="alert('নতুন ছাত্র ভর্তি ফরম')" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-plus"></i> নতুন ছাত্র ভর্তি
+                        </button>
                     </div>
                 </div>
 
-                <!-- Sub-Module List (Based on requested Image Items) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-circle-info text-xl"></i>
-                            <h4 class="font-bold text-sm">১. নাম, লোগো, ঠিকানা ও যোগাযোগ</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">পূর্ব সাহেব নগর কওমি মাদ্রাসা ও এতিমখানা, পরশুরাম, ফেনী।</p>
-                        <button onclick="openEditModal('নাম ও ঠিকানা', 'পূর্ব সাহেব নগর কওমি মাদ্রাসা')" class="text-xs text-emerald-700 font-bold hover:underline">সম্পাদনা করুন →</button>
+                <!-- Students Interactive Table -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b text-slate-400 font-bold">
+                                    <th class="pb-3">রোল</th>
+                                    <th class="pb-3">ছাত্রের নাম (প্রোফাইল ক্লিক)</th>
+                                    <th class="pb-3">জামাত</th>
+                                    <th class="pb-3">অভিভাবকের মোবাইল</th>
+                                    <th class="pb-3">মাসিক ফি</th>
+                                    <th class="pb-3 text-right">বকেয়া</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50 cursor-pointer" onclick="openStudentProfile('১০১', 'আব্দুল্লাহ আল মামুন', 'হিফজুল কুরআন')">
+                                    <td class="py-3 font-bold text-slate-900">১০১</td>
+                                    <td class="py-3 font-bold text-emerald-700 hover:underline flex items-center gap-2">
+                                        <i class="fa-solid fa-id-card"></i> আব্দুল্লাহ আল মামুন
+                                    </td>
+                                    <td class="py-3 text-slate-600">হিফজুল কুরআন</td>
+                                    <td class="py-3 text-slate-500">01812-345678</td>
+                                    <td class="py-3 font-medium">৳ ১,৫০০</td>
+                                    <td class="py-3 text-right font-bold text-rose-600">৳ ৩,০০০</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 cursor-pointer" onclick="openStudentProfile('১০২', 'মোহাম্মদ নাঈম সিদ্দিকী', 'নূরানী বিভাগ')">
+                                    <td class="py-3 font-bold text-slate-900">১০২</td>
+                                    <td class="py-3 font-bold text-emerald-700 hover:underline flex items-center gap-2">
+                                        <i class="fa-solid fa-id-card"></i> মোহাম্মদ নাঈম সিদ্দিকী
+                                    </td>
+                                    <td class="py-3 text-slate-600">নূরানী বিভাগ</td>
+                                    <td class="py-3 text-slate-500">01700-112233</td>
+                                    <td class="py-3 font-medium">৳ ১,০০০</td>
+                                    <td class="py-3 text-right font-bold text-emerald-600">পরিশোধিত</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-landmark text-xl"></i>
-                            <h4 class="font-bold text-sm">২. প্রতিষ্ঠার ইতিহাস ও উদ্দেশ্য</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">দ্বীনি শিক্ষার বিস্তার ও মানবসেবার মহান লক্ষ্যে প্রতিষ্ঠিত।</p>
-                        <button onclick="openEditModal('ইতিহাস', '২০০৫ সালে প্রতিষ্ঠিত')" class="text-xs text-emerald-700 font-bold hover:underline">সম্পাদনা করুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-user-shield text-xl"></i>
-                            <h4 class="font-bold text-sm">৩. মুহতামিম ও পরিচালনা কমিটি</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">প্রধান উপদেষ্টা: আলহাজ্ব জসিম উদ্দিন | মুহতামিম: মাওলানা ইব্রাহিম</p>
-                        <button onclick="switchTab('users')" class="text-xs text-emerald-700 font-bold hover:underline">কমিটি দেখুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-users-gear text-xl"></i>
-                            <h4 class="font-bold text-sm">৪. পরিচালনা কমিটির সদস্য তথ্য</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">মোট সদস্য: ১২ জন (সক্রিয়)</p>
-                        <button onclick="openAddModal('কমিটি সদস্য')" class="text-xs text-emerald-700 font-bold hover:underline">+ সদস্য যোগ করুন</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-scroll text-xl"></i>
-                            <h4 class="font-bold text-sm">৫. সভার তারিখ, সিদ্ধান্ত ও কার্যবিবরণী</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">সর্বশেষ সভা: ৩০ অক্টোবর ২০২৫ | বিষয়: অডিট ও বাজেট</p>
-                        <button onclick="openAddModal('সভা রেজুলেশন')" class="text-xs text-emerald-700 font-bold hover:underline">+ রেজুলেশন লিখুন</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-bullhorn text-xl"></i>
-                            <h4 class="font-bold text-sm">৬. প্রশাসনিক নোটিশ ও বিজ্ঞপ্তি</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">সক্রিয় নোটিশ: ৩টি</p>
-                        <button onclick="switchTab('notices')" class="text-xs text-emerald-700 font-bold hover:underline">নোটিশ বোর্ড →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-folder-closed text-xl"></i>
-                            <h4 class="font-bold text-sm">৭. গুরুত্বপূর্ণ কাগজপত্র সংরক্ষণ</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">জমির দলিল, রেজিস্ট্রেশন ও ছাড়পত্র নথি।</p>
-                        <button onclick="alert('নথি আপলোড ফর্ম')" class="text-xs text-emerald-700 font-bold hover:underline">নথি আপলোড করুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-list-check text-xl"></i>
-                            <h4 class="font-bold text-sm">৮. অনুমোদন, দায়িত্ব বণ্টন ও কাজের তালিকা</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">শিক্ষক ও কর্মচারীদের দৈনিক দায়িত্ব তালিকা।</p>
-                        <button onclick="openAddModal('দায়িত্ব বন্টন')" class="text-xs text-emerald-700 font-bold hover:underline">+ নতুন দায়িত্ব যোগ</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-sitemap text-xl"></i>
-                            <h4 class="font-bold text-sm">৯. প্রতিষ্ঠানের বিভাগ ও শাখা পরিচালনা</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">নূরানী, হিফজ, কিতাব বিভাগ ও লিল্লাহ বোর্ডিং।</p>
-                        <button onclick="openAddModal('নতুন বিভাগ')" class="text-xs text-emerald-700 font-bold hover:underline">+ বিভাগ যোগ করুন</button>
-                    </div>
-
                 </div>
             </section>
 
-            <!-- Other Module Placeholders -->
-            <section id="sec-students" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ছাত্র ব্যবস্থাপনা মডিউল</h2> </div></section>
-            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষক ও কর্মচারী ব্যবস্থাপনা</h2> </div></section>
-            <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h2> </div></section>
-            <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">দান-অনুদান ও তহবিল</h2> </div></section>
-            <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">লিল্লাহ বোর্ডিং ও খাবার</h2> </div></section>
-            <section id="sec-exams" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষা ও পরীক্ষা</h2> </div></section>
-            <section id="sec-assets" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ভবন ও সম্পদ</h2> </div></section>
-            <section id="sec-reports" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">অডিট ও সামারি রিপোর্ট</h2> </div></section>
-            <section id="sec-search" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">গ্লোবাল অনুসন্ধান</h2> </div></section>
-            <section id="sec-notices" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">নোটিশ ও সভা</h2> </div></section>
-            <section id="sec-settings" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">সিস্টেম সেটিংস ও অন্যান্য</h2> </div></section>
-            <section id="sec-users" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ব্যবহারকারী ও অনুমতি</h2> </div></section>
+            <!-- Placeholder for other sections -->
+            <section id="sec-info" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">মাদ্রাসার পরিচিতি ও প্রশাসন</h2> </div></section>
+            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষক ও কর্মচারী মডিউল</h2> </div></section>
 
         </main>
 
@@ -368,81 +321,65 @@
                 <i class="fa-solid fa-house text-base"></i>
                 <span>হোম</span>
             </button>
-            <button onclick="switchTab('search')" id="nav-search" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-magnifying-glass text-base"></i>
-                <span>সার্চ</span>
+            <button onclick="switchTab('students')" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
+                <i class="fa-solid fa-user-graduate text-base"></i>
+                <span>ছাত্র</span>
             </button>
-            <button onclick="switchTab('reports')" id="nav-reports" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
+            <button onclick="switchTab('dashboard')" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
                 <i class="fa-solid fa-file-lines text-base"></i>
                 <span>রিপোর্ট</span>
-            </button>
-            <button onclick="switchTab('notices')" id="nav-notices" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-bell text-base"></i>
-                <span>নোটিশ</span>
-            </button>
-            <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-gears text-base"></i>
-                <span>সেটিংস</span>
             </button>
         </nav>
 
     </div>
 
-    <!-- JAVASCRIPT CONTROLLERS & FORM ENGINE -->
+    <!-- JAVASCRIPT CONTROLLERS -->
     <script>
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             const target = document.getElementById('sec-' + tabId);
             if(target) target.classList.add('active');
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Toast Notification Function
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `p-4 rounded-2xl text-xs font-bold shadow-lg flex items-center gap-2 text-white animate-fadeIn ${type==='success'?'bg-emerald-700':'bg-rose-600'}`;
-            toast.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-circle-exclamation'}"></i> ${message}`;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+        // Student Profile Modal Control
+        function openStudentProfile(roll, name, className) {
+            document.getElementById('sp-roll').innerText = roll;
+            document.getElementById('sp-name').innerText = name;
+            document.getElementById('sp-class').innerText = className;
+            document.getElementById('student-profile-modal').classList.remove('hidden');
         }
 
-        // Dynamic Modal Handlers
-        function openAddModal(moduleName) {
-            document.getElementById('modal-title').innerText = moduleName + ' - নতুন তথ্য যোগ করুন';
-            document.getElementById('modal-fields').innerHTML = `
-                <div>
-                    <label class="block text-xs font-semibold mb-1">শিরোনাম / নাম</label>
-                    <input type="text" id="input-title" required placeholder="নাম বা শিরোনাম লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold mb-1">বিবরণ</label>
-                    <textarea id="input-desc" rows="3" placeholder="বিস্তারিত লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600"></textarea>
-                </div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
+        function closeProfileModal() {
+            document.getElementById('student-profile-modal').classList.add('hidden');
         }
 
-        function openEditModal(title, val) {
-            document.getElementById('modal-title').innerText = title + ' - সম্পাদনা করুন';
-            document.getElementById('modal-fields').innerHTML = `
-                <div>
-                    <label class="block text-xs font-semibold mb-1">বর্তমান তথ্য</label>
-                    <input type="text" id="input-title" value="${val}" required class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
-                </div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
+        function switchProfileTab(tabId) {
+            document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.ptab').forEach(t => {
+                t.classList.remove('bg-white', 'border-t', 'border-x', 'border-slate-300', 'text-emerald-800');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            const btn = document.getElementById('ptab-' + tabId);
+            btn.classList.add('bg-white', 'border-t', 'border-x', 'border-slate-300', 'text-emerald-800');
         }
 
-        function closeModal() {
-            document.getElementById('global-modal').classList.add('hidden');
+        // CSV Export Function
+        function exportToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,রোল,নাম,জামাত,মোবাইল,মাসিক ফি,বকেয়া\n101,আব্দুল্লাহ আল মামুন,হিফজুল কুরআন,01812345678,1500,3000\n102,মোহাম্মদ নাঈম সিদ্দিকী,নূরানী বিভাগ,01700112233,1000,0";
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "student_list.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            closeModal();
-            showToast('তথ্য সফলভাবে সংরক্ষিত হয়েছে!');
+        // Print Student Full File
+        function printStudentProfile() {
+            window.print();
         }
     </script>
 </body>
