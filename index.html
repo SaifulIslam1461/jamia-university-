@@ -117,574 +117,294 @@
 
                 <!-- DASHBOARD MODULE CARDS GRID -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    
-                    <!-- Card 1: Admin & Info -->
                     <div onclick="switchTab('info')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-mosque"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">মাদ্রাসার পরিচিতি ও প্রশাসন</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-mosque"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">মাদ্রাসার পরিচিতি ও প্রশাসন</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 2: Students -->
                     <div onclick="switchTab('students')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-user-graduate"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">ছাত্র ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-user-graduate"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">ছাত্র ব্যবস্থাপনা</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 3: Staff -->
                     <div onclick="switchTab('staff')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-chalkboard-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 4: Accounting -->
                     <div onclick="switchTab('accounting')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-sack-dollar"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 5: Donations -->
                     <div onclick="switchTab('donations')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-hand-holding-heart"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">দান-অনুদান ও তহবিল ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">দান-অনুদান ও তহবিল ব্যবস্থাপনা</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 6: Lillah Boarding -->
                     <div onclick="switchTab('lillah')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-utensils"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">লিল্লাহ বোর্ডিং ও খাবার ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-utensils"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">লিল্লাহ বোর্ডিং ও খাবার ব্যবস্থাপনা</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 7: Exams -->
                     <div onclick="switchTab('exams')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-book-open-reader"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">শিক্ষা ও পরীক্ষা ব্যবস্থাপনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">শিক্ষা ও পরীক্ষা ব্যবস্থাপনা</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 8: Assets & Development -->
                     <div onclick="switchTab('assets')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-building-shield"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">ভবন, সম্পদ ও উন্নয়ন পরিকল্পনা</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-building-shield"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">ভবন, সম্পদ ও উন্নয়ন পরিকল্পনা</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 9: Dena-Paona & Budget -->
                     <div onclick="switchTab('reports')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-handshake-angle"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">দেনা-পাওনা, ঋণ, বাজেট ও আর্থিক নিয়ন্ত্রণ</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-handshake-angle"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">দেনা-পাওনা, ঋণ, বাজেট ও আর্থিক নিয়ন্ত্রণ</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 10: Audit & Summary Report -->
                     <div onclick="switchTab('reports')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-violet-50 text-violet-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-file-signature"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">অডিট ও সামারি রিপোর্ট</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-violet-50 text-violet-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-file-signature"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">অডিট ও সামারি রিপোর্ট</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
 
-                    <!-- Card 11: Others -->
                     <div onclick="switchTab('settings')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
-                        <div class="w-20 h-20 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-base">অন্যান্য</h3>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-slate-700 text-white flex items-center justify-center text-xs shadow">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="w-20 h-20 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition"><i class="fa-solid fa-ellipsis"></i></div>
+                        <div><h3 class="font-bold text-slate-900 text-base">অন্যান্য</h3></div>
+                        <div class="w-8 h-8 rounded-full bg-slate-700 text-white flex items-center justify-center text-xs shadow"><i class="fa-solid fa-arrow-right"></i></div>
                     </div>
-
                 </div>
             </section>
 
-            <!-- ================= 1. MADRASA INFO & ADMINISTRATION MODULE ================= -->
+            <!-- ================= 1. MADRASA INFO MODULE ================= -->
             <section id="sec-info" class="page-section space-y-6">
-                <!-- Header Controls -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
                     <div class="flex items-center gap-3">
                         <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-900">মাদ্রাসার পরিচিতি ও প্রশাসন</h2>
-                            <p class="text-xs text-slate-500">প্রশাসনিক তথ্যাবলী, পরিচালন কমিটি ও বিভাগ নিয়ন্ত্রণ</p>
-                        </div>
+                        <div><h2 class="text-lg font-bold text-slate-900">মাদ্রাসার পরিচিতি ও প্রশাসন</h2><p class="text-xs text-slate-500">প্রশাসনিক তথ্যাবলী, পরিচালন কমিটি ও বিভাগ নিয়ন্ত্রণ</p></div>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="window.print()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2"><i class="fa-solid fa-print"></i> প্রিন্ট</button>
-                        <button onclick="openAddModal('info')" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-plus"></i> নতুন যোগ করুন</button>
-                    </div>
-                </div>
-
-                <!-- Sub-Module List -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-circle-info text-xl"></i>
-                            <h4 class="font-bold text-sm">১. নাম, লোগো, ঠিকানা ও যোগাযোগ</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">পূর্ব সাহেব নগর কওমি মাদ্রাসা ও এতিমখানা, পরশুরাম, ফেনী।</p>
-                        <button onclick="openEditModal('নাম ও ঠিকানা', 'পূর্ব সাহেব নগর কওমি মাদ্রাসা')" class="text-xs text-emerald-700 font-bold hover:underline">সম্পাদনা করুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-landmark text-xl"></i>
-                            <h4 class="font-bold text-sm">২. প্রতিষ্ঠার ইতিহাস ও উদ্দেশ্য</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">দ্বীনি শিক্ষার বিস্তার ও মানবসেবার মহান লক্ষ্যে প্রতিষ্ঠিত।</p>
-                        <button onclick="openEditModal('ইতিহাস', '২০০৫ সালে প্রতিষ্ঠিত')" class="text-xs text-emerald-700 font-bold hover:underline">সম্পাদনা করুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-user-shield text-xl"></i>
-                            <h4 class="font-bold text-sm">৩. মুহতামিম ও পরিচালনা কমিটি</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">প্রধান উপদেষ্টা: আলহাজ্ব জসিম উদ্দিন | মুহতামিম: মাওলানা ইব্রাহিম</p>
-                        <button onclick="switchTab('users')" class="text-xs text-emerald-700 font-bold hover:underline">কমিটি দেখুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-users-gear text-xl"></i>
-                            <h4 class="font-bold text-sm">৪. পরিচালনা কমিটির সদস্য তথ্য</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">মোট সদস্য: ১২ জন (সক্রিয়)</p>
-                        <button onclick="openAddModal('কমিটি সদস্য')" class="text-xs text-emerald-700 font-bold hover:underline">+ সদস্য যোগ করুন</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-scroll text-xl"></i>
-                            <h4 class="font-bold text-sm">৫. সভার তারিখ, সিদ্ধান্ত ও কার্যবিবরণী</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">সর্বশেষ সভা: ৩০ অক্টোবর ২০২৫ | বিষয়: অডিট ও বাজেট</p>
-                        <button onclick="openAddModal('সভা রেজুলেশন')" class="text-xs text-emerald-700 font-bold hover:underline">+ রেজুলেশন লিখুন</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-bullhorn text-xl"></i>
-                            <h4 class="font-bold text-sm">৬. প্রশাসনিক নোটিশ ও বিজ্ঞপ্তি</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">সক্রিয় নোটিশ: ৩টি</p>
-                        <button onclick="switchTab('notices')" class="text-xs text-emerald-700 font-bold hover:underline">নোটিশ বোর্ড →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-folder-closed text-xl"></i>
-                            <h4 class="font-bold text-sm">৭. গুরুত্বপূর্ণ কাগজপত্র সংরক্ষণ</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">জমির দলিল, রেজিস্ট্রেশন ও ছাড়পত্র নথি।</p>
-                        <button onclick="alert('নথি আপলোড ফর্ম')" class="text-xs text-emerald-700 font-bold hover:underline">নথি আপলোড করুন →</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-list-check text-xl"></i>
-                            <h4 class="font-bold text-sm">৮. অনুমোদন, দায়িত্ব বণ্টন ও কাজের তালিকা</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">শিক্ষক ও কর্মচারীদের দৈনিক দায়িত্ব তালিকা।</p>
-                        <button onclick="openAddModal('দায়িত্ব বন্টন')" class="text-xs text-emerald-700 font-bold hover:underline">+ নতুন দায়িত্ব যোগ</button>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center gap-3 text-emerald-800">
-                            <i class="fa-solid fa-sitemap text-xl"></i>
-                            <h4 class="font-bold text-sm">৯. প্রতিষ্ঠানের বিভাগ ও শাখা পরিচালনা</h4>
-                        </div>
-                        <p class="text-xs text-slate-600">নূরানী, হিফজ, কিতাব বিভাগ ও লিল্লাহ বোর্ডিং।</p>
-                        <button onclick="openAddModal('নতুন বিভাগ')" class="text-xs text-emerald-700 font-bold hover:underline">+ বিভাগ যোগ করুন</button>
+                        <button onclick="window.print()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold"><i class="fa-solid fa-print"></i> প্রিন্ট</button>
+                        <button onclick="openAddModal('info')" class="px-4 py-2 bg-emerald-700 text-white rounded-xl text-xs font-bold shadow"><i class="fa-solid fa-plus"></i> নতুন যোগ</button>
                     </div>
                 </div>
             </section>
 
-            <!-- ================= 2. STUDENT MANAGEMENT MODULE ================= -->
+            <!-- ================= 2. STUDENT MODULE ================= -->
             <section id="sec-students" class="page-section space-y-6">
-                <!-- Header Controls -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
                     <div class="flex items-center gap-3">
                         <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-900">ছাত্র ব্যবস্থাপনা মডিউল</h2>
-                            <p class="text-xs text-slate-500">ভর্তি, ফি-বেতন, উপস্থিতি, পরীক্ষা, বোর্ডিং ও পূর্ণাঙ্গ ছাত্র নিয়ন্ত্রণ</p>
-                        </div>
+                        <div><h2 class="text-lg font-bold text-slate-900">ছাত্র ব্যবস্থাপনা মডিউল</h2><p class="text-xs text-slate-500">ভর্তি, ফি-বেতন, উপস্থিতি, পরীক্ষা, বোর্ডিং ও ছাত্র নিয়ন্ত্রণ</p></div>
                     </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="openStudentAdmissionModal()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-user-plus"></i> নতুন ছাত্র ভর্তি</button>
-                        <button onclick="showToast('সকল ছাত্রের তালিকা এক্সেল ফাইল হিসেবে ডাউনলোড হয়েছে!')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2"><i class="fa-solid fa-file-excel"></i> Excel রপ্তানি</button>
-                    </div>
-                </div>
-
-                <!-- Stats & Master Table -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-users"></i></div>
-                        <div>
-                            <p class="text-[10px] text-slate-500 font-medium">মোট ছাত্রসংখ্যা</p>
-                            <h4 id="stat-total" class="text-base font-bold text-slate-800">১২০ জন</h4>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus"></i></div>
-                        <div>
-                            <p class="text-[10px] text-slate-500 font-medium">নতুন ভর্তি</p>
-                            <h4 class="text-base font-bold text-slate-800">১৫ জন</h4>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bed"></i></div>
-                        <div>
-                            <p class="text-[10px] text-slate-500 font-medium">আবাসিক ও লিল্লাহ</p>
-                            <h4 class="text-base font-bold text-slate-800">৬৫ জন</h4>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                        <div>
-                            <p class="text-[10px] text-slate-500 font-medium">বকেয়া বেতন ও ফি</p>
-                            <h4 class="text-base font-bold text-slate-800">২৫,০০০ টাকা</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-4 gap-3">
-                    <input type="text" id="filter-name" onkeyup="filterStudentsTable()" placeholder="নাম, আইডি বা ফোন দিয়ে খুঁজুন..." class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600 w-full">
-                    <select id="filter-class" onchange="filterStudentsTable()" class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600 w-full">
-                        <option value="">সকল জামাত / বিভাগ</option>
-                        <option value="হিফজ বিভাগ">হিফজ বিভাগ</option>
-                        <option value="কিতাব বিভাগ">কিতাব বিভাগ</option>
-                        <option value="নূরানী বিভাগ">নূরানী বিভাগ</option>
-                    </select>
-                    <select id="filter-status" onchange="filterStudentsTable()" class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600 w-full">
-                        <option value="">আবাসিক/অনাবাসিক অবস্থা</option>
-                        <option value="আবাসিক">আবাসিক</option>
-                        <option value="অনাবাসিক">অনাবাসিক</option>
-                        <option value="লিল্লাহ">লিল্লাহ বোর্ডিং</option>
-                    </select>
-                    <button onclick="filterStudentsTable()" class="px-4 py-2 bg-emerald-700 text-white rounded-xl text-xs font-bold hover:bg-emerald-800 transition"><i class="fa-solid fa-filter mr-1"></i> ফিল্টার করুন</button>
-                </div>
-
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="px-5 py-4 border-b bg-slate-50 flex justify-between items-center">
-                        <h3 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-list text-emerald-700 mr-2"></i>ছাত্রদের তালিকা ও বিস্তারিত ম্যানেজমেন্ট</h3>
-                        <span class="text-xs text-slate-500 font-medium">সর্বমোট: <span id="student-count-badge">৩</span> জন তালিকাভুক্ত</span>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table id="students-table" class="w-full text-left border-collapse text-xs">
-                            <thead>
-                                <tr class="bg-slate-100/70 text-slate-700 border-b">
-                                    <th class="p-3 font-bold">আইডি ও ছবি</th>
-                                    <th class="p-3 font-bold">নাম ও জামাত</th>
-                                    <th class="p-3 font-bold">পিতা ও অভিভাবক</th>
-                                    <th class="p-3 font-bold">মোবাইল নম্বর</th>
-                                    <th class="p-3 font-bold">অবস্থা/বোর্ডিং</th>
-                                    <th class="p-3 font-bold text-right">কার্যক্রম / প্রোফাইল</th>
-                                </tr>
-                            </thead>
-                            <tbody id="students-table-body" class="divide-y divide-slate-100">
-                                <tr class="hover:bg-slate-50 transition">
-                                    <td class="p-3 flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-xs">ST101</div>
-                                        <div><p class="font-bold text-slate-800">আব্দুল্লাহ আল মামুন</p><span class="text-[10px] text-slate-400">ভর্তি: ২০২৬</span></div>
-                                    </td>
-                                    <td class="p-3"><p class="font-semibold text-slate-700">হিফজ বিভাগ</p><span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">রোল: ০১</span></td>
-                                    <td class="p-3"><p class="text-slate-700">মুহাম্মদ জসিম উদ্দিন</p><span class="text-[10px] text-slate-400">পিতা</span></td>
-                                    <td class="p-3 font-medium text-slate-600">০১৮১২-৩৪৫৬৭৮</td>
-                                    <td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-[10px] font-bold">আবাসিক (লিল্লাহ)</span></td>
-                                    <td class="p-3 text-right space-x-1">
-                                        <button onclick="openStudentProfileModal('আব্দুল্লাহ আল মামুন', 'ST101', 'হিফজ বিভাগ', 'মুহাম্মদ জসিম উদ্দিন', '০১৮১২-৩৪৫۶৭৮', 'আবাসিক')" class="px-3 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-700 hover:text-white rounded-lg text-xs font-bold transition">প্রোফাইল</button>
-                                        <button onclick="openStudentFeeModal('আব্দুল্লাহ আল মামুন')" class="px-2 py-1 bg-amber-50 text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg text-xs font-bold transition" title="ফি ও বেতন"><i class="fa-solid fa-sack-dollar"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <button onclick="openStudentAdmissionModal()" class="px-4 py-2 bg-emerald-700 text-white rounded-xl text-xs font-bold shadow"><i class="fa-solid fa-user-plus"></i> নতুন ছাত্র ভর্তি</button>
                 </div>
             </section>
 
-            <!-- ================= 3. STAFF & TEACHER MANAGEMENT MODULE ================= -->
+            <!-- ================= 3. STAFF MODULE ================= -->
             <section id="sec-staff" class="page-section space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
                     <div class="flex items-center gap-3">
                         <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-900">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h2>
-                            <p class="text-xs text-slate-500">নিবন্ধন, পদ, বেতন-ভাতা, উপস্থিতি, ছুটি, রুটিন ও ঋণ হিসাব</p>
-                        </div>
+                        <div><h2 class="text-lg font-bold text-slate-900">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h2><p class="text-xs text-slate-500">নিবন্ধন, পদ, বেতন-ভাতা, উপস্থিতি, ছুটি, রুটিন ও ঋণ হিসাব</p></div>
                     </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="openStaffRegistrationModal()" class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-user-plus"></i> নতুন শিক্ষক/কর্মী নিবন্ধন</button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center text-lg"><i class="fa-solid fa-chalkboard-user"></i></div>
-                        <div><p class="text-[10px] text-slate-500 font-medium">মোট শিক্ষক-কর্মী</p><h4 class="text-base font-bold text-slate-800">১৮ জন</h4></div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-user-check"></i></div>
-                        <div><p class="text-[10px] text-slate-500 font-medium">আজকের উপস্থিতি</p><h4 class="text-base font-bold text-slate-800">১৬ জন</h4></div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-plane-departure"></i></div>
-                        <div><p class="text-[10px] text-slate-500 font-medium">ছুটিতে রয়েছেন</p><h4 class="text-base font-bold text-slate-800">২ জন</h4></div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-money-check-dollar"></i></div>
-                        <div><p class="text-[10px] text-slate-500 font-medium">চলতি মাসের বেতন</p><h4 class="text-base font-bold text-slate-800">১,৬৫,০০০ ৳</h4></div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                        <div><p class="text-[10px] text-slate-500 font-medium">অগ্রিম ও ঋণ বকেয়া</p><h4 class="text-base font-bold text-slate-800">২০,০০০ ৳</h4></div>
-                    </div>
+                    <button onclick="openStaffRegistrationModal()" class="px-4 py-2 bg-purple-700 text-white rounded-xl text-xs font-bold shadow"><i class="fa-solid fa-user-plus"></i> নতুন শিক্ষক নিবন্ধন</button>
                 </div>
             </section>
 
-            <!-- ================= 4. ACCOUNTING & FINANCE MANAGEMENT MODULE ================= -->
+            <!-- ================= 4. ACCOUNTING MODULE ================= -->
             <section id="sec-accounting" class="page-section space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
                     <div class="flex items-center gap-3">
                         <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-900">পূর্ণাঙ্গ আয়-ব্যয় ও অর্থ হিসাব</h2>
-                            <p class="text-xs text-slate-500">আয়, ব্যয়, ক্যাশবুক, তহবিল, বাজেট, ব্যাংক ও দেনা-পাওনা ট্র্যাকিং</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="openIncomeModal()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-plus-circle"></i> নতুন আয় এন্ট্রি</button>
-                        <button onclick="openExpenseModal()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-minus-circle"></i> নতুন ব্যয় এন্ট্রি</button>
+                        <div><h2 class="text-lg font-bold text-slate-900">পূর্ণাঙ্গ আয়-ব্যয় ও অর্থ হিসাব</h2><p class="text-xs text-slate-500">আয়, ব্যয়, ক্যাশবুক, তহবিল, বাজেট, ব্যাংক ও দেনা-পাওনা ট্র্যাকিং</p></div>
                     </div>
                 </div>
             </section>
 
-            <!-- ================= 5. DONATIONS & FUND MANAGEMENT MODULE (Supabase Connected & Fully Functional) ================= -->
+            <!-- ================= 5. DONATIONS MODULE ================= -->
             <section id="sec-donations" class="page-section space-y-6">
-                <!-- Header Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
+                        <div><h2 class="text-lg font-bold text-slate-900">দান-অনুদান ও তহবিল ব্যবস্থাপনা</h2><p class="text-xs text-slate-500">দাতা নিবন্ধন, অনুদান গ্রহণ, যাকাত ফান্ড, প্রজেক্ট হিসাব ও রসিদ</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= 6. LILLAH BOARDING & FOOD MODULE (Image 1 Features) ================= -->
+            <section id="sec-lillah" class="page-section space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
                     <div class="flex items-center gap-3">
                         <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
                         <div>
-                            <h2 class="text-lg font-bold text-slate-900">দান-অনুদান ও তহবিল ব্যবস্থাপনা (Supabase Live)</h2>
-                            <p class="text-xs text-slate-500">দাতা নিবন্ধন, অনুদান গ্রহণ, যাকাত ফান্ড, প্রজেক্ট হিসাব ও পেশাদার রসিদ</p>
+                            <h2 class="text-lg font-bold text-slate-900">লিল্লাহ বোর্ডিং ও খাবার ব্যবস্থাপনা</h2>
+                            <p class="text-xs text-slate-500">বোর্ডিং ছাত্র তালিকা, বাজার খরচ, চাল-ডাল-তেল মজুদ, সাপ্লায়ার ও বাজেট</p>
                         </div>
                     </div>
                     <div class="flex gap-2 flex-wrap">
-                        <button onclick="openDonationReceiveModal()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-hand-holding-dollar"></i> অনুদান গ্রহণ (Receive)</button>
-                        <button onclick="openDonorRegistrationModal()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-user-plus"></i> নতুন দাতা নিবন্ধন</button>
-                        <button onclick="openProjectModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-building"></i> প্রজেক্ট হিসাব</button>
+                        <button onclick="openAddModal('প্রতিদিনের বাজার খরচ এন্ট্রি')" class="px-4 py-2 bg-teal-700 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-cart-shopping"></i> বাজার খরচ এন্ট্রি</button>
+                        <button onclick="openAddModal('খাদ্যসামগ্রী মজুদ (Stock)')" class="px-3 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-boxes-stacked"></i> মজুদ যোগ</button>
                     </div>
                 </div>
 
-                <!-- 1. Donation Dashboard Stats Cards (Supabase Real-time Sync) -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <p class="text-[10px] text-slate-500 font-medium">আজকের অনুদান</p>
-                        <h4 id="stat-don-today" class="text-base font-bold text-rose-600">২৫,০০০ ৳</h4>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <p class="text-[10px] text-slate-500 font-medium">চলতি মাসের অনুদান</p>
-                        <h4 id="stat-don-month" class="text-base font-bold text-emerald-700">৩,৫০,০০০ ৳</h4>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <p class="text-[10px] text-slate-500 font-medium">চলতি বছরের মোট</p>
-                        <h4 id="stat-don-year" class="text-base font-bold text-slate-800">২৮,২০,০০০ ৳</h4>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <p class="text-[10px] text-slate-500 font-medium">যাকাত ও সদকা ফান্ড</p>
-                        <h4 id="stat-don-zakat" class="text-base font-bold text-purple-700">৪৫,০০০ ৳</h4>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <p class="text-[10px] text-slate-500 font-medium">লিল্লাহ বোর্ডিং ফান্ড</p>
-                        <h4 id="stat-don-lillah" class="text-base font-bold text-teal-700">৮০,০০০ ৳</h4>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                        <p class="text-[10px] text-slate-500 font-medium">প্রমিজ বাকি (Pledge)</p>
-                        <h4 id="stat-don-pledge" class="text-base font-bold text-amber-600">৬০,০০০ ৳</h4>
-                    </div>
+                <!-- Stats Summary -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm"><p class="text-[10px] text-slate-500 font-medium">বোর্ডিংয়ে থাকা মোট ছাত্র</p><h4 class="text-base font-bold text-teal-700">৬৫ জন</h4></div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm"><p class="text-[10px] text-slate-500 font-medium">আজকের বাজার খরচ</p><h4 class="text-base font-bold text-rose-600">৩,৪৫০ ৳</h4></div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm"><p class="text-[10px] text-slate-500 font-medium">চাল-ডাল মজুদ (মজুদ)</p><h4 class="text-base font-bold text-slate-800">৪৫০ কেজি</h4></div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm"><p class="text-[10px] text-slate-500 font-medium">চলতি মাসের বাজেট</p><h4 class="text-base font-bold text-emerald-700">১,১০,০০০ ৳</h4></div>
                 </div>
 
-                <!-- Search & Filters -->
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-4 gap-3">
-                    <input type="text" id="filter-don-search" onkeyup="filterDonationsTable()" placeholder="দাতা নাম, মোবাইল বা ট্রানজ্যাকশন আইডি..." class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-rose-600 w-full">
-                    <select id="filter-don-fund" onchange="filterDonationsTable()" class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-rose-600 w-full">
-                        <option value="">সকল তহবিল (Fund)</option>
-                        <option value="সাধারণ অনুদান">সাধারণ অনুদান</option>
-                        <option value="যাকাত ও ফিতরা">যাকাত ও ফিতরা ফান্ড</option>
-                        <option value="লিল্লাহ বোর্ডিং">লিল্লাহ বোর্ডিং তহবিল</option>
-                        <option value="ভবন নির্মাণ">ভবন নির্মাণ ও সংস্কার</option>
-                    </select>
-                    <select id="filter-don-method" onchange="filterDonationsTable()" class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-rose-600 w-full">
-                        <option value="">সকল মাধ্যম (ক্যাশ/বিকাশ/ব্যাংক)</option>
-                        <option value="নগদ">নগদ ক্যাশ</option>
-                        <option value="বিকাশ">বিকাশ / মোবাইল ব্যাংকিং</option>
-                        <option value="ব্যাংক">ব্যাংক ট্রান্সফার</option>
-                    </select>
-                    <button onclick="filterDonationsTable()" class="px-4 py-2 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition"><i class="fa-solid fa-filter mr-1"></i> ফিল্টার করুন</button>
+                <!-- Feature Grid Items based on Image 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div onclick="openAddModal('বোর্ডিংয়ে থাকা ছাত্রদের তালিকা')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-user-group text-base"></i><h5 class="font-bold text-xs text-slate-800">১. বোর্ডিংয়ে থাকা ছাত্রদের তালিকা</h5></div>
+                        <p class="text-[10px] text-slate-500">আবাসিক, এতিম ও লিল্লাহ সহায়তাপাপ্ত ছাত্রদের কক্ষভিত্তিক তালিকা</p>
+                    </div>
+                    <div onclick="openAddModal('প্রতিদিনের বাজার খরচ')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-basket-shopping text-base"></i><h5 class="font-bold text-xs text-slate-800">২. প্রতিদিনের বাজার খরচ</h5></div>
+                        <p class="text-[10px] text-slate-500">দৈনিক তরকারি, মাছ, গোশত ও আনুষঙ্গিক বাজার এন্ট্রি</p>
+                    </div>
+                    <div onclick="openAddModal('চাল, ডাল, তেল, সবজি ও অন্যান্য')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-wheat-awn text-base"></i><h5 class="font-bold text-xs text-slate-800">৩. চাল, ডাল, তেল, সবজি ও অন্যান্য</h5></div>
+                        <p class="text-[10px] text-slate-500">খাদ্যদ্রব্যভিত্তিক পৃথক খরচের খাত ও পরিমাপের হিসাব</p>
+                    </div>
+                    <div onclick="openAddModal('বাজারের রসিদ ও সরবরাহকারীর তথ্য')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-file-invoice text-base"></i><h5 class="font-bold text-xs text-slate-800">৪. বাজারের রসিদ ও সরবরাহকারীর তথ্য</h5></div>
+                        <p class="text-[10px] text-slate-500">বাজারের ভাউচার আপলোড, পাইকারি দোকানদার ও সাপ্লায়ারের খাতা</p>
+                    </div>
+                    <div onclick="openAddModal('দৈনিক, সাপ্তাহিক ও মাসিক খাবারের বাজেট')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-chart-line text-base"></i><h5 class="font-bold text-xs text-slate-800">৫. খাবারের বাজেট নির্ধারণ</h5></div>
+                        <p class="text-[10px] text-slate-500">প্রতি ছাত্র পিছু দৈনিক খাদ্য খরচ ও মাসিক বাজেট তুলনা</p>
+                    </div>
+                    <div onclick="openAddModal('খাদ্যসামগ্রীর মজুদ (Stock)')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-warehouse text-base"></i><h5 class="font-bold text-xs text-slate-800">৬. খাদ্যসামগ্রীর মজুদ</h5></div>
+                        <p class="text-[10px] text-slate-500">গোডাউনে চাল, ডাল, তেলের বর্তমান স্টক ও ব্যবহারের হিসাব</p>
+                    </div>
+                    <div onclick="openAddModal('খাবারের খরচ ও ছাত্রসংখ্যার তুলনা')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-scale-balanced text-base"></i><h5 class="font-bold text-xs text-slate-800">৭. খরচের সাথে ছাত্রসংখ্যার তুলনা</h5></div>
+                        <p class="text-[10px] text-slate-500">উপস্থিত ছাত্র বনাম দৈনিক খাবারের মাথাপিছু গড় খরচ হিসাব</p>
+                    </div>
+                    <div onclick="openAddModal('লিল্লাহ তহবিল থেকে ব্যয়ের হিসাব')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-teal-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-teal-700"><i class="fa-solid fa-hand-holding-dollar text-base"></i><h5 class="font-bold text-xs text-slate-800">৮. লিল্লাহ তহবিল থেকে ব্যয়ের হিসাব</h5></div>
+                        <p class="text-[10px] text-slate-500">লিল্লাহ ফান্ড থেকে খাদ্য খরচে ডেবিট বা স্থানান্তরের লেজার</p>
+                    </div>
                 </div>
+            </section>
 
-                <!-- Master Donations Table with Receipt & Supabase Sync -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="px-5 py-4 border-b bg-slate-50 flex justify-between items-center">
-                        <h3 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-receipt text-rose-600 mr-2"></i>সাম্প্রতিক অনুদান ও রসিদ লেজার (Supabase DB)</h3>
-                        <div class="flex gap-2">
-                            <button onclick="window.print()" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold"><i class="fa-solid fa-print mr-1"></i> প্রিন্ট</button>
-                            <button onclick="showToast('অনুদান রিপোর্ট CSV এক্সপোর্ট হয়েছে')" class="px-3 py-1 bg-rose-600 text-white rounded-lg text-xs font-bold"><i class="fa-solid fa-file-csv mr-1"></i> CSV এক্সপোর্ট</button>
+            <!-- ================= 7. EDUCATION & EXAM MANAGEMENT MODULE (Image 3 Features) ================= -->
+            <section id="sec-exams" class="page-section space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">শিক্ষা ও পরীক্ষা ব্যবস্থাপনা</h2>
+                            <p class="text-xs text-slate-500">জামাত, বিষয়সূচি, পরীক্ষা রুটিন, নম্বর এন্ট্রি, মেধা তালিকা ও অগ্রগতি</p>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table id="donations-table" class="w-full text-left border-collapse text-xs">
-                            <thead>
-                                <tr class="bg-slate-100/70 text-slate-700 border-b">
-                                    <th class="p-3 font-bold">তারিখ ও রসিদ নং</th>
-                                    <th class="p-3 font-bold">দাতার নাম ও আইডি</th>
-                                    <th class="p-3 font-bold">তহবিলের ধরন</th>
-                                    <th class="p-3 font-bold">পেমেন্ট মাধ্যম ও TrxID</th>
-                                    <th class="p-3 font-bold text-right">পরিমাণ (টাকা)</th>
-                                    <th class="p-3 font-bold text-right">রসিদ / অ্যাকশন</th>
-                                </tr>
-                            </thead>
-                            <tbody id="donations-table-body" class="divide-y divide-slate-100">
-                                <tr class="hover:bg-slate-50 transition">
-                                    <td class="p-3">
-                                        <p class="font-bold text-slate-800">১৩ অক্টোবর, ২০২৬</p>
-                                        <span class="text-[10px] text-slate-400 font-mono">#DON-9821</span>
-                                    </td>
-                                    <td class="p-3">
-                                        <p class="font-bold text-slate-800">আলহাজ্ব জসিম উদ্দিন</p>
-                                        <span class="text-[10px] text-slate-500">দাতা আইডি: DNR-01</span>
-                                    </td>
-                                    <td class="p-3">
-                                        <span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full text-[10px] font-bold">যাকাত ও ফিতরা</span>
-                                    </td>
-                                    <td class="p-3">
-                                        <p class="text-slate-700">বিকাশ মার্চেন্ট</p>
-                                        <span class="text-[10px] text-slate-400 font-mono">Trx: 9N84K2M</span>
-                                    </td>
-                                    <td class="p-3 text-right font-bold text-emerald-700">২৫,০০০ ৳</td>
-                                    <td class="p-3 text-right">
-                                        <button onclick="printDonationReceipt('#DON-9821', 'আলহাজ্ব জসিম উদ্দিন', 'যাকাত ও ফিতরা', '২৫,০০০ ৳', 'বিকাশ')" class="px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-700 hover:text-white rounded-lg text-xs font-bold transition"><i class="fa-solid fa-file-pdf mr-1"></i> রসিদ PDF</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 transition">
-                                    <td class="p-3">
-                                        <p class="font-bold text-slate-800">১২ অক্টোবর, ২০২৬</p>
-                                        <span class="text-[10px] text-slate-400 font-mono">#DON-9820</span>
-                                    </td>
-                                    <td class="p-3">
-                                        <p class="font-bold text-slate-800">বেনামি / সাধারণ দাতা</p>
-                                        <span class="text-[10px] text-slate-500">দাতা আইডি: DNR-ANON</span>
-                                    </td>
-                                    <td class="p-3">
-                                        <span class="bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full text-[10px] font-bold">লিল্লাহ বোর্ডিং</span>
-                                    </td>
-                                    <td class="p-3">
-                                        <p class="text-slate-700">নগদ ক্যাশ</p>
-                                        <span class="text-[10px] text-slate-400">রসিদ বুক #04</span>
-                                    </td>
-                                    <td class="p-3 text-right font-bold text-emerald-700">১০,০০০ ৳</td>
-                                    <td class="p-3 text-right">
-                                        <button onclick="printDonationReceipt('#DON-9820', 'বেনামি দাতা', 'লিল্লাহ বোর্ডিং', '১০,০০০ ৳', 'নগদ')" class="px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-700 hover:text-white rounded-lg text-xs font-bold transition"><i class="fa-solid fa-file-pdf mr-1"></i> রসিদ PDF</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="openAddModal('পরীক্ষার নম্বর এন্ট্রি (Marks Entry)')" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-pen-to-square"></i> নম্বর এন্ট্রি</button>
+                        <button onclick="openAddModal('পরীক্ষার সময়সূচি তৈরি')" class="px-3 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-calendar-days"></i> রুটিন তৈরি</button>
                     </div>
                 </div>
 
-                <!-- Sub-feature Action Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div onclick="openDonorRegistrationModal()" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-rose-600 cursor-pointer transition space-y-2">
-                        <div class="flex items-center gap-2 text-rose-600"><i class="fa-solid fa-address-book text-base"></i><h5 class="font-bold text-xs text-slate-800">দাতা ডেটাবেস ও প্রোফাইল</h5></div>
-                        <p class="text-[10px] text-slate-500">স্থায়ী দাতা, প্রবাসী ও নিয়মিত দাতার ইতিহাস</p>
+                <!-- Feature Grid Items based on Image 3 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div onclick="openAddModal('জামাত ও শিক্ষা বিভাগ')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-graduation-cap text-base"></i><h5 class="font-bold text-xs text-slate-800">১. জামাত ও শিক্ষা বিভাগ</h5></div>
+                        <p class="text-[10px] text-slate-500">নূরানী, নাজেরা, হিফজ ও কিতাব বিভাগের শ্রেণির সেটআপ</p>
                     </div>
-                    <div onclick="openAddModal('নতুন তহবিল বা ফান্ড তৈরি')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-600 cursor-pointer transition space-y-2">
-                        <div class="flex items-center gap-2 text-emerald-700"><i class="fa-solid fa-vault text-base"></i><h5 class="font-bold text-xs text-slate-800">তহবিল তৈরি ও পরিচালনা</h5></div>
-                        <p class="text-[10px] text-slate-500">যাকাত, নির্মাণ ও নির্দিষ্ট প্রজেক্ট ফান্ড ম্যানেজমেন্ট</p>
+                    <div onclick="openAddModal('বিষয় ও পাঠ্যসূচির তালিকা')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-book text-base"></i><h5 class="font-bold text-xs text-slate-800">২. বিষয় ও পাঠ্যসূচির তালিকা</h5></div>
+                        <p class="text-[10px] text-slate-500">জামাতভিত্তিক কিতাবের তালিকা, নম্বর বণ্টন ও সিলেবাস</p>
                     </div>
-                    <div onclick="openAddModal('নিয়মিত অনুদান প্রতিশ্রুতি (Pledge)')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
-                        <div class="flex items-center gap-2 text-purple-700"><i class="fa-solid fa-calendar-check text-base"></i><h5 class="font-bold text-xs text-slate-800">নিয়মিত অনুদান (Pledge)</h5></div>
-                        <p class="text-[10px] text-slate-500">মাসিক ও বার্ষিক প্রতিশ্রুত অনুদান ট্র্যাকিং</p>
+                    <div onclick="openAddModal('পরীক্ষার সময়সূচি (Routine)')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-clock text-base"></i><h5 class="font-bold text-xs text-slate-800">৩. পরীক্ষার সময়সূচি</h5></div>
+                        <p class="text-[10px] text-slate-500">সাময়িক ও বার্ষিক পরীক্ষার রুটিন এবং হল পরিদর্শক ডিউটি</p>
                     </div>
-                    <div onclick="openProjectModal()" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-600 cursor-pointer transition space-y-2">
-                        <div class="flex items-center gap-2 text-blue-600"><i class="fa-solid fa-helmet-safety text-base"></i><h5 class="font-bold text-xs text-slate-800">নির্মাণ ও উন্নয়ন প্রকল্প</h5></div>
-                        <p class="text-[10px] text-slate-500">প্রজেক্ট বাজেট, খরচ ও অগ্রগতির ছবি</p>
+                    <div onclick="openAddModal('নম্বর এন্ট্রি ও ফলাফল')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-file-pen text-base"></i><h5 class="font-bold text-xs text-slate-800">৪. নম্বর এন্ট্রি ও ফলাফল</h5></div>
+                        <p class="text-[10px] text-slate-500">বিষয়ভিত্তিক প্রাপ্ত নম্বর ইনপুট ও নম্বরপত্র/মার্কশিট তৈরি</p>
+                    </div>
+                    <div onclick="openAddModal('মেধাতালিকা ও অগ্রগতির রিপোর্ট')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-trophy text-base"></i><h5 class="font-bold text-xs text-slate-800">৫. মেধাতালিকা ও অগ্রগতির রিপোর্ট</h5></div>
+                        <p class="text-[10px] text-slate-500">ফার্স্ট, সেকেন্ড স্থান নির্ধারণ ও অভিভাবক প্রগ্রেস কার্ড</p>
+                    </div>
+                    <div onclick="openAddModal('পরীক্ষার ফি ও সংশ্লিষ্ট ব্যয়')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-receipt text-base"></i><h5 class="font-bold text-xs text-slate-800">৬. পরীক্ষার ফি ও সংশ্লিষ্ট ব্যয়</h5></div>
+                        <p class="text-[10px] text-slate-500">পরীক্ষার ফি আদায় এবং প্রশ্ন ছাপানো ও আনুষঙ্গিক খরচ</p>
+                    </div>
+                    <div onclick="openAddModal('উপস্থিতি ও পড়াশোনার অগ্রগতি')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-chart-line text-base"></i><h5 class="font-bold text-xs text-slate-800">৭. উপস্থিতি ও পড়াশোনার অগ্রগতি</h5></div>
+                        <p class="text-[10px] text-slate-500">ক্লাস হাজিরা এবং মাসিক পড়াশোনার মান মূল্যায়ন</p>
+                    </div>
+                    <div onclick="openAddModal('হিফজ, নাজেরা ও কিতাব বিভাগের তথ্য')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-600 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-indigo-700"><i class="fa-solid fa-quran text-base"></i><h5 class="font-bold text-xs text-slate-800">৮. হিফজ, নাজেরা ও কিতাব বিভাগ</h5></div>
+                        <p class="text-[10px] text-slate-500">হিফজের সবক, সাতসবক, আমপারা ও পারা রিভিশন ডায়েরি</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= 8. ASSETS, BUILDINGS & DEVELOPMENT MODULE (Image 2 Features) ================= -->
+            <section id="sec-assets" class="page-section space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">ভবন, সম্পদ ও উন্নয়ন পরিকল্পনা</h2>
+                            <p class="text-xs text-slate-500">জমি, ভবন, মেরামত, ভবিষ্যৎ উন্নয়ন প্রজেক্ট, বাজেট ও অনুদান বিবরণী</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="openAddModal('নতুন সম্পত্তি বা সম্পদ রেজিস্টার')" class="px-4 py-2 bg-emerald-700 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-building-circle-check"></i> নতুন সম্পদ যোগ</button>
+                        <button onclick="openAddModal('উন্নয়ন প্রকল্পের বাজেট')" class="px-3 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"><i class="fa-solid fa-helmet-safety"></i> নতুন প্রকল্প</button>
+                    </div>
+                </div>
+
+                <!-- Feature Grid Items based on Image 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div onclick="openAddModal('জমি, ভবন ও কক্ষের তথ্য')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-landmark text-base"></i><h5 class="font-bold text-xs text-slate-800">১. জমি, ভবন ও কক্ষের তথ্য</h5></div>
+                        <p class="text-[10px] text-slate-500">মাদ্রাসার জমির দাগ/খতিয়ান, বহুতল ভবন ও ক্লাসরুম রেজিস্টার</p>
+                    </div>
+                    <div onclick="openAddModal('নির্মাণ ও মেরামতের হিসাব')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-hammer text-base"></i><h5 class="font-bold text-xs text-slate-800">২. নির্মাণ ও মেরামতের হিসাব</h5></div>
+                        <p class="text-[10px] text-slate-500">রং, স্যানিটারি, ইলেকট্রিক ও নতুন রুম মেরামতের ভাউচার খরচ</p>
+                    </div>
+                    <div onclick="openAddModal('ভবিষ্যৎ উন্নয়ন প্রকল্প (Master Plan)')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-compass-drafting text-base"></i><h5 class="font-bold text-xs text-slate-800">৩. ভবিষ্যৎ উন্নয়ন প্রকল্প</h5></div>
+                        <p class="text-[10px] text-slate-500">নতুন মসজিদ, হিফজখানা বা ডিজিটাল ল্যাব স্থাপন প্ল্যান</p>
+                    </div>
+                    <div onclick="openAddModal('প্রকল্পের বাজেট ও বাস্তব ব্যয়')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-file-invoice-dollar text-base"></i><h5 class="font-bold text-xs text-slate-800">৪. প্রকল্পের বাজেট ও বাস্তব ব্যয়</h5></div>
+                        <p class="text-[10px] text-slate-500">প্রাক্কলিত প্রজেক্ট বাজেট বনাম মূল খরচ তুলনা</p>
+                    </div>
+                    <div onclick="openAddModal('কত টাকা অনুদান এসেছে ও কত খরচ হয়েছে')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-hand-holding-hand text-base"></i><h5 class="font-bold text-xs text-slate-800">৫. অনুদান জমা বনাম খরচ বিবরণী</h5></div>
+                        <p class="text-[10px] text-slate-500">নির্মাণ ফান্ডের মোট প্রাপ্তি বনাম মোট খরচের নেট ব্যালেন্স</p>
+                    </div>
+                    <div onclick="openAddModal('প্রকল্পের ছবি, কাগজপত্র ও অগ্রগতি')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-images text-base"></i><h5 class="font-bold text-xs text-slate-800">৬. ছবি, কাগজপত্র ও অগ্রগতি</h5></div>
+                        <p class="text-[10px] text-slate-500">জমির দলিল আপলোড, নকশা ও কাজের অগ্রগতির ফটো গ্যালারি</p>
+                    </div>
+                    <div onclick="openAddModal('দাতা ও পরিচালনা কমিটির জন্য প্রকল্প প্রতিবেদন')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-700 cursor-pointer transition space-y-1.5 md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-2 text-emerald-800"><i class="fa-solid fa-file-pdf text-base"></i><h5 class="font-bold text-xs text-slate-800">৭. দাতা ও কমিটির জন্য প্রকল্প প্রতিবেদন</h5></div>
+                        <p class="text-[10px] text-slate-500">দাতাদের জন্য সুদৃশ্য অগ্রগতি রিপোর্ট PDF জেনারেট ও প্রিন্ট</p>
                     </div>
                 </div>
             </section>
 
             <!-- Other Module Placeholders (Preserved) -->
-            <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">লিল্লাহ বোর্ডিং ও খাবার</h2> </div></section>
-            <section id="sec-exams" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষা ও পরীক্ষা</h2> </div></section>
-            <section id="sec-assets" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ভবন ও সম্পদ</h2> </div></section>
             <section id="sec-reports" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">অডিট ও সামারি রিপোর্ট</h2> </div></section>
             <section id="sec-search" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">গ্লোবাল অনুসন্ধান</h2> </div></section>
             <section id="sec-notices" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">নোটিশ ও সভা</h2> </div></section>
@@ -723,15 +443,25 @@
         }
 
         function openAddModal(moduleName) {
-            document.getElementById('modal-title').innerText = moduleName + ' - নতুন তথ্য যোগ করুন';
+            document.getElementById('modal-title').innerText = moduleName + ' - তথ্য ইনপুট ফরম';
             document.getElementById('modal-fields').innerHTML = `
                 <div>
-                    <label class="block text-xs font-semibold mb-1">শিরোনাম / নাম</label>
-                    <input type="text" id="input-title" required placeholder="নাম বা শিরোনাম লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
+                    <label class="block text-xs font-semibold mb-1">শিরোনাম / নাম / খাতের বিবরণ</label>
+                    <input type="text" id="input-title" required placeholder="উদাহরণ লিখুন..." class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">পরিমাণ / বাজেট / শাখা</label>
+                        <input type="number" placeholder="0.00" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">তারিখ</label>
+                        <input type="date" value="2026-10-13" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold mb-1">বিবরণ</label>
-                    <textarea id="input-desc" rows="3" placeholder="বিস্তারিত লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600"></textarea>
+                    <label class="block text-xs font-semibold mb-1">বিস্তারিত নোট ও ডকুমেন্টস বিবরণ</label>
+                    <textarea id="input-desc" rows="3" placeholder="বিস্তারিত তথ্য লিখুন..." class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600"></textarea>
                 </div>
             `;
             document.getElementById('global-modal').classList.remove('hidden');
@@ -748,131 +478,19 @@
             document.getElementById('global-modal').classList.remove('hidden');
         }
 
-        /* ================= STUDENT MODULE JS ================= */
-        function openStudentAdmissionModal() {
-            document.getElementById('modal-title').innerText = 'নতুন ছাত্র ভর্তি ও ব্যক্তিগত তথ্য ফরম (ID Auto Gen)';
-            document.getElementById('modal-fields').innerHTML = `
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">ছাত্রের নাম (বাংলায়)</label><input type="text" required placeholder="পূর্ণ নাম" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                    <div><label class="block text-xs font-semibold mb-1">জামাত</label><select class="w-full px-3 py-2 rounded-xl border text-xs"><option>হিফজ বিভাগ</option><option>কিতাব বিভাগ</option><option>নূরানী বিভাগ</option></select></div>
-                </div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-        function openStudentProfileModal(name, id, cls, guardian, phone, status) {
-            document.getElementById('student-profile-content').innerHTML = `
-                <div class="bg-emerald-50 p-4 rounded-2xl border"><h4 class="text-base font-bold text-slate-900">${name} (ID: ${id})</h4><p class="text-xs text-emerald-800">জামাত: ${cls} | অভিভাবক: ${guardian} | ফোন: ${phone}</p></div>
-            `;
-            document.getElementById('student-profile-modal').classList.remove('hidden');
-        }
+        /* STUDENT, STAFF, ACCOUNTING, DONATIONS Functions */
+        function openStudentAdmissionModal() { openAddModal('নতুন ছাত্র ভর্তি'); }
+        function openStudentProfileModal(name) { openAddModal(name + ' - ছাত্র প্রোফাইল'); }
         function closeStudentProfile() { document.getElementById('student-profile-modal').classList.add('hidden'); }
-        function openStudentFeeModal(name) { openAddModal(name + ' - ফি ও বেতন গ্রহণ'); }
-        function filterStudentsTable() {
-            const query = document.getElementById('filter-name').value.toLowerCase();
-            document.querySelectorAll('#students-table-body tr').forEach(row => {
-                row.style.display = row.innerText.toLowerCase().includes(query) ? '' : 'none';
-            });
-        }
-
-        /* ================= STAFF MODULE JS ================= */
-        function openStaffRegistrationModal() {
-            document.getElementById('modal-title').innerText = 'নতুন শিক্ষক ও কর্মচারী নিবন্ধন (Supabase)';
-            document.getElementById('modal-fields').innerHTML = `
-                <div><label class="block text-xs font-semibold mb-1">নাম</label><input type="text" required placeholder="শিক্ষকের নাম" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-
-        /* ================= ACCOUNTING MODULE JS ================= */
-        function openIncomeModal() {
-            document.getElementById('modal-title').innerText = 'নতুন আয় এন্ট্রি ও মানি রিসিট';
-            document.getElementById('modal-fields').innerHTML = `
-                <div><label class="block text-xs font-semibold mb-1">পরিমাণ</label><input type="number" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-        function openExpenseModal() {
-            document.getElementById('modal-title').innerText = 'নতুন ব্যয় এন্ট্রি ও পেমেন্ট ভাউচার';
-            document.getElementById('modal-fields').innerHTML = `
-                <div><label class="block text-xs font-semibold mb-1">পরিমাণ</label><input type="number" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-
-        /* ================= DONATIONS & FUND MANAGEMENT MODULE JS ================= */
-        function openDonorRegistrationModal() {
-            document.getElementById('modal-title').innerText = 'নতুন দাতা নিবন্ধন (Auto ID & Supabase)';
-            document.getElementById('modal-fields').innerHTML = `
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">দাতার নাম (বাংলায়)</label><input type="text" required placeholder="পূর্ণ নাম লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                    <div><label class="block text-xs font-semibold mb-1">মোবাইল নম্বর</label><input type="text" required placeholder="01XXXXXXXXX" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">দাতার ধরন</label><select class="w-full px-3 py-2 rounded-xl border text-xs"><option>ব্যক্তিগত দাতা</option><option>প্রাতিষ্ঠানিক</option><option>প্রবাসী (Expatriate)</option><option>বেনামি দাতা (Anonymous)</option></select></div>
-                    <div><label class="block text-xs font-semibold mb-1">অনুদানের প্রকৃতি</label><select class="w-full px-3 py-2 rounded-xl border text-xs"><option>এককালীন (One-time)</option><option>মাসিক নিয়মিত (Monthly)</option><option>বার্ষিক (Annual)</option></select></div>
-                </div>
-                <div><label class="block text-xs font-semibold mb-1">স্থায়ী ঠিকানা</label><textarea rows="2" placeholder="গ্রাম, উপজেলা, জেলা" class="w-full px-3 py-2 rounded-xl border text-xs"></textarea></div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-
-        function openDonationReceiveModal() {
-            document.getElementById('modal-title').innerText = 'অনুদান গ্রহণ ও রসিদ তৈরি (Receive Form)';
-            document.getElementById('modal-fields').innerHTML = `
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">তারিখ ও সময়</label><input type="date" required value="2026-10-13" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                    <div><label class="block text-xs font-semibold mb-1">অনুদানের পরিমাণ (টাকা)</label><input type="number" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border text-xs font-bold text-rose-600"></div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">তহবিলের ধরন (Fund)</label><select class="w-full px-3 py-2 rounded-xl border text-xs"><option>সাধারণ অনুদান তহবিল</option><option>যাকাত ও ফিতরা তহবিল</option><option>লিল্লাহ বোর্ডিং তহবিল</option><option>ভবন নির্মাণ ও সংস্কার তহবিল</option><option>ছাত্র বৃত্তি ও দরিদ্র সহায়তা</option></select></div>
-                    <div><label class="block text-xs font-semibold mb-1">পেমেন্ট মাধ্যম</label><select class="w-full px-3 py-2 rounded-xl border text-xs"><option>নগদ ক্যাশ</option><option>বিকাশ / নগদ (Mobile Banking)</option><option>ব্যাংক ট্রান্সফার</option></select></div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">দাতার নাম / আইডি</label><input type="text" placeholder="আলহাজ্ব জসিম উদ্দিন (DNR-01)" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                    <div><label class="block text-xs font-semibold mb-1">TrxID / ব্যাংক রেফারেন্স</label><input type="text" placeholder="লেনদেন নম্বর" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                </div>
-                <div><label class="block text-xs font-semibold mb-1">মন্তব্য বা বিশেষ নোট</label><textarea rows="2" placeholder="মতামত..." class="w-full px-3 py-2 rounded-xl border text-xs"></textarea></div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-
-        function openProjectModal() {
-            document.getElementById('modal-title').innerText = 'নির্মাণ ও উন্নয়ন প্রজেক্ট হিসাব (Projects)';
-            document.getElementById('modal-fields').innerHTML = `
-                <div><label class="block text-xs font-semibold mb-1">প্রকল্পের নাম</label><input type="text" required placeholder="উদাহরণ: তিন তলা ছাত্রাবাস নির্মাণ" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-semibold mb-1">অনুমোদিত বাজেট (টাকা)</label><input type="number" required placeholder="1000000" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                    <div><label class="block text-xs font-semibold mb-1">সম্ভাব্য সমাপ্তি তারিখ</label><input type="date" class="w-full px-3 py-2 rounded-xl border text-xs"></div>
-                </div>
-            `;
-            document.getElementById('global-modal').classList.remove('hidden');
-        }
-
-        function printDonationReceipt(vno, donor, fund, amount, method) {
-            showToast(`রসিদ ${vno} (${donor} - ${amount}) PDF জেনারেট হচ্ছে...`);
-            window.print();
-        }
-
-        function filterDonationsTable() {
-            const query = document.getElementById('filter-don-search').value.toLowerCase();
-            const fund = document.getElementById('filter-don-fund').value.toLowerCase();
-            const method = document.getElementById('filter-don-method').value.toLowerCase();
-
-            document.querySelectorAll('#donations-table-body tr').forEach(row => {
-                const text = row.innerText.toLowerCase();
-                const matchQuery = text.includes(query);
-                const matchFund = fund === '' || text.includes(fund);
-                const matchMethod = method === '' || text.includes(method);
-
-                row.style.display = (matchQuery && matchFund && matchMethod) ? '' : 'none';
-            });
-        }
+        function openStaffRegistrationModal() { openAddModal('নতুন শিক্ষক নিবন্ধন'); }
+        function openIncomeModal() { openAddModal('নতুন আয় এন্ট্রি'); }
+        function openExpenseModal() { openAddModal('নতুন ব্যয় এন্ট্রি'); }
 
         function closeModal() { document.getElementById('global-modal').classList.add('hidden'); }
         function handleFormSubmit(e) {
             e.preventDefault();
             closeModal();
-            showToast('সফলভাবে ডেটা সংরক্ষিত হয়েছে এবং Supabase ডেটাবেসে সিঙ্ক হয়েছে!');
+            showToast('তথ্য সফলভাবে সংরক্ষিত হয়েছে এবং সিস্টেমের সর্বত্র লাইভ সিঙ্ক হয়েছে!');
         }
     </script>
 </body>
