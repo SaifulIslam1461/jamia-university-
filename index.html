@@ -62,6 +62,19 @@
         </div>
     </div>
 
+    <!-- STAFF PROFILE MODAL -->
+    <div id="staff-profile-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-4xl rounded-3xl p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto animate-fadeIn">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-base font-bold text-slate-800"><i class="fa-solid fa-id-badge text-purple-700 mr-2"></i>শিক্ষক ও কর্মকর্তার পূর্ণাঙ্গ প্রোফাইল</h3>
+                <button onclick="closeStaffProfile()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="staff-profile-content" class="space-y-6">
+                <!-- Staff Profile Data injected dynamically -->
+            </div>
+        </div>
+    </div>
+
     <div class="min-h-screen flex flex-col">
         
         <!-- TOP APP HEADER -->
@@ -357,7 +370,7 @@
                 </div>
             </section>
 
-            <!-- ================= 2. STUDENT MANAGEMENT MODULE (17 FEATURES INTEGRATED) ================= -->
+            <!-- ================= 2. STUDENT MANAGEMENT MODULE ================= -->
             <section id="sec-students" class="page-section space-y-6">
                 <!-- Header Controls -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
@@ -379,28 +392,28 @@
                     <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-users"></i></div>
                         <div>
-                            <p class="text-[10px] text-slate-500 font-medium">মোট ছাত্রসংখ্যা</label>
+                            <p class="text-[10px] text-slate-500 font-medium">মোট ছাত্রসংখ্যা</p>
                             <h4 id="stat-total" class="text-base font-bold text-slate-800">১২০ জন</h4>
                         </div>
                     </div>
                     <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-user-plus"></i></div>
                         <div>
-                            <p class="text-[10px] text-slate-500 font-medium">নতুন ভর্তি</label>
+                            <p class="text-[10px] text-slate-500 font-medium">নতুন ভর্তি</p>
                             <h4 class="text-base font-bold text-slate-800">১৫ জন</h4>
                         </div>
                     </div>
                     <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-bed"></i></div>
                         <div>
-                            <p class="text-[10px] text-slate-500 font-medium">আবাসিক ও লিল্লাহ</label>
+                            <p class="text-[10px] text-slate-500 font-medium">আবাসিক ও লিল্লাহ</p>
                             <h4 class="text-base font-bold text-slate-800">৬৫ জন</h4>
                         </div>
                     </div>
                     <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-file-invoice-dollar"></i></div>
                         <div>
-                            <p class="text-[10px] text-slate-500 font-medium">বকেয়া বেতন ও ফি</label>
+                            <p class="text-[10px] text-slate-500 font-medium">বকেয়া বেতন ও ফি</p>
                             <h4 class="text-base font-bold text-slate-800">২৫,০০০ টাকা</h4>
                         </div>
                     </div>
@@ -526,7 +539,7 @@
                     </div>
                 </div>
 
-                <!-- Quick Action Sub-Cards for Features (Exams, Attendance, Boarding, etc.) -->
+                <!-- Quick Action Sub-Cards for Features -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <div onclick="openAddModal('ছাত্র উপস্থিতি এন্ট্রি')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-600 cursor-pointer transition text-center space-y-2">
                         <i class="fa-solid fa-calendar-days text-xl text-emerald-700"></i>
@@ -551,8 +564,241 @@
                 </div>
             </section>
 
+            <!-- ================= 3. STAFF & TEACHER MANAGEMENT MODULE (11 FEATURES INTEGRATED) ================= -->
+            <section id="sec-staff" class="page-section space-y-6">
+                <!-- Header Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h2>
+                            <p class="text-xs text-slate-500">নিবন্ধন, পদ, বেতন-ভাতা, উপস্থিতি, ছুটি, রুটিন ও ঋণ হিসাব</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="openStaffRegistrationModal()" class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-user-plus"></i> নতুন শিক্ষক/কর্মী নিবন্ধন</button>
+                        <button onclick="showToast('সকল শিক্ষক-কর্মচারীর তালিকা ডাউনলোড হয়েছে!')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2"><i class="fa-solid fa-file-excel"></i> Excel রপ্তানি</button>
+                    </div>
+                </div>
+
+                <!-- 1. Staff Dashboard Stats Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center text-lg"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-500 font-medium">মোট শিক্ষক-কর্মী</p>
+                            <h4 id="stat-staff-total" class="text-base font-bold text-slate-800">১৮ জন</h4>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-user-check"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-500 font-medium">আজকের উপস্থিতি</p>
+                            <h4 class="text-base font-bold text-slate-800">১৬ জন</h4>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-plane-departure"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-500 font-medium">ছুটিতে রয়েছেন</p>
+                            <h4 class="text-base font-bold text-slate-800">২ জন</h4>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-money-check-dollar"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-500 font-medium">চলতি মাসের বেতন</p>
+                            <h4 class="text-base font-bold text-slate-800">১,৬৫,০০০ ৳</h4>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-500 font-medium">অগ্রিম ও ঋণ বকেয়া</p>
+                            <h4 class="text-base font-bold text-slate-800">২০,০০০ ৳</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. Staff Search & Filter Engine -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-4 gap-3">
+                    <input type="text" id="filter-staff-name" onkeyup="filterStaffTable()" placeholder="নাম, আইডি বা ফোন নম্বর দিয়ে খুঁজুন..." class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-purple-600 w-full">
+                    <select id="filter-staff-role" onchange="filterStaffTable()" class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-purple-600 w-full">
+                        <option value="">সকল পদবি / পদ</option>
+                        <option value="মুহতামিম">মুহতামিম / নায়েবে মুহতামিম</option>
+                        <option value="মুহাদ্দিস">মুহাদ্দিস / মুফতি</option>
+                        <option value="শিক্ষক">হিফজ / কিতাব শিক্ষক</option>
+                        <option value="হিসাবরক্ষক">হিসাবরক্ষক ও অফিস স্টাফ</option>
+                        <option value="খাদেম">খাদেম / বাবুর্চি / নৈশপ্রহরী</option>
+                    </select>
+                    <select id="filter-staff-status" onchange="filterStaffTable()" class="px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-purple-600 w-full">
+                        <option value="">অবস্থা অনুযায়ী ফিল্টার</option>
+                        <option value="কর্মরত">কর্মরত</option>
+                        <option value="ছুটিতে">ছুটিতে</option>
+                        <option value="অব্যাহতিপ্রাপ্ত">অব্যাহতিপ্রাপ্ত</option>
+                    </select>
+                    <button onclick="filterStaffTable()" class="px-4 py-2 bg-purple-700 text-white rounded-xl text-xs font-bold hover:bg-purple-800 transition"><i class="fa-solid fa-filter mr-1"></i> ফিল্টার করুন</button>
+                </div>
+
+                <!-- Staff Table -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="px-5 py-4 border-b bg-slate-50 flex justify-between items-center">
+                        <h3 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-users-gear text-purple-700 mr-2"></i>শিক্ষক ও কর্মচারীদের মাস্টার তালিকা</h3>
+                        <span class="text-xs text-slate-500 font-medium">সর্বমোট: <span id="staff-count-badge">৩</span> জন প্রদর্শিত</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table id="staff-table" class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100/70 text-slate-700 border-b">
+                                    <th class="p-3 font-bold">আইডি ও নাম</th>
+                                    <th class="p-3 font-bold">পদবি ও বিভাগ</th>
+                                    <th class="p-3 font-bold">যোগদানের তারিখ ও যোগ্যতা</th>
+                                    <th class="p-3 font-bold">মোবাইল নম্বর</th>
+                                    <th class="p-3 font-bold">মূল বেতন</th>
+                                    <th class="p-3 font-bold">অবস্থা</th>
+                                    <th class="p-3 font-bold text-right">কার্যক্রম / অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staff-table-body" class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="p-3 flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-800 font-bold flex items-center justify-center text-xs">EMP01</div>
+                                        <div>
+                                            <p class="font-bold text-slate-800">মাওলানা ইব্রাহিম খলিল</p>
+                                            <span class="text-[10px] text-slate-400">কওমি মারহালা: দাওরায়ে হাদিস</span>
+                                        </div>
+                                    </td>
+                                    <td class="p-3">
+                                        <p class="font-semibold text-slate-700">মুহতামিম</p>
+                                        <span class="text-[10px] bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full font-medium">প্রশাসন</span>
+                                    </td>
+                                    <td class="p-3">
+                                        <p class="text-slate-700">১৫ জানুয়ারি ২০১৮</p>
+                                        <span class="text-[10px] text-slate-400">অভিজ্ঞতা: ৮ বছর</span>
+                                    </td>
+                                    <td class="p-3 font-medium text-slate-600">০১৮১১-৯৯৮৮৭৭</td>
+                                    <td class="p-3 font-bold text-slate-800">২৫,০০০ ৳</td>
+                                    <td class="p-3">
+                                        <span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-[10px] font-bold">কর্মরত</span>
+                                    </td>
+                                    <td class="p-3 text-right space-x-1">
+                                        <button onclick="openStaffProfileModal('মাওলানা ইব্রাহিম খলিল', 'EMP01', 'মুহতামিম', 'প্রশাসন', '০১৮১১-৯৯৮৮৭৭', '২৫,০০০ ৳', 'কর্মরত')" class="px-3 py-1 bg-purple-50 text-purple-700 hover:bg-purple-700 hover:text-white rounded-lg text-xs font-bold transition">প্রোফাইল</button>
+                                        <button onclick="openStaffSalaryModal('মাওলানা ইব্রাহিম খলিল')" class="px-2 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-700 hover:text-white rounded-lg text-xs font-bold transition" title="বেতন পরিশোধ"><i class="fa-solid fa-money-bill-wave"></i></button>
+                                        <button onclick="openStaffLeaveModal('মাওলানা ইব্রাহিম খলিল')" class="px-2 py-1 bg-amber-50 text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg text-xs font-bold transition" title="ছুটি ও উপস্থিতি"><i class="fa-solid fa-user-clock"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="p-3 flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-800 font-bold flex items-center justify-center text-xs">EMP02</div>
+                                        <div>
+                                            <p class="font-bold text-slate-800">হাফেজ মাওলানা ওবায়দুল্লাহ</p>
+                                            <span class="text-[10px] text-slate-400">কওমি মারহালা: তায়সীর ও হিফজ</span>
+                                        </div>
+                                    </td>
+                                    <td class="p-3">
+                                        <p class="font-semibold text-slate-700">প্রধান শিক্ষক (হিফজ)</p>
+                                        <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">হিফজ বিভাগ</span>
+                                    </td>
+                                    <td class="p-3">
+                                        <p class="text-slate-700">০১ মার্চ ২০২১</p>
+                                        <span class="text-[10px] text-slate-400">অভিজ্ঞতা: ৫ বছর</span>
+                                    </td>
+                                    <td class="p-3 font-medium text-slate-600">০১৯২২-৩৩৪৪৫৫</td>
+                                    <td class="p-3 font-bold text-slate-800">১৮,০০০ ৳</td>
+                                    <td class="p-3">
+                                        <span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-[10px] font-bold">কর্মরত</span>
+                                    </td>
+                                    <td class="p-3 text-right space-x-1">
+                                        <button onclick="openStaffProfileModal('হাফেজ মাওলানা ওবায়দুল্লাহ', 'EMP02', 'প্রধান শিক্ষক (হিফজ)', 'হিফজ বিভাগ', '০১৯২২-৩৩৪৪৫৫', '১৮,০০০ ৳', 'কর্মরত')" class="px-3 py-1 bg-purple-50 text-purple-700 hover:bg-purple-700 hover:text-white rounded-lg text-xs font-bold transition">প্রোফাইল</button>
+                                        <button onclick="openStaffSalaryModal('হাফেজ মাওলানা ওবায়দুল্লাহ')" class="px-2 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-700 hover:text-white rounded-lg text-xs font-bold transition" title="বেতন পরিশোধ"><i class="fa-solid fa-money-bill-wave"></i></button>
+                                        <button onclick="openStaffLeaveModal('হাফেজ মাওলানা ওবায়দুল্লাহ')" class="px-2 py-1 bg-amber-50 text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg text-xs font-bold transition" title="ছুটি ও উপস্থিতি"><i class="fa-solid fa-user-clock"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="p-3 flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-800 font-bold flex items-center justify-center text-xs">EMP03</div>
+                                        <div>
+                                            <p class="font-bold text-slate-800">আব্দুর রহিম (বাবুর্চি)</p>
+                                            <span class="text-[10px] text-slate-400">লিল্লাহ বোর্ডিং রান্না দায়িত্ব</span>
+                                        </div>
+                                    </td>
+                                    <td class="p-3">
+                                        <p class="font-semibold text-slate-700">প্রধান বাবুর্চি</p>
+                                        <span class="text-[10px] bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full font-medium">বোর্ডিং ও খাবার</span>
+                                    </td>
+                                    <td class="p-3">
+                                        <p class="text-slate-700">১০ জুন ২০২২</p>
+                                        <span class="text-[10px] text-slate-400">অভিজ্ঞতা: ৪ বছর</span>
+                                    </td>
+                                    <td class="p-3 font-medium text-slate-600">০১৭৩৩-৪৪৫৫৬৬</td>
+                                    <td class="p-3 font-bold text-slate-800">১২,০০০ ৳</td>
+                                    <td class="p-3">
+                                        <span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full text-[10px] font-bold">ছুটিতে</span>
+                                    </td>
+                                    <td class="p-3 text-right space-x-1">
+                                        <button onclick="openStaffProfileModal('আব্দুর রহিম (বাবুর্চি)', 'EMP03', 'প্রধান বাবুর্চি', 'বোর্ডিং ও খাবার', '০১৭৩৩-৪৪৫৫৬৬', '১২,০০০ ৳', 'ছুটিতে')" class="px-3 py-1 bg-purple-50 text-purple-700 hover:bg-purple-700 hover:text-white rounded-lg text-xs font-bold transition">প্রোফাইল</button>
+                                        <button onclick="openStaffSalaryModal('আব্দুর রহিম (বাবুর্চি)')" class="px-2 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-700 hover:text-white rounded-lg text-xs font-bold transition" title="বেতন পরিশোধ"><i class="fa-solid fa-money-bill-wave"></i></button>
+                                        <button onclick="openStaffLeaveModal('আব্দুর রহিম (বাবুর্চি)')" class="px-2 py-1 bg-amber-50 text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg text-xs font-bold transition" title="ছুটি ও উপস্থিতি"><i class="fa-solid fa-user-clock"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 11 Sub-module Operations Quick Grid Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div onclick="openAddModal('পদবি ও নতুন বিভাগ')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
+                        <div class="flex items-center gap-3 text-purple-700">
+                            <i class="fa-solid fa-sitemap text-lg"></i>
+                            <h5 class="font-bold text-xs text-slate-800">৩. পদ ও বিভাগ ব্যবস্থাপনা</h5>
+                        </div>
+                        <p class="text-[11px] text-slate-500">মুহতামিম, মুহাদ্দিস, হিসাবরক্ষক ও নতুন পদ তৈরি</p>
+                    </div>
+
+                    <div onclick="openAddModal('মাসিক বেতন ও সম্মানী বোনাস')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
+                        <div class="flex items-center gap-3 text-purple-700">
+                            <i class="fa-solid fa-file-invoice-dollar text-lg"></i>
+                            <h5 class="font-bold text-xs text-slate-800">৪. বেতন, ভাতা ও স্কেল</h5>
+                        </div>
+                        <p class="text-[11px] text-slate-500">মাসিক বেতন স্কেল, বোনাস, কর্তন ও স্লিপ তৈরি</p>
+                    </div>
+
+                    <div onclick="openAddModal('শিক্ষক-কর্মচারী উপস্থিতি হাজিরা')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
+                        <div class="flex items-center gap-3 text-purple-700">
+                            <i class="fa-solid fa-clipboard-user text-lg"></i>
+                            <h5 class="font-bold text-xs text-slate-800">৫. দৈনিক উপস্থিতি ও ভ্রমণ</h5>
+                        </div>
+                        <p class="text-[11px] text-slate-500">দেরিতে আসা, সফর ও নির্ধারিত বেতন কর্তন</p>
+                    </div>
+
+                    <div onclick="openAddModal('ছুটির আবেদন ও অনুমোদন')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
+                        <div class="flex items-center gap-3 text-purple-700">
+                            <i class="fa-solid fa-business-time text-lg"></i>
+                            <h5 class="font-bold text-xs text-slate-800">৬. ছুটি ও অনুমোদন</h5>
+                        </div>
+                        <p class="text-[11px] text-slate-500">ছুটির আবেদন, ব্যালেন্স ও কর্তৃপক্ষের অনুমোদন</p>
+                    </div>
+
+                    <div onclick="openAddModal('শিক্ষকতার দায়িত্ব বন্টন ও রুটিন')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
+                        <div class="flex items-center gap-3 text-purple-700">
+                            <i class="fa-solid fa-book-journal-whills text-lg"></i>
+                            <h5 class="font-bold text-xs text-slate-800">৮. শিক্ষকতার দায়িত্ব ও রুটিন</h5>
+                        </div>
+                        <p class="text-[11px] text-slate-500">জামাত, বিষয় বন্টন, রুটিন ও বিকল্প শিক্ষক</p>
+                    </div>
+
+                    <div onclick="openAddModal('কর্মচারী ঋণ ও অগ্রিম বেতন')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:border-purple-600 cursor-pointer transition space-y-2">
+                        <div class="flex items-center gap-3 text-purple-700">
+                            <i class="fa-solid fa-handshake text-lg"></i>
+                            <h5 class="font-bold text-xs text-slate-800">৯. ঋণ, অগ্রিম ও কিস্তি</h5>
+                        </div>
+                        <p class="text-[11px] text-slate-500">বেতন অগ্রিম, কিস্তিতে কর্তন ও পূর্ণাঙ্গ দেনা-পাওনা</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- Other Module Placeholders (Preserved) -->
-            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষক ও কর্মচারী ব্যবস্থাপনা</h2> </div></section>
             <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h2> </div></section>
             <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">দান-অনুদান ও তহবিল</h2> </div></section>
             <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">লিল্লাহ বোর্ডিং ও খাবার</h2> </div></section>
@@ -639,7 +885,7 @@
             document.getElementById('global-modal').classList.remove('hidden');
         }
 
-        // Student Admission Comprehensive Modal (Feature 2 & 3)
+        /* ================= STUDENT MODULE JS ================= */
         function openStudentAdmissionModal() {
             document.getElementById('modal-title').innerText = 'নতুন ছাত্র ভর্তি ও ব্যক্তিগত তথ্য ফরম (ID Auto Gen)';
             document.getElementById('modal-fields').innerHTML = `
@@ -689,7 +935,6 @@
             document.getElementById('global-modal').classList.remove('hidden');
         }
 
-        // Student Profile Modal (Feature 17)
         function openStudentProfileModal(name, id, cls, guardian, phone, status) {
             document.getElementById('student-profile-content').innerHTML = `
                 <div class="flex flex-col sm:flex-row items-center gap-4 bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
@@ -724,13 +969,8 @@
             document.getElementById('student-profile-modal').classList.add('hidden');
         }
 
-        function openStudentFeeModal(name) {
-            openAddModal(name + ' - ফি ও বেতন গ্রহণ');
-        }
-
-        function openStudentAttendanceModal(name) {
-            openAddModal(name + ' - উপস্থিতি ও হাজিরা');
-        }
+        function openStudentFeeModal(name) { openAddModal(name + ' - ফি ও বেতন গ্রহণ'); }
+        function openStudentAttendanceModal(name) { openAddModal(name + ' - উপস্থিতি ও হাজিরা'); }
 
         function filterStudentsTable() {
             const query = document.getElementById('filter-name').value.toLowerCase();
@@ -754,6 +994,139 @@
                 }
             });
             document.getElementById('student-count-badge').innerText = visibleCount;
+        }
+
+        /* ================= STAFF MODULE JS ================= */
+        function openStaffRegistrationModal() {
+            document.getElementById('modal-title').innerText = 'নতুন শিক্ষক ও কর্মচারী নিবন্ধন (২. নিবন্ধন ফরম)';
+            document.getElementById('modal-fields').innerHTML = `
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">পূর্ণ নাম (বাংলায়)</label>
+                        <input type="text" required placeholder="উদাহরণ: মাওলানা ইব্রাহিম" class="w-full px-3 py-2 rounded-xl border text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Full Name (English)</label>
+                        <input type="text" placeholder="Full Name" class="w-full px-3 py-2 rounded-xl border text-xs">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">পদবি ও ভূমিকা</label>
+                        <select class="w-full px-3 py-2 rounded-xl border text-xs">
+                            <option>মুহতামিম / নায়েবে মুহতামিম</option>
+                            <option>মুহাদ্দিস / মুফতি</option>
+                            <option>হিফজ শিক্ষক</option>
+                            <option>কিতাব শিক্ষক</option>
+                            <option>হিসাবরক্ষক / অফিস কর্মকর্তা</option>
+                            <option>বাবুর্চি / খাদেম / নৈশপ্রহরী</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">বিভাগ</label>
+                        <select class="w-full px-3 py-2 rounded-xl border text-xs">
+                            <option>প্রশাসন</option>
+                            <option>হিফজ বিভাগ</option>
+                            <option>কিতাব বিভাগ</option>
+                            <option>অফিস ও হিসাব</option>
+                            <option>বোর্ডিং ও খাবার</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">কওমি মারহালা / যোগ্যতা</label>
+                        <input type="text" placeholder="দাওরায়ে হাদিস / ইফতা / এসএসসি" class="w-full px-3 py-2 rounded-xl border text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">মোবাইল নম্বর</label>
+                        <input type="text" required placeholder="01XXXXXXXXX" class="w-full px-3 py-2 rounded-xl border text-xs">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">যোগদানের তারিখ</label>
+                        <input type="date" class="w-full px-3 py-2 rounded-xl border text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">মূল বেতন (টাকা)</label>
+                        <input type="number" placeholder="১৫০০০" class="w-full px-3 py-2 rounded-xl border text-xs">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">স্থায়ী ঠিকানা ও জরুরি যোগাযোগ</label>
+                    <textarea rows="2" placeholder="গ্রাম, থানা, জেলা ও জরুরি ফোন নম্বর" class="w-full px-3 py-2 rounded-xl border text-xs"></textarea>
+                </div>
+            `;
+            document.getElementById('global-modal').classList.remove('hidden');
+        }
+
+        function openStaffProfileModal(name, id, designation, dept, phone, salary, status) {
+            document.getElementById('staff-profile-content').innerHTML = `
+                <div class="flex flex-col sm:flex-row items-center gap-4 bg-purple-50 p-4 rounded-2xl border border-purple-100">
+                    <div class="w-16 h-16 rounded-full bg-purple-700 text-white font-bold flex items-center justify-center text-xl shadow">${name.charAt(0)}</div>
+                    <div class="text-center sm:text-left flex-1">
+                        <h4 class="text-base font-bold text-slate-900">${name}</h4>
+                        <p class="text-xs text-purple-800 font-semibold">আইডি: ${id} | পদবি: ${designation} | বিভাগ: ${dept}</p>
+                        <p class="text-xs text-slate-600 mt-1">ফোন: ${phone} | মূল বেতন: ${salary} | অবস্থা: ${status}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="window.print()" class="px-3 py-2 bg-purple-700 text-white text-xs font-bold rounded-xl shadow"><i class="fa-solid fa-print mr-1"></i> প্রিন্ট প্রোফাইল</button>
+                        <button onclick="showToast('আইডি কার্ড তৈরির আদেশ প্রক্রিয়াধীন...')" class="px-3 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow"><i class="fa-solid fa-id-card mr-1"></i> ID Card</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                    <div class="bg-slate-50 p-3 rounded-xl border"><p class="text-[10px] text-slate-500">চলতি মাসের উপস্থিতি</p><h5 class="text-sm font-bold text-slate-800">২২ দিন</h5></div>
+                    <div class="bg-slate-50 p-3 rounded-xl border"><p class="text-[10px] text-slate-500">অবশিষ্ট ছুটি</p><h5 class="text-sm font-bold text-purple-700">৮ দিন</h5></div>
+                    <div class="bg-slate-50 p-3 rounded-xl border"><p class="text-[10px] text-slate-500">অগ্রিম ঋণ বকেয়া</p><h5 class="text-sm font-bold text-rose-600">০ টাকা</h5></div>
+                    <div class="bg-slate-50 p-3 rounded-xl border"><p class="text-[10px] text-slate-500">চাকরির মেয়াদ</p><h5 class="text-sm font-bold text-slate-800">৪ বছর</h5></div>
+                </div>
+
+                <div class="border-t pt-3 space-y-2">
+                    <h5 class="font-bold text-xs text-slate-800">শিক্ষকতা ও দায়িত্বের ইতিহাস:</h5>
+                    <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 flex justify-between items-center">
+                        <span>কিতাব: মেশকাত শরীফ ও হেদায়া | জামাত: কিতাব বিভাগ</span>
+                        <span class="text-purple-700 font-bold">সক্রিয় রুটিন</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 flex justify-between items-center">
+                        <span>বেতন স্লিপ: অক্টোবর ২০২৬ (পরিশোধিত)</span>
+                        <span class="text-emerald-700 font-bold">PDF স্লিপ</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('staff-profile-modal').classList.remove('hidden');
+        }
+
+        function closeStaffProfile() {
+            document.getElementById('staff-profile-modal').classList.add('hidden');
+        }
+
+        function openStaffSalaryModal(name) { openAddModal(name + ' - বেতন ও ভাতা পরিশোধ'); }
+        function openStaffLeaveModal(name) { openAddModal(name + ' - ছুটি ও উপস্থিতি রেকর্ড'); }
+
+        function filterStaffTable() {
+            const query = document.getElementById('filter-staff-name').value.toLowerCase();
+            const role = document.getElementById('filter-staff-role').value.toLowerCase();
+            const status = document.getElementById('filter-staff-status').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('#staff-table-body tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                const matchQuery = text.includes(query);
+                const matchRole = role === '' || text.includes(role);
+                const matchStatus = status === '' || text.includes(status);
+
+                if (matchQuery && matchRole && matchStatus) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            document.getElementById('staff-count-badge').innerText = visibleCount;
         }
 
         function closeModal() {
