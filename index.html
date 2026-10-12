@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>কওমি মাদ্রাসা ম্যানেজমেন্ট ও হিসাবের খাতা</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#065f46">
@@ -23,8 +22,14 @@
                     <h2 class="text-xl font-bold tracking-wide text-emerald-100 flex items-center gap-2">
                         🕌 কওমি মাদ্রাসা সিস্টেম
                     </h2>
-                    <p class="text-xs text-emerald-400 mt-1">পূর্ণাঙ্গ প্রাতিষ্ঠানিক হিসাব ও পরিচালনা</p>
+                    <p class="text-xs text-emerald-400 mt-1">প্রশাসন ও পূর্ণাঙ্গ হিসাবরক্ষণ</p>
                 </div>
+                
+                <!-- Global Search Box -->
+                <div class="relative">
+                    <input type="text" id="global-search" onkeyup="filterGlobalData()" placeholder="🔍 যেকোনো তথ্য খুঁজুন..." class="w-full px-3 py-2 rounded-xl bg-emerald-900/60 border border-emerald-700 text-sm text-white placeholder-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                </div>
+
                 <nav class="space-y-1.5" id="sidebar-nav">
                     <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-emerald-800 text-white font-medium flex items-center gap-3 shadow-md">📊 কেন্দ্রীয় ড্যাশবোর্ড</button>
                     <button onclick="switchTab('accounting')" id="btn-accounting" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-emerald-200 hover:bg-emerald-900/80 transition flex items-center gap-3">📖 হিসাবের খাতা ও লেজার</button>
@@ -36,10 +41,10 @@
             </div>
             <div class="text-xs bg-emerald-900/50 p-3 rounded-xl border border-emerald-800 text-emerald-300 space-y-1">
                 <div class="flex justify-between items-center">
-                    <span>অফলাইন সিংক</span>
+                    <span>অফলাইন সিংক কিউ</span>
                     <span id="sync-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                 </div>
-                <p class="text-[10px] text-emerald-400">IndexedDB Queue Active</p>
+                <p class="text-[10px] text-emerald-400">IndexedDB & Auto-Sync Active</p>
             </div>
         </aside>
 
@@ -50,7 +55,7 @@
             <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <div>
                     <h1 class="text-2xl font-extrabold text-gray-900">পূর্ব সাহেব নগর কওমি মাদ্রাসা ও এতিমখানা</h1>
-                    <p class="text-sm text-gray-500 mt-0.5">ম্যানেজমেন্ট ও ডাবল-এন্ট্রি অ্যাকাউন্ট সিস্টেম</p>
+                    <p class="text-sm text-gray-500 mt-0.5">পরশুরাম, ফেনী, বাংলাদেশ • শিক্ষা কার্যক্রম ও হিসাব পরিচালনা</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="px-3.5 py-1.5 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold border border-emerald-200">মুহতামিম / সুপার অ্যাডমিন</span>
@@ -58,50 +63,49 @@
                 </div>
             </header>
 
-            <!-- ================= 1. DASHBOARD SECTION ================= -->
+            <!-- ================= 1. DASHBOARD ================= -->
             <section id="sec-dashboard" class="page-section active space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">আজকের মোট আয়</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase">আজকের মোট আয়</span>
                         <div class="text-2xl font-black text-emerald-700">৳ ৪৫,৫০০</div>
                         <span class="text-xs text-emerald-600 font-medium">সাধারণ তহবিল ও অনুদান</span>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">আজকের মোট ব্যয়</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase">আজকের মোট ব্যয়</span>
                         <div class="text-2xl font-black text-rose-600">৳ ১২,৩০০</div>
                         <span class="text-xs text-rose-500 font-medium">লিল্লাহ বোর্ডিং বাজার খরচ</span>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">ক্যাশ ও ব্যাংক ব্যালেন্স</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase">ক্যাশ ও ব্যাংক ব্যালেন্স</span>
                         <div class="text-2xl font-black text-blue-700">৳ ৫,৮০,৪০০</div>
                         <span class="text-xs text-blue-600 font-medium">নগদ, ব্যাংক ও বিকাশ</span>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">ছাত্রদের বকেয়া ফি</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase">ছাত্রদের বকেয়া ফি</span>
                         <div class="text-2xl font-black text-amber-600">৳ ৮৫,০০০</div>
                         <span class="text-xs text-amber-500 font-medium">মাসিক বেতন বকেয়া</span>
                     </div>
                 </div>
 
-                <!-- Quick Form & Ledger Preview -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                         <h3 class="text-lg font-bold text-gray-800 border-b pb-3">⚡ দ্রুত লেনদেন এন্ট্রি</h3>
                         <form id="dash-tx-form" onsubmit="handleTransaction(event)" class="space-y-4">
                             <div>
                                 <label class="block text-xs font-semibold text-gray-600 mb-1">লেনদেনের ধরন</label>
-                                <select id="d-type" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <select id="d-type" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-emerald-500">
                                     <option value="income">আয় (Income)</option>
                                     <option value="expense">ব্যয় (Expense)</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-gray-600 mb-1">বিবরণ</label>
-                                <input type="text" id="d-desc" placeholder="যেমন: সাধারণ যাকাত অনুদান" required class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <input type="text" id="d-desc" placeholder="যেমন: সাধারণ যাকাত অনুদান" required class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-emerald-500">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-gray-600 mb-1">পরিমাণ (টাকা)</label>
-                                <input type="number" id="d-amount" placeholder="0.00" required class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <input type="number" id="d-amount" placeholder="0.00" required class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:ring-2 focus:ring-emerald-500">
                             </div>
                             <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-lg transition">
                                 হিসাব সংরক্ষণ করুন
@@ -112,10 +116,10 @@
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4 lg:col-span-2">
                         <div class="flex justify-between items-center border-b pb-3">
                             <h3 class="text-lg font-bold text-gray-800">📋 সাম্প্রতিক লেনদেন তালিকা</h3>
-                            <span class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-semibold">রিয়েল-টাইম সিংক</span>
+                            <span class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-semibold">অফলাইন কিউ সিংকড</span>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm">
+                            <table class="w-full text-left text-sm searchable-table">
                                 <thead>
                                     <tr class="text-gray-400 border-b">
                                         <th class="pb-3 font-semibold">তারিখ</th>
@@ -140,12 +144,12 @@
                 </div>
             </section>
 
-            <!-- ================= 2. ACCOUNTING SECTION ================= -->
+            <!-- ================= 2. ACCOUNTING ================= -->
             <section id="sec-accounting" class="page-section space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                     <div class="flex justify-between items-center border-b pb-4">
                         <h2 class="text-xl font-bold text-gray-800">📖 হিসাবের খাতা, ক্যাশবুক ও লেজার</h2>
-                        <button onclick="alert('নতুন ভাউচার পেজ প্রস্তুত!')" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow hover:bg-emerald-700">+ নতুন ভাউচার</button>
+                        <button onclick="alert('নতুন ভাউচার এন্ট্রি ফর্ম ওপেন হয়েছে!')" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow hover:bg-emerald-700">+ নতুন ভাউচার</button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-100">
@@ -164,48 +168,94 @@
                 </div>
             </section>
 
-            <!-- ================= 3. DONATIONS SECTION ================= -->
+            <!-- ================= 3. DONATIONS ================= -->
             <section id="sec-donations" class="page-section space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                     <h2 class="text-xl font-bold text-gray-800 border-b pb-4">💰 অনুদান, যাকাত ও সদকা তহবিল</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="border p-5 rounded-2xl space-y-2">
-                            <h4 class="font-bold text-gray-700">যাকাত ফান্ড (Restricted Fund)</h4>
+                        <div class="border p-5 rounded-2xl space-y-2 bg-emerald-50/50">
+                            <h4 class="font-bold text-emerald-900">যাকাত ফান্ড (Restricted Fund)</h4>
                             <div class="text-2xl font-black text-emerald-700">৳ ১,২০,০০০</div>
-                            <p class="text-xs text-gray-500">শরয়ি নিয়ম অনুযায়ী مستحق (মুসতাহিদ) ছাত্রদের মধ্যে বণ্টিত হবে।</p>
+                            <p class="text-xs text-gray-600">শরয়ি নিয়ম অনুযায়ী مستحق ছাত্রদের মধ্যে বণ্টিত।</p>
                         </div>
-                        <div class="border p-5 rounded-2xl space-y-2">
-                            <h4 class="font-bold text-gray-700">লিল্লাহ বোর্ডিং ফান্ড</h4>
+                        <div class="border p-5 rounded-2xl space-y-2 bg-blue-50/50">
+                            <h4 class="font-bold text-blue-900">লিল্লাহ বোর্ডিং ফান্ড</h4>
                             <div class="text-2xl font-black text-blue-700">৳ ৭৫,০০০</div>
-                            <p class="text-xs text-gray-500">এতিম ও দরিদ্র ছাত্রদের খাদ্য ও বাসস্থান বাবদ সংরক্ষিত।</p>
+                            <p class="text-xs text-gray-600">এতিম ও দরিদ্র ছাত্রদের খাদ্য ও বাসস্থান বাবদ সংরক্ষিত।</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ================= 4. STUDENTS SECTION ================= -->
+            <!-- ================= 4. STUDENTS ================= -->
             <section id="sec-students" class="page-section space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-                    <h2 class="text-xl font-bold text-gray-800 border-b pb-4">🎓 ছাত্র তথ্য ও মাসিক ফি কালেকশন</h2>
-                    <p class="text-sm text-gray-600">হিফজ বিভাগ, দাওরায়ে হাদিস এবং নূরানী বিভাগের ছাত্র তালিকা ও ফি আদায় শিট।</p>
+                    <div class="flex justify-between items-center border-b pb-4">
+                        <h2 class="text-xl font-bold text-gray-800">🎓 ছাত্র তথ্য ও মাসিক ফি কালেকশন</h2>
+                        <button onclick="alert('নতুন ছাত্র ভর্তির ফর্ম')" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold">+ ছাত্র ভর্তি</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm searchable-table">
+                            <thead>
+                                <tr class="border-b text-gray-400">
+                                    <th class="pb-3">রোল নং</th>
+                                    <th class="pb-3">ছাত্রের নাম</th>
+                                    <th class="pb-3">জামাত</th>
+                                    <th class="pb-3">মাসিক ফি</th>
+                                    <th class="pb-3 text-right">বকেয়া</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr>
+                                    <td class="py-3 font-bold">১০১</td>
+                                    <td class="py-3">আব্দুল্লাহ আল মামুন</td>
+                                    <td class="py-3">হিফজ বিভাগ</td>
+                                    <td class="py-3">৳ ১,৫০০</td>
+                                    <td class="py-3 text-right font-bold text-rose-600">৳ ৩,০০০</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
-            <!-- ================= 5. STAFF SECTION ================= -->
+            <!-- ================= 5. STAFF ================= -->
             <section id="sec-staff" class="page-section space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-                    <h2 class="text-xl font-bold text-gray-800 border-b pb-4">👨‍🏫 শিক্ষক ও কর্মচারী বেতন রেজিস্টার</h2>
-                    <p class="text-sm text-gray-600">মুহতামিম, শিক্ষক ও স্টাফদের মাসিক বেতন ও বোনাস পরিশোধ ফরম।</p>
+                    <div class="flex justify-between items-center border-b pb-4">
+                        <h2 class="text-xl font-bold text-gray-800">👨‍🏫 শিক্ষক ও কর্মচারী বেতন রেজিস্টার</h2>
+                        <button onclick="alert('নতুন স্টাফ যুক্ত করুন')" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold">+ স্টাফ যোগ করুন</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm searchable-table">
+                            <thead>
+                                <tr class="border-b text-gray-400">
+                                    <th class="pb-3">নাম</th>
+                                    <th class="pb-3">পদবি</th>
+                                    <th class="pb-3">মাসিক বেতন</th>
+                                    <th class="pb-3 text-right">বকেয়া</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr>
+                                    <td class="py-3 font-bold">মাওলানা ইব্রাহিম খলিল</td>
+                                    <td class="py-3">প্রধান শিক্ষক</td>
+                                    <td class="py-3">৳ ২৫,০০০</td>
+                                    <td class="py-3 text-right font-bold text-emerald-600">পরিশোধিত</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
-            <!-- ================= 6. REPORTS SECTION ================= -->
+            <!-- ================= 6. REPORTS ================= -->
             <section id="sec-reports" class="page-section space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                     <h2 class="text-xl font-bold text-gray-800 border-b pb-4">📑 দুই পৃষ্ঠার বার্ষিক আর্থিক প্রতিবেদন</h2>
                     <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-200 flex flex-col md:flex-row justify-between items-center gap-4">
                         <div>
-                            <h4 class="font-bold text-emerald-900 text-lg">বার্ষিক অডিট ও আর্থিক সামারি রিপোর্ট</h4>
+                            <h4 class="font-bold text-emerald-900 text-lg">বার্ষিক অডিট ও আর্থিক সামারি রিপোর্ট (২০২৬)</h4>
                             <p class="text-sm text-emerald-700">প্রথম পৃষ্ঠা: আর্থিক ছক ও ব্যালেন্স | দ্বিতীয় পৃষ্ঠা: সম্পাদকীয় ও ভবিষ্যৎ পরিকল্পনা।</p>
                         </div>
                         <button onclick="window.print()" class="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow transition">
@@ -218,7 +268,7 @@
         </main>
     </div>
 
-    <!-- JavaScript for Dynamic App Control -->
+    <!-- JavaScript Scripts -->
     <script>
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -231,6 +281,19 @@
             const activeBtn = document.getElementById('btn-' + tabId);
             activeBtn.classList.add('bg-emerald-800', 'text-white', 'shadow-md');
             activeBtn.classList.remove('text-emerald-200');
+        }
+
+        // Global Search & Filtering
+        function filterGlobalData() {
+            let input = document.getElementById('global-search').value.toLowerCase();
+            let tables = document.querySelectorAll('.searchable-table');
+            tables.forEach(table => {
+                let rows = table.getElementsByTagName('tr');
+                for (let i = 1; i < rows.length; i++) {
+                    let text = rows[i].textContent.toLowerCase();
+                    rows[i].style.display = text.includes(input) ? '' : 'none';
+                }
+            });
         }
 
         function handleTransaction(e) {
