@@ -27,38 +27,55 @@
 </head>
 <body class="antialiased selection:bg-emerald-700 selection:text-white pb-20 md:pb-0">
 
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 space-y-2"></div>
+
+    <!-- GLOBAL MODAL FOR ADD/EDIT -->
+    <div id="global-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl border border-slate-200 space-y-4 animate-fadeIn">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="modal-title" class="text-base font-bold text-slate-800">তথ্য ইনপুট করুন</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="modal-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div id="modal-fields" class="space-y-3">
+                    <!-- Dynamic Inputs injected via JS -->
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">বাতিল</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow">সংরক্ষণ করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="min-h-screen flex flex-col">
         
         <!-- TOP APP HEADER -->
         <header class="app-header text-white px-4 py-3 shadow-md flex justify-between items-center sticky top-0 z-30">
             <div class="flex items-center gap-3">
-                <button onclick="toggleMobileMenu()" class="text-white text-xl md:hidden focus:outline-none"><i class="fa-solid fa-bars"></i></button>
+                <button onclick="switchTab('dashboard')" class="text-white text-xl focus:outline-none"><i class="fa-solid fa-house"></i></button>
                 <div class="w-10 h-10 rounded-full border border-amber-400 bg-emerald-900 flex items-center justify-center text-amber-300 text-lg shadow">
                     <i class="fa-solid fa-mosque"></i>
                 </div>
                 <div>
                     <h2 class="text-sm font-bold tracking-tight text-white leading-tight">নসিহাত মাদ্রাসা</h2>
                     <p class="text-[10px] text-amber-300 font-medium">ম্যানেজমেন্ট সিস্টেম</p>
-                    <p class="text-[8px] text-emerald-200 opacity-90 hidden sm:block">দ্বীন, শিক্ষা, মানবতার পথে</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-3">
-                <!-- Search Icon -->
                 <button onclick="switchTab('search')" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition">
                     <i class="fa-solid fa-magnifying-glass text-xs"></i>
                 </button>
-                <!-- Notification Bell -->
                 <div class="relative cursor-pointer w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition">
                     <i class="fa-regular fa-bell text-xs"></i>
                     <span class="absolute -top-0.5 -right-0.5 bg-rose-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">৩</span>
                 </div>
-                <!-- Profile Avatar -->
                 <div class="flex items-center gap-2 cursor-pointer pl-2 border-l border-white/20">
-                    <div class="w-9 h-9 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center shadow">
-                        <i class="fa-solid fa-user text-xs"></i>
+                    <div class="w-9 h-9 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center shadow text-xs">
+                        <i class="fa-solid fa-user"></i>
                     </div>
-                    <i class="fa-solid fa-chevron-down text-[9px] text-amber-300 hidden sm:inline"></i>
                 </div>
             </div>
         </header>
@@ -196,7 +213,7 @@
                         </div>
                     </div>
 
-                    <!-- Card 10: Audit & Summary Report (New Added) -->
+                    <!-- Card 10: Audit & Summary Report -->
                     <div onclick="switchTab('reports')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
                         <div class="w-20 h-20 rounded-2xl bg-violet-50 text-violet-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
                             <i class="fa-solid fa-file-signature"></i>
@@ -209,7 +226,7 @@
                         </div>
                     </div>
 
-                    <!-- Card 11: Others (New Added) -->
+                    <!-- Card 11: Others -->
                     <div onclick="switchTab('settings')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
                         <div class="w-20 h-20 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
                             <i class="fa-solid fa-ellipsis"></i>
@@ -225,19 +242,123 @@
                 </div>
             </section>
 
-            <!-- Other placeholders for tabs -->
-            <section id="sec-info" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> মাদ্রাসারপরিচিতি ও প্রশাসন পেজ </div></section>
-            <section id="sec-students" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> ছাত্র ব্যবস্থাপনা পেজ </div></section>
-            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> শিক্ষক ও কর্মচারী পেজ </div></section>
-            <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> আয়-ব্যয় হিসাব পেজ </div></section>
-            <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> দান-অনুদান পেজ </div></section>
-            <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> লিল্লাহ বোর্ডিং পেজ </div></section>
-            <section id="sec-exams" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> শিক্ষা ও পরীক্ষা পেজ </div></section>
-            <section id="sec-assets" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> সম্পদ ও উন্নয়ন পেজ </div></section>
-            <section id="sec-reports" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> রিপোর্ট ও বাজেট পেজ </div></section>
-            <section id="sec-search" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> গ্লোবাল অনুসন্ধান পেজ </div></section>
-            <section id="sec-notices" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> নোটিশ বোর্ড পেজ </div></section>
-            <section id="sec-settings" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> সিস্টেম সেটিংস পেজ </div></section>
+            <!-- ================= 1. MADRASA INFO & ADMINISTRATION MODULE ================= -->
+            <section id="sec-info" class="page-section space-y-6">
+                <!-- Header Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchTab('dashboard')" class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200"><i class="fa-solid fa-arrow-left"></i></button>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">মাদ্রাসার পরিচিতি ও প্রশাসন</h2>
+                            <p class="text-xs text-slate-500">প্রশাসনিক তথ্যাবলী, পরিচালন কমিটি ও বিভাগ নিয়ন্ত্রণ</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="window.print()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2"><i class="fa-solid fa-print"></i> প্রিন্ট</button>
+                        <button onclick="openAddModal('info')" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow flex items-center gap-2"><i class="fa-solid fa-plus"></i> নতুন যোগ করুন</button>
+                    </div>
+                </div>
+
+                <!-- Sub-Module List (Based on requested Image Items) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-circle-info text-xl"></i>
+                            <h4 class="font-bold text-sm">১. নাম, লোগো, ঠিকানা ও যোগাযোগ</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">পূর্ব সাহেব নগর কওমি মাদ্রাসা ও এতিমখানা, পরশুরাম, ফেনী।</p>
+                        <button onclick="openEditModal('নাম ও ঠিকানা', 'পূর্ব সাহেব নগর কওমি মাদ্রাসা')" class="text-xs text-emerald-700 font-bold hover:underline">সম্পাদনা করুন →</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-landmark text-xl"></i>
+                            <h4 class="font-bold text-sm">২. প্রতিষ্ঠার ইতিহাস ও উদ্দেশ্য</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">দ্বীনি শিক্ষার বিস্তার ও মানবসেবার মহান লক্ষ্যে প্রতিষ্ঠিত।</p>
+                        <button onclick="openEditModal('ইতিহাস', '২০০৫ সালে প্রতিষ্ঠিত')" class="text-xs text-emerald-700 font-bold hover:underline">সম্পাদনা করুন →</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-user-shield text-xl"></i>
+                            <h4 class="font-bold text-sm">৩. মুহতামিম ও পরিচালনা কমিটি</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">প্রধান উপদেষ্টা: আলহাজ্ব জসিম উদ্দিন | মুহতামিম: মাওলানা ইব্রাহিম</p>
+                        <button onclick="switchTab('users')" class="text-xs text-emerald-700 font-bold hover:underline">কমিটি দেখুন →</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-users-gear text-xl"></i>
+                            <h4 class="font-bold text-sm">৪. পরিচালনা কমিটির সদস্য তথ্য</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">মোট সদস্য: ১২ জন (সক্রিয়)</p>
+                        <button onclick="openAddModal('কমিটি সদস্য')" class="text-xs text-emerald-700 font-bold hover:underline">+ সদস্য যোগ করুন</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-scroll text-xl"></i>
+                            <h4 class="font-bold text-sm">৫. সভার তারিখ, সিদ্ধান্ত ও কার্যবিবরণী</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">সর্বশেষ সভা: ৩০ অক্টোবর ২০২৫ | বিষয়: অডিট ও বাজেট</p>
+                        <button onclick="openAddModal('সভা রেজুলেশন')" class="text-xs text-emerald-700 font-bold hover:underline">+ রেজুলেশন লিখুন</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-bullhorn text-xl"></i>
+                            <h4 class="font-bold text-sm">৬. প্রশাসনিক নোটিশ ও বিজ্ঞপ্তি</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">সক্রিয় নোটিশ: ৩টি</p>
+                        <button onclick="switchTab('notices')" class="text-xs text-emerald-700 font-bold hover:underline">নোটিশ বোর্ড →</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-folder-closed text-xl"></i>
+                            <h4 class="font-bold text-sm">৭. গুরুত্বপূর্ণ কাগজপত্র সংরক্ষণ</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">জমির দলিল, রেজিস্ট্রেশন ও ছাড়পত্র নথি।</p>
+                        <button onclick="alert('নথি আপলোড ফর্ম')" class="text-xs text-emerald-700 font-bold hover:underline">নথি আপলোড করুন →</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-list-check text-xl"></i>
+                            <h4 class="font-bold text-sm">৮. অনুমোদন, দায়িত্ব বণ্টন ও কাজের তালিকা</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">শিক্ষক ও কর্মচারীদের দৈনিক দায়িত্ব তালিকা।</p>
+                        <button onclick="openAddModal('দায়িত্ব বন্টন')" class="text-xs text-emerald-700 font-bold hover:underline">+ নতুন দায়িত্ব যোগ</button>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3 text-emerald-800">
+                            <i class="fa-solid fa-sitemap text-xl"></i>
+                            <h4 class="font-bold text-sm">৯. প্রতিষ্ঠানের বিভাগ ও শাখা পরিচালনা</h4>
+                        </div>
+                        <p class="text-xs text-slate-600">নূরানী, হিফজ, কিতাব বিভাগ ও লিল্লাহ বোর্ডিং।</p>
+                        <button onclick="openAddModal('নতুন বিভাগ')" class="text-xs text-emerald-700 font-bold hover:underline">+ বিভাগ যোগ করুন</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Other Module Placeholders -->
+            <section id="sec-students" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ছাত্র ব্যবস্থাপনা মডিউল</h2> </div></section>
+            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষক ও কর্মচারী ব্যবস্থাপনা</h2> </div></section>
+            <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h2> </div></section>
+            <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">দান-অনুদান ও তহবিল</h2> </div></section>
+            <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">লিল্লাহ বোর্ডিং ও খাবার</h2> </div></section>
+            <section id="sec-exams" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">শিক্ষা ও পরীক্ষা</h2> </div></section>
+            <section id="sec-assets" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ভবন ও সম্পদ</h2> </div></section>
+            <section id="sec-reports" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">অডিট ও সামারি রিপোর্ট</h2> </div></section>
+            <section id="sec-search" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">গ্লোবাল অনুসন্ধান</h2> </div></section>
+            <section id="sec-notices" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">নোটিশ ও সভা</h2> </div></section>
+            <section id="sec-settings" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">সিস্টেম সেটিংস ও অন্যান্য</h2> </div></section>
+            <section id="sec-users" class="page-section space-y-4"><div class="bg-white p-6 rounded-3xl shadow border"> <button onclick="switchTab('dashboard')" class="text-xs font-bold text-emerald-700">← ফিরে যান</button> <h2 class="text-lg font-bold mt-2">ব্যবহারকারী ও অনুমতি</h2> </div></section>
 
         </main>
 
@@ -267,21 +388,61 @@
 
     </div>
 
-    <!-- JAVASCRIPT CONTROLLERS -->
+    <!-- JAVASCRIPT CONTROLLERS & FORM ENGINE -->
     <script>
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             const target = document.getElementById('sec-' + tabId);
             if(target) target.classList.add('active');
 
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('text-emerald-800', 'font-bold'));
-            document.querySelectorAll('nav button').forEach(b => b.classList.add('text-slate-500', 'font-medium'));
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function toggleMobileMenu() {
-            alert('মোবাইল মেনু ওপেন হয়েছে');
+        // Toast Notification Function
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-2xl text-xs font-bold shadow-lg flex items-center gap-2 text-white animate-fadeIn ${type==='success'?'bg-emerald-700':'bg-rose-600'}`;
+            toast.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-circle-exclamation'}"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Dynamic Modal Handlers
+        function openAddModal(moduleName) {
+            document.getElementById('modal-title').innerText = moduleName + ' - নতুন তথ্য যোগ করুন';
+            document.getElementById('modal-fields').innerHTML = `
+                <div>
+                    <label class="block text-xs font-semibold mb-1">শিরোনাম / নাম</label>
+                    <input type="text" id="input-title" required placeholder="নাম বা শিরোনাম লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">বিবরণ</label>
+                    <textarea id="input-desc" rows="3" placeholder="বিস্তারিত লিখুন" class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600"></textarea>
+                </div>
+            `;
+            document.getElementById('global-modal').classList.remove('hidden');
+        }
+
+        function openEditModal(title, val) {
+            document.getElementById('modal-title').innerText = title + ' - সম্পাদনা করুন';
+            document.getElementById('modal-fields').innerHTML = `
+                <div>
+                    <label class="block text-xs font-semibold mb-1">বর্তমান তথ্য</label>
+                    <input type="text" id="input-title" value="${val}" required class="w-full px-3 py-2 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-600">
+                </div>
+            `;
+            document.getElementById('global-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('global-modal').classList.add('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            closeModal();
+            showToast('তথ্য সফলভাবে সংরক্ষিত হয়েছে!');
         }
     </script>
 </body>
