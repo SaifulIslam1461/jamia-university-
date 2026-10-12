@@ -8,491 +8,265 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#064E3B">
-    <!-- FontAwesome Icons & Chart.js -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Hind Siliguri', sans-serif; background-color: #F3F6F8; color: #1E293B; }
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #F0F4F8; color: #1E293B; }
         
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #E2E8F0; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 10px; }
 
-        .sidebar-bg { background-color: #04382B; }
-        .sidebar-active { background-color: #0B5C48; }
-        .card-bg { background-color: #FFFFFF; }
-        .emerald-text { color: #064E3B; }
-        .emerald-bg { background-color: #064E3B; }
-        .emerald-light-bg { background-color: #E8F5E9; }
+        .app-header { background: linear-gradient(135deg, #04382B 0%, #064E3B 100%); }
     </style>
 </head>
-<body class="antialiased selection:bg-emerald-700 selection:text-white">
+<body class="antialiased selection:bg-emerald-700 selection:text-white pb-20 md:pb-0">
 
-    <div class="min-h-screen flex flex-col md:flex-row">
+    <div class="min-h-screen flex flex-col">
         
-        <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-full md:w-72 sidebar-bg text-emerald-50 p-4 flex flex-col justify-between shadow-2xl z-20">
-            <div class="space-y-4">
-                <!-- Branding / Logo -->
-                <div class="pb-3 border-b border-emerald-800/60 flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-full border-2 border-amber-400 bg-emerald-900 flex items-center justify-center text-amber-300 text-2xl shadow-md">
-                        <i class="fa-solid fa-mosque"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-bold tracking-tight text-white leading-tight">নসিহাত মাদ্রাসা</h2>
-                        <p class="text-[11px] text-amber-300 font-medium">ম্যানেজমেন্ট সিস্টেম</p>
-                        <p class="text-[9px] text-emerald-300 opacity-80">দ্বীন, শিক্ষা, মানবতার পথে</p>
-                    </div>
+        <!-- TOP APP HEADER -->
+        <header class="app-header text-white px-4 py-3 shadow-md flex justify-between items-center sticky top-0 z-30">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleMobileMenu()" class="text-white text-xl md:hidden focus:outline-none"><i class="fa-solid fa-bars"></i></button>
+                <div class="w-10 h-10 rounded-full border border-amber-400 bg-emerald-900 flex items-center justify-center text-amber-300 text-lg shadow">
+                    <i class="fa-solid fa-mosque"></i>
                 </div>
-
-                <!-- Navigation Links -->
-                <nav class="space-y-1 text-xs" id="sidebar-nav">
-                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl sidebar-active text-white font-semibold flex items-center justify-between shadow-sm transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-house w-4 text-center"></i> ড্যাশবোর্ড</span>
-                    </button>
-                    <button onclick="switchTab('info')" id="btn-info" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-building-columns w-4 text-center"></i> মাদ্রাসার তথ্য</span>
-                    </button>
-                    <button onclick="switchTab('students')" id="btn-students" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-user-graduate w-4 text-center"></i> ছাত্র ব্যবস্থাপনা</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('staff')" id="btn-staff" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-users w-4 text-center"></i> শিক্ষক-কর্মচারী</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('accounting')" id="btn-accounting" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-calculator w-4 text-center"></i> আয়-ব্যয় হিসাব</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('donations')" id="btn-donations" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-hand-holding-dollar w-4 text-center"></i> দান-অনুদান</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('lillah')" id="btn-lillah" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-utensils w-4 text-center"></i> লিল্লাহ বোর্ডিং</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('inventory')" id="btn-inventory" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-store w-4 text-center"></i> বাজার ও মজুত</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('assets')" id="btn-assets" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-boxes-packing w-4 text-center"></i> সম্পদ ও মালামাল</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('exams')" id="btn-exams" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-file-pen w-4 text-center"></i> পরীক্ষা ও ফলাফল</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('notices')" id="btn-notices" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-bullhorn w-4 text-center"></i> নোটিশ ও সভা</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('reports')" id="btn-reports" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-chart-line w-4 text-center"></i> রিপোর্ট</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('search')" id="btn-search" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-magnifying-glass w-4 text-center"></i> অনুসন্ধান</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('customization')" id="btn-customization" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-wand-magic-sparkles w-4 text-center"></i> কাস্টমাইজেশন</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('users')" id="btn-users" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-user-gear w-4 text-center"></i> ব্যবহারকারী ও অনুমতি</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                    <button onclick="switchTab('settings')" id="btn-settings" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
-                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-gears w-4 text-center"></i> সিস্টেম সেটিংস</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
-                    </button>
-                </nav>
-
-                <!-- Islamic Quote Widget -->
-                <div class="p-3 bg-emerald-950/80 border border-emerald-700/50 rounded-2xl text-center space-y-1">
-                    <p class="text-amber-300 text-xs font-semibold">“জ্ঞান অর্জন করা প্রত্যেক মুসলিমের উপর ফরজ।”</p>
-                    <p class="text-[10px] text-emerald-300 opacity-80">— হাদিস</p>
+                <div>
+                    <h2 class="text-sm font-bold tracking-tight text-white leading-tight">নসিহাত মাদ্রাসা</h2>
+                    <p class="text-[10px] text-amber-300 font-medium">ম্যানেজমেন্ট সিস্টেম</p>
+                    <p class="text-[8px] text-emerald-200 opacity-90 hidden sm:block">দ্বীন, শিক্ষা, মানবতার পথে</p>
                 </div>
             </div>
 
-            <!-- Sync Indicator -->
-            <div class="mt-4 bg-emerald-950/90 p-3 rounded-2xl border border-emerald-800/80 space-y-2">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="text-xs font-medium text-emerald-200">অফলাইন মোড</span>
-                </div>
-                <p class="text-[10px] text-emerald-400">ফিল্ড তথ্য অফলাইনে আছে</p>
-                <button onclick="alert('অফলাইন সিংক সম্পন্ন হয়েছে!')" class="w-full py-1.5 bg-emerald-800 hover:bg-emerald-700 text-white rounded-xl text-[11px] font-semibold transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-rotate"></i> সিংক করুন
+            <div class="flex items-center gap-3">
+                <!-- Search Icon -->
+                <button onclick="switchTab('search')" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
                 </button>
+                <!-- Notification Bell -->
+                <div class="relative cursor-pointer w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition">
+                    <i class="fa-regular fa-bell text-xs"></i>
+                    <span class="absolute -top-0.5 -right-0.5 bg-rose-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">৩</span>
+                </div>
+                <!-- Profile Avatar -->
+                <div class="flex items-center gap-2 cursor-pointer pl-2 border-l border-white/20">
+                    <div class="w-9 h-9 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center shadow">
+                        <i class="fa-solid fa-user text-xs"></i>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-[9px] text-amber-300 hidden sm:inline"></i>
+                </div>
             </div>
-        </aside>
+        </header>
 
         <!-- MAIN WORKSPACE -->
-        <main class="flex-1 p-4 md:p-6 space-y-5 overflow-y-auto max-h-screen">
+        <main class="flex-1 p-4 md:p-8 space-y-5 max-w-7xl mx-auto w-full">
             
-            <!-- HEADER BAR -->
-            <header class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <button class="md:hidden text-slate-700 text-lg"><i class="fa-solid fa-bars"></i></button>
-                    <!-- Global Search Bar -->
-                    <div class="relative w-full md:w-96">
-                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-slate-400 text-xs"></i>
-                        <input type="text" id="global-search" onkeyup="filterGlobalData()" placeholder="নাম, রোল, ভাউচার নম্বর, তারিখ, বা অন্য কিছু খুঁজুন..." class="w-full pl-4 pr-9 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600">
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <!-- Notification Bell -->
-                    <div class="relative cursor-pointer">
-                        <i class="fa-regular fa-bell text-slate-600 text-lg"></i>
-                        <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">৩</span>
-                    </div>
-
-                    <!-- Sync Status -->
-                    <div class="hidden sm:flex items-center gap-2 text-xs text-slate-600 bg-slate-100 px-3 py-1 rounded-xl">
-                        <i class="fa-solid fa-rotate-double text-emerald-600"></i>
-                        <span>সিংক স্ট্যাটাস: সর্বশেষ ২ মিনিট আগে</span>
-                    </div>
-
-                    <!-- Admin Profile -->
-                    <div class="flex items-center gap-2 cursor-pointer pl-3 border-l border-slate-200">
-                        <div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 overflow-hidden flex items-center justify-center">
-                            <i class="fa-solid fa-user text-slate-600 text-sm"></i>
-                        </div>
-                        <div class="text-left">
-                            <h4 class="text-xs font-bold text-slate-800 leading-tight">মুহতামিম</h4>
-                            <p class="text-[10px] text-slate-500">প্রধান প্রশাসক</p>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
-                    </div>
-                </div>
-            </header>
-
-            <!-- ================= DASHBOARD PAGE ================= -->
-            <section id="sec-dashboard" class="page-section active space-y-5">
+            <!-- ================= HOME / DASHBOARD PAGE ================= -->
+            <section id="sec-dashboard" class="page-section active space-y-6">
                 
-                <!-- WELCOME BANNER WITH ISLAMIC ART -->
-                <div class="relative rounded-3xl overflow-hidden shadow-sm border border-emerald-900/20 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div class="space-y-3 z-10 text-center md:text-left">
-                        <div class="text-amber-300 font-serif text-lg tracking-widest opacity-90">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-                        <h1 class="text-2xl md:text-3xl font-extrabold text-white">নসিহাত মাদ্রাসায় আপনাকে স্বাগতম</h1>
-                        <p class="text-emerald-100 text-sm font-medium">“শিক্ষার আলো, চরিত্র গঠন, মানব সেবা—এই আমাদের লক্ষ্য।”</p>
-                    </div>
-
-                    <!-- Date & Prayer Info Widget -->
-                    <div class="bg-emerald-950/80 border border-amber-400/30 rounded-2xl p-4 text-center z-10 space-y-1 min-w-[220px]">
-                        <div class="flex items-center justify-center gap-2 text-amber-300 text-xs font-semibold border-b border-emerald-800 pb-1">
-                            <i class="fa-regular fa-calendar"></i> আজ ১২ কার্তিক ১৪৩২ (বাংলা)
-                        </div>
-                        <p class="text-xs text-emerald-100">২৮ অক্টোবর ২০২৫ (ইংরেজি)</p>
-                        <div class="pt-1 flex items-center justify-center gap-1 text-amber-400 text-xs font-bold">
-                            <i class="fa-solid fa-sun"></i> সকাল ৮:৪৫
-                        </div>
-                    </div>
+                <!-- ISLAMIC BANNER -->
+                <div class="relative rounded-3xl overflow-hidden shadow-md border border-emerald-900/20 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white p-6 md:p-8 flex flex-col items-center text-center space-y-3">
+                    <div class="text-amber-300 font-serif text-xl tracking-widest opacity-95">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+                    <h1 class="text-xl md:text-2xl font-extrabold text-white">“মাদ্রাসা শুধু শিক্ষা প্রতিষ্ঠান নয়, এটি আলোর পথের একটি কারখানা.!”</h1>
+                    <div class="w-24 h-0.5 bg-amber-400/60 rounded-full my-1"></div>
                 </div>
 
-                <!-- TOP SUMMARY METRICS (ROW 1) -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-wallet"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">মোট আয়</p>
-                        <div class="text-base font-extrabold text-slate-900">৳ ১২,৪৫,০০০</div>
-                        <span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-arrow-up"></i> ১২% (এই মাস)</span>
+                <!-- DASHBOARD MODULE CARDS GRID -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    
+                    <!-- Card 1: Admin & Info -->
+                    <div onclick="switchTab('info')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-mosque"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">মাদ্রাসার পরিচিতি ও প্রশাসন</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">প্রতিষ্ঠানের মৌলিক তথ্য ও মুহতামিম</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">মোট ব্যয়</p>
-                        <div class="text-base font-extrabold text-slate-900">৳ ৯,৫৭,০০০</div>
-                        <span class="text-[10px] text-rose-500 font-bold"><i class="fa-solid fa-arrow-up"></i> ৪% (এই মাস)</span>
+                    <!-- Card 2: Students -->
+                    <div onclick="switchTab('students')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">ছাত্র ব্যবস্থাপনা</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">ভর্তি, হাজিরা, জামাত ও ফি কালেকশন</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-vault"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">বর্তমান ব্যালেন্স</p>
-                        <div class="text-base font-extrabold text-slate-900">৳ ২,৮৮,০০০</div>
-                        <span class="text-[10px] text-slate-400">(নগদ + ব্যাংক)</span>
+                    <!-- Card 3: Staff -->
+                    <div onclick="switchTab('staff')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">বেতন, উপস্থিতি ও দায়িত্ব বণ্টন</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">দান-অনুদান</p>
-                        <div class="text-base font-extrabold text-slate-900">৳ ৩,৭৫,০০০</div>
-                        <span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-arrow-up"></i> ২৫% (এই মাস)</span>
+                    <!-- Card 4: Accounting -->
+                    <div onclick="switchTab('accounting')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">পূর্ণাঙ্গ আয়-ব্যয় হিসাব</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">ক্যাশবুক, লেজার, ব্যাংক ও ভাউচার</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-user-clock"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">বকেয়া ফি</p>
-                        <div class="text-base font-extrabold text-slate-900">৳ ১,২৮,০০০</div>
-                        <span class="text-[10px] text-amber-600 font-semibold">(৫৬ জন ছাত্র)</span>
+                    <!-- Card 5: Donations -->
+                    <div onclick="switchTab('donations')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">দান-অনুদান ও তহবিল ব্যবস্থাপনা</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">যাকাত, সদকা ও রেস্ট্রিক্টেড ফান্ড</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">বকেয়া বেতন</p>
-                        <div class="text-base font-extrabold text-slate-900">৳ ৮৫,০০০</div>
-                        <span class="text-[10px] text-teal-600 font-semibold">(শিক্ষক-কর্মচারী)</span>
+                    <!-- Card 6: Lillah Boarding -->
+                    <div onclick="switchTab('lillah')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">লিল্লাহ বোর্ডিং ও খাবার ব্যবস্থাপনা</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">খাদ্যসামগ্রী, বাজার খরচ ও ছাত্র তালিকা</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
                     </div>
+
+                    <!-- Card 7: Exams -->
+                    <div onclick="switchTab('exams')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">শিক্ষা ও পরীক্ষা ব্যবস্থাপনা</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">রুটিন, নম্বরপত্র ও ফলাফল শিট</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 8: Assets & Development -->
+                    <div onclick="switchTab('assets')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-building-shield"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">ভবন, সম্পদ ও উন্নয়ন পরিকল্পনা</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">স্থাবর-অস্থাবর সম্পদ ও প্রজেক্ট</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 9: Dena-Paona & Budget -->
+                    <div onclick="switchTab('reports')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
+                            <i class="fa-solid fa-handshake-angle"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">দেনা-পাওনা, ঋণ, বাজেট ও আর্থিক নিয়ন্ত্রণ</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">অডিট সামারি ও বাজেট রিপোর্ট</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center text-xs shadow">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
                 </div>
-
-                <!-- TOP SUMMARY METRICS (ROW 2) -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                        <div class="w-10 h-10 rounded-full bg-emerald-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-graduation-cap"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">মোট ছাত্র</p>
-                        <div class="text-xl font-extrabold text-slate-900">১৮৪</div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-chalkboard-user"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">শিক্ষক</p>
-                        <div class="text-xl font-extrabold text-slate-900">১২</div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                        <div class="w-10 h-10 rounded-full bg-amber-500 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-user-group"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">কর্মচারী</p>
-                        <div class="text-xl font-extrabold text-slate-900">৮</div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                        <div class="w-10 h-10 rounded-full bg-teal-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-bed"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">বোর্ডিং ছাত্র</p>
-                        <div class="text-xl font-extrabold text-slate-900">৬২</div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                        <div class="w-10 h-10 rounded-full bg-rose-500 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-receipt"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">মোট লেনদেন</p>
-                        <div class="text-xl font-extrabold text-slate-900">৪২</div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                        <div class="w-10 h-10 rounded-full bg-blue-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-bell"></i></div>
-                        <p class="text-[11px] text-slate-500 font-medium">আজকের নোটিশ</p>
-                        <div class="text-xl font-extrabold text-slate-900">৩</div>
-                    </div>
-                </div>
-
-                <!-- CHARTS SECTION -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    <!-- Income vs Expense Bar Chart -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-sm font-bold text-slate-800">আয়-ব্যয় (গত ৬ মাস)</h3>
-                            <div class="flex items-center gap-3 text-xs">
-                                <span class="flex items-center gap-1 font-semibold text-emerald-700"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> আয়</span>
-                                <span class="flex items-center gap-1 font-semibold text-rose-600"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> ব্যয়</span>
-                            </div>
-                        </div>
-                        <div class="h-56">
-                            <canvas id="incomeExpenseChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Category Expense Donut Chart -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-sm font-bold text-slate-800">খাতভিত্তিক ব্যয়</h3>
-                            <span class="text-xs text-slate-500">মোট ব্যয়: ৳ ৯,৫৭,০০০</span>
-                        </div>
-                        <div class="h-56 flex items-center justify-center">
-                            <canvas id="categoryExpenseChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RECENT TRANSACTIONS & UPCOMING EVENTS -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    <!-- Recent Transactions -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-sm font-bold text-slate-800">সাম্প্রতিক লেনদেন</h3>
-                            <a href="#" onclick="switchTab('accounting')" class="text-xs font-bold text-emerald-700 hover:underline">সব দেখুন →</a>
-                        </div>
-                        <div class="space-y-2.5 text-xs">
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center"><i class="fa-solid fa-arrow-down"></i></div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">ছাত্র ফি (রোল: ১২৩)</p>
-                                        <p class="text-[10px] text-slate-400">আজ, ০৪:২০ AM</p>
-                                    </div>
-                                </div>
-                                <span class="font-extrabold text-emerald-600">৳ ৫,০০০</span>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center"><i class="fa-solid fa-cart-shopping"></i></div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">বাজার খরচ (চাল, ডাল, তেল)</p>
-                                        <p class="text-[10px] text-slate-400">আজ, ০৯:১৫ AM</p>
-                                    </div>
-                                </div>
-                                <span class="font-extrabold text-rose-500">৳ ২,৫০০</span>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">দান-অনুদান (জনাব আব্দুল্লাহ)</p>
-                                        <p class="text-[10px] text-slate-400">আজ, ১০:০০ AM</p>
-                                    </div>
-                                </div>
-                                <span class="font-extrabold text-emerald-600">৳ ১০,০০০</span>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">শিক্ষক বেতন</p>
-                                        <p class="text-[10px] text-slate-400">আজ, ১১:২০ AM</p>
-                                    </div>
-                                </div>
-                                <span class="font-extrabold text-rose-500">৳ ৫,০০০</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Upcoming Tasks / Notice -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-sm font-bold text-slate-800">আসন্ন কাজ</h3>
-                            <a href="#" onclick="switchTab('notices')" class="text-xs font-bold text-emerald-700 hover:underline">সব দেখুন →</a>
-                        </div>
-                        <div class="space-y-2.5 text-xs">
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 font-bold flex flex-col items-center justify-center text-[10px]">
-                                        <span>২৯</span><span>অক্টো</span>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">মাসিক বেতন প্রদান</p>
-                                        <p class="text-[10px] text-slate-500">শিক্ষক ও কর্মচারী</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 font-bold flex flex-col items-center justify-center text-[10px]">
-                                        <span>৩০</span><span>অক্টো</span>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">মাদ্রাসা পরিষদ সভা</p>
-                                        <p class="text-[10px] text-slate-500">স্থান: অফিস কক্ষ | সময়: ১০:০০ AM</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 font-bold flex flex-col items-center justify-center text-[10px]">
-                                        <span>০২</span><span>নভে</span>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold text-slate-800">মাসিক রিপোর্ট প্রস্তুত</p>
-                                        <p class="text-[10px] text-slate-500">হিসাব বিভাগ</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- QUICK ACCESS ACTION BUTTONS -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                    <h3 class="text-sm font-bold text-slate-800">দ্রুত অ্যাক্সেস</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 text-xs">
-                        <button onclick="alert('নতুন ছাত্র ভর্তি')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-user-plus text-emerald-600"></i> নতুন ছাত্র ভর্তি</button>
-                        <button onclick="alert('আয় এন্ট্রি')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus-circle text-emerald-600"></i> আয় এন্ট্রি</button>
-                        <button onclick="alert('ব্যয় এন্ট্রি')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-rose-50 hover:border-rose-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-minus-circle text-rose-500"></i> ব্যয় এন্ট্রি</button>
-                        <button onclick="switchTab('reports')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-blue-50 hover:border-blue-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-file-invoice text-blue-600"></i> রিপোর্ট তৈরি</button>
-                        <button onclick="switchTab('donations')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-purple-50 hover:border-purple-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-hand-holding-heart text-purple-600"></i> দান-অনুদান</button>
-                        <button onclick="switchTab('notices')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-amber-50 hover:border-amber-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-bullhorn text-amber-600"></i> নোটিশ</button>
-                        <button onclick="switchTab('staff')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-teal-50 hover:border-teal-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-money-check-dollar text-teal-600"></i> বেতন প্রদান</button>
-                        <button onclick="switchTab('users')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-user-gear text-slate-600"></i> ব্যবহারকারী</button>
-                    </div>
-                </div>
-
             </section>
 
+            <!-- Other placeholders for tabs -->
+            <section id="sec-info" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> মাদ্রাসার পরিচিতি ও প্রশাসন পেজ </div></section>
+            <section id="sec-students" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> ছাত্র ব্যবস্থাপনা পেজ </div></section>
+            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> শিক্ষক ও কর্মচারী পেজ </div></section>
+            <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> আয়-ব্যয় হিসাব পেজ </div></section>
+            <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> দান-অনুদান পেজ </div></section>
+            <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> লিল্লাহ বোর্ডিং পেজ </div></section>
+            <section id="sec-exams" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> শিক্ষা ও পরীক্ষা পেজ </div></section>
+            <section id="sec-assets" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> সম্পদ ও উন্নয়ন পেজ </div></section>
+            <section id="sec-reports" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> রিপোর্ট ও বাজেট পেজ </div></section>
+            <section id="sec-search" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> গ্লোবাল অনুসন্ধান পেজ </div></section>
+            <section id="sec-notices" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> নোটিশ বোর্ড পেজ </div></section>
+            <section id="sec-settings" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> সিস্টেম সেটিংস পেজ </div></section>
+
         </main>
+
+        <!-- BOTTOM MOBILE NAVIGATION BAR -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-2.5 flex justify-between items-center z-40 md:hidden shadow-lg">
+            <button onclick="switchTab('dashboard')" id="nav-home" class="flex flex-col items-center text-emerald-800 text-[11px] font-bold gap-0.5">
+                <i class="fa-solid fa-house text-base"></i>
+                <span>হোম</span>
+            </button>
+            <button onclick="switchTab('search')" id="nav-search" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
+                <i class="fa-solid fa-magnifying-glass text-base"></i>
+                <span>সার্চ</span>
+            </button>
+            <button onclick="switchTab('reports')" id="nav-reports" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
+                <i class="fa-solid fa-file-lines text-base"></i>
+                <span>রিপোর্ট</span>
+            </button>
+            <button onclick="switchTab('notices')" id="nav-notices" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
+                <i class="fa-solid fa-bell text-base"></i>
+                <span>নোটিশ</span>
+            </button>
+            <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
+                <i class="fa-solid fa-gears text-base"></i>
+                <span>সেটিংস</span>
+            </button>
+        </nav>
+
     </div>
 
-    <!-- JAVASCRIPT CONTROLLERS & CHARTS -->
+    <!-- JAVASCRIPT CONTROLLERS -->
     <script>
-        // Tab Navigation Switcher
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('sidebar-active', 'text-white');
-                btn.classList.add('text-emerald-100');
-            });
+            const target = document.getElementById('sec-' + tabId);
+            if(target) target.classList.add('active');
 
-            const targetSection = document.getElementById('sec-' + tabId);
-            if(targetSection) targetSection.classList.add('active');
-
-            const activeBtn = document.getElementById('btn-' + tabId);
-            if(activeBtn) {
-                activeBtn.classList.add('sidebar-active', 'text-white');
-                activeBtn.classList.remove('text-emerald-100');
-            }
+            // Update bottom nav active state if applicable
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('text-emerald-800', 'font-bold'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.add('text-slate-500', 'font-medium'));
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Global Search Filter
-        function filterGlobalData() {
-            let query = document.getElementById('global-search').value.toLowerCase();
-            console.log("Searching for:", query);
+        function toggleMobileMenu() {
+            alert('মোবাইল মেনু ওপেন হয়েছে');
         }
-
-        // Initialize Charts
-        window.addEventListener('DOMContentLoaded', () => {
-            // Bar Chart (Income vs Expense)
-            const ctx1 = document.getElementById('incomeExpenseChart').getContext('2d');
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: ['মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর'],
-                    datasets: [
-                        { label: 'আয়', data: [220000, 270000, 230000, 280000, 250000, 270000], backgroundColor: '#059669' },
-                        { label: 'ব্যয়', data: [150000, 180000, 150000, 190000, 210000, 180000], backgroundColor: '#F43F5E' }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-
-            // Donut Chart (Category Expense)
-            const ctx2 = document.getElementById('categoryExpenseChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'doughnut',
-                data: {
-                    labels: ['খাদ্য ও বোর্ডিং (২৮%)', 'বেতন ও ভাতা (২২%)', 'শিক্ষা ও বই (১৫%)', 'ভবন ও রক্ষণাবেক্ষণ (১২%)', 'বিদ্যুৎ ও পানি (৪%)', 'অন্যান্য (১%)'],
-                    datasets: [{
-                        data: [28, 22, 15, 12, 4, 1],
-                        backgroundColor: ['#059669', '#3B82F6', '#F59E0B', '#8B5CF6', '#06B6D4', '#94A3B8']
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        });
     </script>
 </body>
 </html>
