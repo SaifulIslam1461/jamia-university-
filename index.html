@@ -3,642 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কওমি মাদ্রাসা ম্যানেজমেন্ট ও হিসাবের খাতা</title>
+    <title>নসিহাত মাদ্রাসা ম্যানেজমেন্ট সিস্টেম</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#064e3b">
-    <!-- FontAwesome Icons -->
+    <meta name="theme-color" content="#064E3B">
+    <!-- FontAwesome Icons & Chart.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom Theme & Styling Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Hind Siliguri', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #F3F6F8; color: #1E293B; }
+        
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-        
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #E2E8F0; }
+        ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 10px; }
 
-        /* Theme Engine Variables */
-        :root {
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --sidebar-bg: #0f172a;
-            --sidebar-text: #f1f5f9;
-            --accent-primary: #059669;
-            --accent-gold: #D4AF37;
-            --border-color: #e2e8f0;
-        }
-
-        body { background-color: var(--bg-main); color: var(--text-main); }
-        .theme-sidebar { background-color: var(--sidebar-bg); color: var(--sidebar-text); }
-        .theme-card { background-color: var(--bg-card); border-color: var(--border-color); }
-        .theme-btn { background-color: var(--accent-primary); color: #ffffff; }
+        .sidebar-bg { background-color: #04382B; }
+        .sidebar-active { background-color: #0B5C48; }
+        .card-bg { background-color: #FFFFFF; }
+        .emerald-text { color: #064E3B; }
+        .emerald-bg { background-color: #064E3B; }
+        .emerald-light-bg { background-color: #E8F5E9; }
     </style>
-    <script>
-        // Theme Configurations Dictionary
-        const themes = {
-            emerald: { name: "Emerald Royal", bg: "#F8FAFC", card: "#FFFFFF", text: "#1E293B", muted: "#64748b", sidebar: "#064E3B", sidebarText: "#FFFDF5", accent: "#064E3B", gold: "#D4AF37", border: "#E2E8F0" },
-            sultan: { name: "Sultan Navy", bg: "#0D1B2A", card: "#1B263B", text: "#E0E1DD", muted: "#94A3B8", sidebar: "#102542", sidebarText: "#FFFFFF", accent: "#D6B25E", gold: "#D6B25E", border: "#415A77" },
-            sage: { name: "Madani Sage", bg: "#F6F2E8", card: "#FFFFFF", text: "#2C3E2D", muted: "#6B7A6C", sidebar: "#879B78", sidebarText: "#FFFFFF", accent: "#485A3B", gold: "#C2A649", border: "#D8D0BE" },
-            blackgold: { name: "Black & Gold Heritage", bg: "#121212", card: "#1E1E1E", text: "#F8F5EC", muted: "#A3A3A3", sidebar: "#171717", sidebarText: "#F8F5EC", accent: "#C5A253", gold: "#C5A253", border: "#333333" },
-            turquoise: { name: "Ottoman Turquoise", bg: "#FAF7EF", card: "#FFFFFF", text: "#17324D", muted: "#5C768D", sidebar: "#087E8B", sidebarText: "#FAF7EF", accent: "#087E8B", gold: "#E5A93B", border: "#D2DCE6" },
-            maroon: { name: "Royal Maroon", bg: "#F8F1E7", card: "#FFFFFF", text: "#3D0F22", muted: "#8A6472", sidebar: "#6B1839", sidebarText: "#F8F1E7", accent: "#B99A58", gold: "#B99A58", border: "#EADbc8" },
-            noor: { name: "Noor Minimal", bg: "#F1F5F3", card: "#FFFFFF", text: "#0F172A", muted: "#64748B", sidebar: "#FFFFFF", sidebarText: "#0F172A", accent: "#047857", gold: "#CA8A04", border: "#CBD5E1" },
-            sand: { name: "Andalusian Sand", bg: "#F4EFE6", card: "#FFFFFF", text: "#3E3226", muted: "#7E7060", sidebar: "#A65D45", sidebarText: "#F4EFE6", accent: "#566447", gold: "#D4A373", border: "#E3D5C6" },
-            midnight: { name: "Midnight Crescent", bg: "#0B0F19", card: "#1F2937", text: "#F3F4F6", muted: "#9CA3AF", sidebar: "#111827", sidebarText: "#F3F4F6", accent: "#6366F1", gold: "#F59E0B", border: "#374151" },
-            jannat: { name: "Jannat Garden", bg: "#F4FBF7", card: "#FFFFFF", text: "#064E3B", muted: "#4A7C59", sidebar: "#087F5B", sidebarText: "#FFFEF8", accent: "#087F5B", gold: "#E5C77A", border: "#C6E6D5" }
-        };
-
-        function applyTheme(themeKey) {
-            const t = themes[themeKey] || themes.emerald;
-            document.documentElement.style.setProperty('--bg-main', t.bg);
-            document.documentElement.style.setProperty('--bg-card', t.card);
-            document.documentElement.style.setProperty('--text-main', t.text);
-            document.documentElement.style.setProperty('--text-muted', t.muted);
-            document.documentElement.style.setProperty('--sidebar-bg', t.sidebar);
-            document.documentElement.style.setProperty('--sidebar-text', t.sidebarText);
-            document.documentElement.style.setProperty('--accent-primary', t.accent);
-            document.documentElement.style.setProperty('--accent-gold', t.gold);
-            document.documentElement.style.setProperty('--border-color', t.border);
-            
-            localStorage.setItem('madrasa_selected_theme', themeKey);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('madrasa_selected_theme') || 'emerald';
-            applyTheme(savedTheme);
-            const selectEl = document.getElementById('theme-selector');
-            if(selectEl) selectEl.value = savedTheme;
-        });
-    </script>
 </head>
-<body style="background-color: var(--bg-main); color: var(--text-main);" class="antialiased selection:bg-emerald-500 selection:text-white">
+<body class="antialiased selection:bg-emerald-700 selection:text-white">
 
     <div class="min-h-screen flex flex-col md:flex-row">
         
         <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-full md:w-80 p-5 flex flex-col justify-between shadow-2xl z-20 transition-all duration-300" style="background-color: var(--sidebar-bg); color: var(--sidebar-text);">
-            <div class="space-y-6">
+        <aside class="w-full md:w-72 sidebar-bg text-emerald-50 p-4 flex flex-col justify-between shadow-2xl z-20">
+            <div class="space-y-4">
                 <!-- Branding / Logo -->
-                <div class="border-b pb-5 pt-2 flex items-center gap-3" style="border-color: rgba(255,255,255,0.15);">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white text-2xl shadow-lg">
+                <div class="pb-3 border-b border-emerald-800/60 flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full border-2 border-amber-400 bg-emerald-900 flex items-center justify-center text-amber-300 text-2xl shadow-md">
                         <i class="fa-solid fa-mosque"></i>
                     </div>
                     <div>
-                        <h2 class="text-lg font-bold tracking-tight leading-tight">জামিয়া ম্যানেজমেন্ট</h2>
-                        <p class="text-xs opacity-80 font-medium">এন্টারপ্রাইজ হিসাব ও পরিচালনা</p>
+                        <h2 class="text-lg font-bold tracking-tight text-white leading-tight">নসিহাত মাদ্রাসা</h2>
+                        <p class="text-[11px] text-amber-300 font-medium">ম্যানেজমেন্ট সিস্টেম</p>
+                        <p class="text-[9px] text-emerald-300 opacity-80">দ্বীন, শিক্ষা, মানবতার পথে</p>
                     </div>
                 </div>
 
-                <!-- Global Search -->
-                <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 opacity-60 text-xs"></i>
-                    <input type="text" id="global-search" onkeyup="filterGlobalData()" placeholder="যেকোনো তথ্য দ্রুত খুঁজুন..." class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-black/20 border border-white/10 text-xs placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition">
-                </div>
-
                 <!-- Navigation Links -->
-                <nav class="space-y-1.5" id="sidebar-nav">
-                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-white/20 font-semibold flex items-center justify-between shadow-md transition">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-chart-pie w-5 text-center"></i> ড্যাশবোর্ড</span>
-                        <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+                <nav class="space-y-1 text-xs" id="sidebar-nav">
+                    <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl sidebar-active text-white font-semibold flex items-center justify-between shadow-sm transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-house w-4 text-center"></i> ড্যাশবোর্ড</span>
                     </button>
-                    <button onclick="switchTab('accounting')" id="btn-accounting" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-book-open w-5 text-center"></i> হিসাবের খাতা ও লেজার</span>
+                    <button onclick="switchTab('info')" id="btn-info" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-building-columns w-4 text-center"></i> মাদ্রাসার তথ্য</span>
                     </button>
-                    <button onclick="switchTab('donations')" id="btn-donations" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-hand-holding-dollar w-5 text-center"></i> দান, যাকাত ও তহবিল</span>
+                    <button onclick="switchTab('students')" id="btn-students" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-user-graduate w-4 text-center"></i> ছাত্র ব্যবস্থাপনা</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </button>
-                    <button onclick="switchTab('students')" id="btn-students" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-user-graduate w-5 text-center"></i> ছাত্র ও ফি কালেকশন</span>
+                    <button onclick="switchTab('staff')" id="btn-staff" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-users w-4 text-center"></i> শিক্ষক-কর্মচারী</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </button>
-                    <button onclick="switchTab('staff')" id="btn-staff" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> শিক্ষক ও স্টাফ বেতন</span>
+                    <button onclick="switchTab('accounting')" id="btn-accounting" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-calculator w-4 text-center"></i> আয়-ব্যয় হিসাব</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </button>
-                    <button onclick="switchTab('lillah')" id="btn-lillah" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-utensils w-5 text-center"></i> লিল্লাহ বোর্ডিং ও বাজার</span>
+                    <button onclick="switchTab('donations')" id="btn-donations" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-hand-holding-dollar w-4 text-center"></i> দান-অনুদান</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </button>
-                    <button onclick="switchTab('settings')" id="btn-settings" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-palette w-5 text-center"></i> ইসলামিক থিম ও সেটিংস</span>
+                    <button onclick="switchTab('lillah')" id="btn-lillah" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-utensils w-4 text-center"></i> লিল্লাহ বোর্ডিং</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </button>
-                    <button onclick="switchTab('reports')" id="btn-reports" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition flex items-center justify-between opacity-90">
-                        <span class="flex items-center gap-3"><i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i> বার্ষিক অডিট রিপোর্ট</span>
+                    <button onclick="switchTab('inventory')" id="btn-inventory" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-store w-4 text-center"></i> বাজার ও মজুত</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('assets')" id="btn-assets" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-boxes-packing w-4 text-center"></i> সম্পদ ও মালামাল</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('exams')" id="btn-exams" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-file-pen w-4 text-center"></i> পরীক্ষা ও ফলাফল</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('notices')" id="btn-notices" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-bullhorn w-4 text-center"></i> নোটিশ ও সভা</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('reports')" id="btn-reports" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-chart-line w-4 text-center"></i> রিপোর্ট</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('search')" id="btn-search" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-magnifying-glass w-4 text-center"></i> অনুসন্ধান</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('customization')" id="btn-customization" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-wand-magic-sparkles w-4 text-center"></i> কাস্টমাইজেশন</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('users')" id="btn-users" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-user-gear w-4 text-center"></i> ব্যবহারকারী ও অনুমতি</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="switchTab('settings')" id="btn-settings" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-emerald-800/50 text-emerald-100 flex items-center justify-between transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-gears w-4 text-center"></i> সিস্টেম সেটিংস</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </button>
                 </nav>
+
+                <!-- Islamic Quote Widget -->
+                <div class="p-3 bg-emerald-950/80 border border-emerald-700/50 rounded-2xl text-center space-y-1">
+                    <p class="text-amber-300 text-xs font-semibold">“জ্ঞান অর্জন করা প্রত্যেক মুসলিমের উপর ফরজ।”</p>
+                    <p class="text-[10px] text-emerald-300 opacity-80">— হাদিস</p>
+                </div>
             </div>
 
             <!-- Sync Indicator -->
-            <div class="mt-6 bg-black/20 p-3.5 rounded-2xl border border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <span class="relative flex h-3 w-3">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                    </span>
-                    <span class="text-xs font-medium opacity-90">অফলাইন অটো-সিংক</span>
+            <div class="mt-4 bg-emerald-950/90 p-3 rounded-2xl border border-emerald-800/80 space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-medium text-emerald-200">অফলাইন মোড</span>
                 </div>
-                <span class="text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded-md border border-emerald-800 font-mono">ACTIVE</span>
+                <p class="text-[10px] text-emerald-400">ফিল্ড তথ্য অফলাইনে আছে</p>
+                <button onclick="alert('অফলাইন সিংক সম্পন্ন হয়েছে!')" class="w-full py-1.5 bg-emerald-800 hover:bg-emerald-700 text-white rounded-xl text-[11px] font-semibold transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-rotate"></i> সিংক করুন
+                </button>
             </div>
         </aside>
 
         <!-- MAIN WORKSPACE -->
-        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-h-screen">
+        <main class="flex-1 p-4 md:p-6 space-y-5 overflow-y-auto max-h-screen">
             
             <!-- HEADER BAR -->
-            <header class="p-5 rounded-2xl shadow-sm border flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-lg border border-emerald-100">
-                        🕌
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold" style="color: var(--text-main);">পূর্ব সাহেব নগর কওমি মাদ্রাসা ও এতিমখানা</h1>
-                        <p class="text-xs opacity-70">পরশুরাম, ফেনী • শিক্ষাবর্ষ: ২০২৬</p>
+            <header class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <button class="md:hidden text-slate-700 text-lg"><i class="fa-solid fa-bars"></i></button>
+                    <!-- Global Search Bar -->
+                    <div class="relative w-full md:w-96">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="global-search" onkeyup="filterGlobalData()" placeholder="নাম, রোল, ভাউচার নম্বর, তারিখ, বা অন্য কিছু খুঁজুন..." class="w-full pl-4 pr-9 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600">
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span class="px-3.5 py-1.5 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold border border-emerald-200/80 flex items-center gap-1.5">
-                        <i class="fa-solid fa-user-shield text-emerald-600"></i> মুহতামিম (সুপার অ্যাডমিন)
-                    </span>
+
+                <div class="flex items-center gap-4">
+                    <!-- Notification Bell -->
+                    <div class="relative cursor-pointer">
+                        <i class="fa-regular fa-bell text-slate-600 text-lg"></i>
+                        <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">৩</span>
+                    </div>
+
+                    <!-- Sync Status -->
+                    <div class="hidden sm:flex items-center gap-2 text-xs text-slate-600 bg-slate-100 px-3 py-1 rounded-xl">
+                        <i class="fa-solid fa-rotate-double text-emerald-600"></i>
+                        <span>সিংক স্ট্যাটাস: সর্বশেষ ২ মিনিট আগে</span>
+                    </div>
+
+                    <!-- Admin Profile -->
+                    <div class="flex items-center gap-2 cursor-pointer pl-3 border-l border-slate-200">
+                        <div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 overflow-hidden flex items-center justify-center">
+                            <i class="fa-solid fa-user text-slate-600 text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="text-xs font-bold text-slate-800 leading-tight">মুহতামিম</h4>
+                            <p class="text-[10px] text-slate-500">প্রধান প্রশাসক</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                    </div>
                 </div>
             </header>
 
-            <!-- ================= 1. DASHBOARD ================= -->
-            <section id="sec-dashboard" class="page-section active space-y-6">
-                <!-- Summary Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <div class="p-5 rounded-2xl shadow-sm border space-y-2 relative overflow-hidden transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                        <div class="flex justify-between items-center opacity-70">
-                            <span class="text-xs font-bold uppercase tracking-wider">আজকের মোট আয়</span>
-                            <i class="fa-solid fa-arrow-down-left text-emerald-500 bg-emerald-50 p-2 rounded-xl"></i>
-                        </div>
-                        <div class="text-2xl font-extrabold text-emerald-600" id="dash-income">৳ ৪৫,৫০০</div>
-                        <p class="text-[11px] opacity-60">সাধারণ তহবিল ও চাঁদা অনুদান</p>
+            <!-- ================= DASHBOARD PAGE ================= -->
+            <section id="sec-dashboard" class="page-section active space-y-5">
+                
+                <!-- WELCOME BANNER WITH ISLAMIC ART -->
+                <div class="relative rounded-3xl overflow-hidden shadow-sm border border-emerald-900/20 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="space-y-3 z-10 text-center md:text-left">
+                        <div class="text-amber-300 font-serif text-lg tracking-widest opacity-90">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+                        <h1 class="text-2xl md:text-3xl font-extrabold text-white">নসিহাত মাদ্রাসায় আপনাকে স্বাগতম</h1>
+                        <p class="text-emerald-100 text-sm font-medium">“শিক্ষার আলো, চরিত্র গঠন, মানব সেবা—এই আমাদের লক্ষ্য।”</p>
                     </div>
 
-                    <div class="p-5 rounded-2xl shadow-sm border space-y-2 relative overflow-hidden transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                        <div class="flex justify-between items-center opacity-70">
-                            <span class="text-xs font-bold uppercase tracking-wider">আজকের মোট ব্যয়</span>
-                            <i class="fa-solid fa-arrow-up-right text-rose-500 bg-rose-50 p-2 rounded-xl"></i>
+                    <!-- Date & Prayer Info Widget -->
+                    <div class="bg-emerald-950/80 border border-amber-400/30 rounded-2xl p-4 text-center z-10 space-y-1 min-w-[220px]">
+                        <div class="flex items-center justify-center gap-2 text-amber-300 text-xs font-semibold border-b border-emerald-800 pb-1">
+                            <i class="fa-regular fa-calendar"></i> আজ ১২ কার্তিক ১৪৩২ (বাংলা)
                         </div>
-                        <div class="text-2xl font-extrabold text-rose-500" id="dash-expense">৳ ১২,৩০০</div>
-                        <p class="text-[11px] opacity-60">লিল্লাহ বোর্ডিং ও অন্যান্য খরচ</p>
-                    </div>
-
-                    <div class="p-5 rounded-2xl shadow-sm border space-y-2 relative overflow-hidden transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                        <div class="flex justify-between items-center opacity-70">
-                            <span class="text-xs font-bold uppercase tracking-wider">ক্যাশ ও ব্যাংক ব্যালেন্স</span>
-                            <i class="fa-solid fa-vault text-blue-500 bg-blue-50 p-2 rounded-xl"></i>
+                        <p class="text-xs text-emerald-100">২৮ অক্টোবর ২০২৫ (ইংরেজি)</p>
+                        <div class="pt-1 flex items-center justify-center gap-1 text-amber-400 text-xs font-bold">
+                            <i class="fa-solid fa-sun"></i> সকাল ৮:৪৫
                         </div>
-                        <div class="text-2xl font-extrabold text-blue-600">৳ ৫,৮০,৪০০</div>
-                        <p class="text-[11px] opacity-60">নগদ, ক্যাশ ও ব্যাংক মার্চেন্ট</p>
-                    </div>
-
-                    <div class="p-5 rounded-2xl shadow-sm border space-y-2 relative overflow-hidden transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                        <div class="flex justify-between items-center opacity-70">
-                            <span class="text-xs font-bold uppercase tracking-wider">ছাত্রদের বকেয়া ফি</span>
-                            <i class="fa-solid fa-clock-rotate-left text-amber-500 bg-amber-50 p-2 rounded-xl"></i>
-                        </div>
-                        <div class="text-2xl font-extrabold text-amber-500">৳ ৮৫,০০০</div>
-                        <p class="text-[11px] opacity-60">বর্তমান বকেয়া মাসিক ফি</p>
                     </div>
                 </div>
 
-                <!-- Transaction Input & Ledger Live Stream -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Form -->
-                    <div class="p-6 rounded-2xl shadow-sm border space-y-4 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                        <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-color);">
-                            <h3 class="font-bold flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-emerald-600"></i> দ্রুত লেনদেন ইনপুট</h3>
-                            <span class="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full">Double-Entry</span>
-                        </div>
-                        <form id="dash-tx-form" onsubmit="addTransaction(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold mb-1 opacity-80">লেনদেনের ধরন</label>
-                                <select id="tx-type" class="w-full px-3.5 py-2.5 rounded-xl border text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent" style="border-color: var(--border-color);">
-                                    <option value="income" class="text-slate-900">আয় (Income)</option>
-                                    <option value="expense" class="text-slate-900">ব্যয় (Expense)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold mb-1 opacity-80">তহবিল / খাত</label>
-                                <select id="tx-fund" class="w-full px-3.5 py-2.5 rounded-xl border text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent" style="border-color: var(--border-color);">
-                                    <option value="সাধারণ তহবিল" class="text-slate-900">সাধারণ তহবিল</option>
-                                    <option value="যাকাত ফান্ড" class="text-slate-900">যাকাত ফান্ড</option>
-                                    <option value="লিল্লাহ বোর্ডিং" class="text-slate-900">লিল্লাহ বোর্ডিং বাজার</option>
-                                    <option value="নির্মাণ ফান্ড" class="text-slate-900">নির্মাণ ও উন্নয়ন</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold mb-1 opacity-80">বিবরণ</label>
-                                <input type="text" id="tx-desc" placeholder="যেমন: সাধারণ চাঁদা গ্রহণ" required class="w-full px-3.5 py-2.5 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent" style="border-color: var(--border-color);">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold mb-1 opacity-80">পরিমাণ (টাকা)</label>
-                                <input type="number" id="tx-amount" placeholder="0.00" required class="w-full px-3.5 py-2.5 rounded-xl border text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent" style="border-color: var(--border-color);">
-                            </div>
-                            <button type="submit" class="w-full py-3 rounded-xl text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2" style="background-color: var(--accent-primary);">
-                                <i class="fa-solid fa-floppy-disk"></i> হিসাব সংরক্ষণ করুন
-                            </button>
-                        </form>
+                <!-- TOP SUMMARY METRICS (ROW 1) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-wallet"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">মোট আয়</p>
+                        <div class="text-base font-extrabold text-slate-900">৳ ১২,৪৫,০০০</div>
+                        <span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-arrow-up"></i> ১২% (এই মাস)</span>
                     </div>
 
-                    <!-- Live Stream Table -->
-                    <div class="p-6 rounded-2xl shadow-sm border space-y-4 lg:col-span-2 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                        <div class="flex justify-between items-center border-b pb-3" style="border-color: var(--border-color);">
-                            <h3 class="font-bold flex items-center gap-2"><i class="fa-solid fa-list-check text-emerald-600"></i> সাম্প্রতিক ক্যাশবুক লেনদেন</h3>
-                            <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full font-semibold border border-emerald-100">লাইভ আপডেট</span>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">মোট ব্যয়</p>
+                        <div class="text-base font-extrabold text-slate-900">৳ ৯,৫৭,০০০</div>
+                        <span class="text-[10px] text-rose-500 font-bold"><i class="fa-solid fa-arrow-up"></i> ৪% (এই মাস)</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-vault"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">বর্তমান ব্যালেন্স</p>
+                        <div class="text-base font-extrabold text-slate-900">৳ ২,৮৮,০০০</div>
+                        <span class="text-[10px] text-slate-400">(নগদ + ব্যাংক)</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">দান-অনুদান</p>
+                        <div class="text-base font-extrabold text-slate-900">৳ ৩,৭৫,০০০</div>
+                        <span class="text-[10px] text-emerald-600 font-bold"><i class="fa-solid fa-arrow-up"></i> ২৫% (এই মাস)</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-user-clock"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">বকেয়া ফি</p>
+                        <div class="text-base font-extrabold text-slate-900">৳ ১,২৮,০০০</div>
+                        <span class="text-[10px] text-amber-600 font-semibold">(৫৬ জন ছাত্র)</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">বকেয়া বেতন</p>
+                        <div class="text-base font-extrabold text-slate-900">৳ ৮৫,০০০</div>
+                        <span class="text-[10px] text-teal-600 font-semibold">(শিক্ষক-কর্মচারী)</span>
+                    </div>
+                </div>
+
+                <!-- TOP SUMMARY METRICS (ROW 2) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                        <div class="w-10 h-10 rounded-full bg-emerald-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">মোট ছাত্র</p>
+                        <div class="text-xl font-extrabold text-slate-900">১৮৪</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                        <div class="w-10 h-10 rounded-full bg-purple-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">শিক্ষক</p>
+                        <div class="text-xl font-extrabold text-slate-900">১২</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                        <div class="w-10 h-10 rounded-full bg-amber-500 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-user-group"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">কর্মচারী</p>
+                        <div class="text-xl font-extrabold text-slate-900">৮</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                        <div class="w-10 h-10 rounded-full bg-teal-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-bed"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">বোর্ডিং ছাত্র</p>
+                        <div class="text-xl font-extrabold text-slate-900">৬২</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                        <div class="w-10 h-10 rounded-full bg-rose-500 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-receipt"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">মোট লেনদেন</p>
+                        <div class="text-xl font-extrabold text-slate-900">৪২</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 text-white mx-auto flex items-center justify-center text-lg"><i class="fa-solid fa-bell"></i></div>
+                        <p class="text-[11px] text-slate-500 font-medium">আজকের নোটিশ</p>
+                        <div class="text-xl font-extrabold text-slate-900">৩</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS SECTION -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <!-- Income vs Expense Bar Chart -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-sm font-bold text-slate-800">আয়-ব্যয় (গত ৬ মাস)</h3>
+                            <div class="flex items-center gap-3 text-xs">
+                                <span class="flex items-center gap-1 font-semibold text-emerald-700"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> আয়</span>
+                                <span class="flex items-center gap-1 font-semibold text-rose-600"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> ব্যয়</span>
+                            </div>
                         </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs searchable-table">
-                                <thead>
-                                    <tr class="opacity-60 border-b" style="border-color: var(--border-color);">
-                                        <th class="pb-3 font-semibold">তারিখ</th>
-                                        <th class="pb-3 font-semibold">ভাউচার</th>
-                                        <th class="pb-3 font-semibold">তহবিল</th>
-                                        <th class="pb-3 font-semibold">বিবরণ</th>
-                                        <th class="pb-3 font-semibold text-right">পরিমাণ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="live-ledger" class="divide-y" style="border-color: var(--border-color);">
-                                    <tr>
-                                        <td class="py-3 opacity-70">১২ অক্টো, ২০২৬</td>
-                                        <td class="py-3 font-bold">VCH-2026-001</td>
-                                        <td class="py-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-800 rounded text-[10px]">সাধারণ</span></td>
-                                        <td class="py-3">মাসিক অনুদান আদায়</td>
-                                        <td class="py-3 text-right font-bold text-emerald-600">+৳ ১০,০০০</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 opacity-70">১২ অক্টো, ২০২৬</td>
-                                        <td class="py-3 font-bold">VCH-2026-002</td>
-                                        <td class="py-3"><span class="px-2 py-0.5 bg-rose-50 text-rose-700 rounded text-[10px]">লিল্লাহ</span></td>
-                                        <td class="py-3">আজকের বাজার খরচ</td>
-                                        <td class="py-3 text-right font-bold text-rose-500">-৳ ৫,২০০</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="h-56">
+                            <canvas id="incomeExpenseChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Category Expense Donut Chart -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-sm font-bold text-slate-800">খাতভিত্তিক ব্যয়</h3>
+                            <span class="text-xs text-slate-500">মোট ব্যয়: ৳ ৯,৫৭,০০০</span>
+                        </div>
+                        <div class="h-56 flex items-center justify-center">
+                            <canvas id="categoryExpenseChart"></canvas>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- ================= 2. ACCOUNTING ================= -->
-            <section id="sec-accounting" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-5 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="flex justify-between items-center border-b pb-4" style="border-color: var(--border-color);">
-                        <div>
-                            <h2 class="text-lg font-bold">📖 হিসাবের খাতা ও ব্যাংক স্টেটমেন্ট</h2>
-                            <p class="text-xs opacity-70">নগদ ক্যাশ, ব্যাংক ও বিকাশ মারফতে সমস্ত লেনদেন</p>
+                <!-- RECENT TRANSACTIONS & UPCOMING EVENTS -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <!-- Recent Transactions -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-sm font-bold text-slate-800">সাম্প্রতিক লেনদেন</h3>
+                            <a href="#" onclick="switchTab('accounting')" class="text-xs font-bold text-emerald-700 hover:underline">সব দেখুন →</a>
                         </div>
-                        <button onclick="alert('নতুন কাস্টম লেজার খোলা হচ্ছে...')" class="px-4 py-2 text-white rounded-xl text-xs font-semibold shadow transition" style="background-color: var(--accent-primary);">+ নতুন লেজার খাত</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 text-slate-900 space-y-2">
-                            <div class="flex justify-between items-center font-bold text-xs text-emerald-800">
-                                <span>নগদ ক্যাশ বক্স</span>
-                                <i class="fa-solid fa-money-bill-wave"></i>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center"><i class="fa-solid fa-arrow-down"></i></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">ছাত্র ফি (রোল: ১২৩)</p>
+                                        <p class="text-[10px] text-slate-400">আজ, ০৪:২০ AM</p>
+                                    </div>
+                                </div>
+                                <span class="font-extrabold text-emerald-600">৳ ৫,০০০</span>
                             </div>
-                            <div class="text-2xl font-extrabold text-emerald-900">৳ ২,৫০,০০০</div>
-                            <p class="text-[11px] text-emerald-700">হাতে জমা ক্যাশ টাকা</p>
-                        </div>
 
-                        <div class="p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 text-slate-900 space-y-2">
-                            <div class="flex justify-between items-center font-bold text-xs text-blue-800">
-                                <span>ইসলামী ব্যাংক অ্যাকাউন্ট</span>
-                                <i class="fa-solid fa-building-columns"></i>
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center"><i class="fa-solid fa-cart-shopping"></i></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">বাজার খরচ (চাল, ডাল, তেল)</p>
+                                        <p class="text-[10px] text-slate-400">আজ, ০৯:১৫ AM</p>
+                                    </div>
+                                </div>
+                                <span class="font-extrabold text-rose-500">৳ ২,৫০০</span>
                             </div>
-                            <div class="text-2xl font-extrabold text-blue-900">৳ ৩,০০,৪০০</div>
-                            <p class="text-[11px] text-blue-700">চলতি হিসাব নম্বর: ৮৯৪০১</p>
-                        </div>
 
-                        <div class="p-5 rounded-2xl bg-gradient-to-br from-purple-50 to-fuchsia-50 border border-purple-100 text-slate-900 space-y-2">
-                            <div class="flex justify-between items-center font-bold text-xs text-purple-800">
-                                <span>বিকাশ ও নগদ মার্চেন্ট</span>
-                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">দান-অনুদান (জনাব আব্দুল্লাহ)</p>
+                                        <p class="text-[10px] text-slate-400">আজ, ১০:০০ AM</p>
+                                    </div>
+                                </div>
+                                <span class="font-extrabold text-emerald-600">৳ ১০,০০০</span>
                             </div>
-                            <div class="text-2xl font-extrabold text-purple-900">৳ ৩০,০০০</div>
-                            <p class="text-[11px] text-purple-700">মোবাইল ব্যাংকিং ওয়ালেট</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- ================= 3. DONATIONS & FUNDS ================= -->
-            <section id="sec-donations" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-5 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="border-b pb-4 flex justify-between items-center" style="border-color: var(--border-color);">
-                        <div>
-                            <h2 class="text-lg font-bold">💰 দান, যাকাত ও পৃথক তহবিলসমূহ</h2>
-                            <p class="text-xs opacity-70">শরয়ি যাকাত, সদকা ও সাধারণ তহবিলের বিবরণ</p>
-                        </div>
-                        <button onclick="alert('নতুন দাতা এন্ট্রি')" class="px-4 py-2 text-white rounded-xl text-xs font-semibold" style="background-color: var(--accent-primary);">+ নতুন দাতা রেজিস্টার</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="p-5 rounded-2xl border border-emerald-200 bg-emerald-50/40 text-slate-900 space-y-3">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-bold text-emerald-900 text-sm">যাকাত ও সদকা ফান্ড (Restricted)</h4>
-                                <span class="text-[10px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-bold">শরয়ি তহবিল</span>
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">শিক্ষক বেতন</p>
+                                        <p class="text-[10px] text-slate-400">আজ, ১১:২০ AM</p>
+                                    </div>
+                                </div>
+                                <span class="font-extrabold text-rose-500">৳ ৫,০০০</span>
                             </div>
-                            <div class="text-3xl font-black text-emerald-700">৳ ১,২০,০০০</div>
-                            <p class="text-xs text-slate-700 leading-relaxed">এই ফান্ড শুধুমাত্র মুসতাহিক ছাত্রদের খাদ্য, চিকিৎসা ও মৌলিক প্রয়োজনে ব্যয় করা হয়।</p>
                         </div>
+                    </div>
 
-                        <div class="p-5 rounded-2xl border border-blue-200 bg-blue-50/40 text-slate-900 space-y-3">
-                            <div class="flex justify-between items-center">
-                                <h4 class="font-bold text-blue-900 text-sm">সাধারণ নির্মাণ ও সংস্কার ফান্ড</h4>
-                                <span class="text-[10px] bg-blue-200 text-blue-900 px-2 py-0.5 rounded font-bold">উন্নয়ন</span>
+                    <!-- Upcoming Tasks / Notice -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-sm font-bold text-slate-800">আসন্ন কাজ</h3>
+                            <a href="#" onclick="switchTab('notices')" class="text-xs font-bold text-emerald-700 hover:underline">সব দেখুন →</a>
+                        </div>
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 font-bold flex flex-col items-center justify-center text-[10px]">
+                                        <span>২৯</span><span>অক্টো</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">মাসিক বেতন প্রদান</p>
+                                        <p class="text-[10px] text-slate-500">শিক্ষক ও কর্মচারী</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
                             </div>
-                            <div class="text-3xl font-black text-blue-700">৳ ২,১০,০০০</div>
-                            <p class="text-xs text-slate-700 leading-relaxed">মাদ্রাসার নতুন ভবন নির্মাণ, সংস্কার ও আসবাবপত্র ক্রয়ের জন্য সংরক্ষিত তহবিল।</p>
+
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 font-bold flex flex-col items-center justify-center text-[10px]">
+                                        <span>৩০</span><span>অক্টো</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">মাদ্রাসা পরিষদ সভা</p>
+                                        <p class="text-[10px] text-slate-500">স্থান: অফিস কক্ষ | সময়: ১০:০০ AM</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                            </div>
+
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 font-bold flex flex-col items-center justify-center text-[10px]">
+                                        <span>০২</span><span>নভে</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">মাসিক রিপোর্ট প্রস্তুত</p>
+                                        <p class="text-[10px] text-slate-500">হিসাব বিভাগ</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- ================= 4. STUDENTS ================= -->
-            <section id="sec-students" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-5 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="flex justify-between items-center border-b pb-4" style="border-color: var(--border-color);">
-                        <div>
-                            <h2 class="text-lg font-bold">🎓 ছাত্র তথ্য ও মাসিক ফি কালেকশন</h2>
-                            <p class="text-xs opacity-70">জামাতভিত্তিক ছাত্র তালিকা ও বকেয়া ফি ট্র্যাকিং</p>
-                        </div>
-                        <button onclick="addStudentPrompt()" class="px-4 py-2 text-white rounded-xl text-xs font-semibold shadow transition" style="background-color: var(--accent-primary);">+ নতুন ছাত্র ভর্তি</button>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs searchable-table">
-                            <thead>
-                                <tr class="opacity-60 border-b" style="border-color: var(--border-color);">
-                                    <th class="pb-3 font-semibold">রোল</th>
-                                    <th class="pb-3 font-semibold">ছাত্রের নাম</th>
-                                    <th class="pb-3 font-semibold">জামাত / বিভাগ</th>
-                                    <th class="pb-3 font-semibold">অভিভাবকের ফোন</th>
-                                    <th class="pb-3 font-semibold">মাসিক ফি</th>
-                                    <th class="pb-3 font-semibold text-right">বকেয়া</th>
-                                </tr>
-                            </thead>
-                            <tbody id="student-list" class="divide-y" style="border-color: var(--border-color);">
-                                <tr>
-                                    <td class="py-3 font-bold">১০১</td>
-                                    <td class="py-3 font-medium">আব্দুল্লাহ আল মামুন</td>
-                                    <td class="py-3 opacity-80">হিফজুল কুরআন</td>
-                                    <td class="py-3 opacity-70">০১৮১২-৩ND456</td>
-                                    <td class="py-3 opacity-90">৳ ১,৫০০</td>
-                                    <td class="py-3 text-right font-bold text-rose-500">৳ ৩,০০০</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 font-bold">১০২</td>
-                                    <td class="py-3 font-medium">মোহাম্মদ নাঈম সিদ্দিকী</td>
-                                    <td class="py-3 opacity-80">নূরানী বিভাগ</td>
-                                    <td class="py-3 opacity-70">০১৭০০-১১২২৩৩</td>
-                                    <td class="py-3 opacity-90">৳ ১,০০০</td>
-                                    <td class="py-3 text-right font-bold text-emerald-600">পরিশোধিত</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- QUICK ACCESS ACTION BUTTONS -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h3 class="text-sm font-bold text-slate-800">দ্রুত অ্যাক্সেস</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 text-xs">
+                        <button onclick="alert('নতুন ছাত্র ভর্তি')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-user-plus text-emerald-600"></i> নতুন ছাত্র ভর্তি</button>
+                        <button onclick="alert('আয় এন্ট্রি')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-plus-circle text-emerald-600"></i> আয় এন্ট্রি</button>
+                        <button onclick="alert('ব্যয় এন্ট্রি')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-rose-50 hover:border-rose-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-minus-circle text-rose-500"></i> ব্যয় এন্ট্রি</button>
+                        <button onclick="switchTab('reports')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-blue-50 hover:border-blue-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-file-invoice text-blue-600"></i> রিপোর্ট তৈরি</button>
+                        <button onclick="switchTab('donations')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-purple-50 hover:border-purple-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-hand-holding-heart text-purple-600"></i> দান-অনুদান</button>
+                        <button onclick="switchTab('notices')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-amber-50 hover:border-amber-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-bullhorn text-amber-600"></i> নোটিশ</button>
+                        <button onclick="switchTab('staff')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-teal-50 hover:border-teal-300 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-money-check-dollar text-teal-600"></i> বেতন প্রদান</button>
+                        <button onclick="switchTab('users')" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 font-semibold text-slate-700 transition flex items-center justify-center gap-1.5"><i class="fa-solid fa-user-gear text-slate-600"></i> ব্যবহারকারী</button>
                     </div>
                 </div>
-            </section>
 
-            <!-- ================= 5. STAFF ================= -->
-            <section id="sec-staff" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-5 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="flex justify-between items-center border-b pb-4" style="border-color: var(--border-color);">
-                        <div>
-                            <h2 class="text-lg font-bold">👨‍🏫 শিক্ষক ও কর্মচারী বেতন রেজিস্টার</h2>
-                            <p class="text-xs opacity-70">মাসিক স্কেল, বোনাস ও অগ্রিম হিসেব</p>
-                        </div>
-                        <button onclick="alert('নতুন শিক্ষক যোগ ফর্ম')" class="px-4 py-2 text-white rounded-xl text-xs font-semibold" style="background-color: var(--accent-primary);">+ নতুন শিক্ষক/স্টাফ</button>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs searchable-table">
-                            <thead>
-                                <tr class="opacity-60 border-b" style="border-color: var(--border-color);">
-                                    <th class="pb-3 font-semibold">শিক্ষক / কর্মচারীর নাম</th>
-                                    <th class="pb-3 font-semibold">পদবি</th>
-                                    <th class="pb-3 font-semibold">মোবাইল</th>
-                                    <th class="pb-3 font-semibold">মূল স্কেল</th>
-                                    <th class="pb-3 font-semibold text-right">স্ট্যাটাস</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y" style="border-color: var(--border-color);">
-                                <tr>
-                                    <td class="py-3 font-bold">মাওলানা ইব্রাহিম খলিল</td>
-                                    <td class="py-3 opacity-80">প্রধান শিক্ষক (নূরানী)</td>
-                                    <td class="py-3 opacity-70">০১৮১১-৯৯৮৮৭৭</td>
-                                    <td class="py-3 font-medium">৳ ২২,০০০</td>
-                                    <td class="py-3 text-right"><span class="px-2.5 py-1 bg-emerald-100 text-emerald-900 text-[10px] font-bold rounded-full">পরিশোধিত</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================= 6. LILLAH BOARDING ================= -->
-            <section id="sec-lillah" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-5 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="flex justify-between items-center border-b pb-4" style="border-color: var(--border-color);">
-                        <div>
-                            <h2 class="text-lg font-bold">🍲 লিল্লাহ বোর্ডিং ও দৈনন্দিন বাজার খরচ</h2>
-                            <p class="text-xs opacity-70">খাদ্যসামগ্রী ক্রয় ও ইনভেন্টরি স্টক ট্র্যাকিং</p>
-                        </div>
-                        <button onclick="alert('বাজার এন্ট্রি')" class="px-4 py-2 text-white rounded-xl text-xs font-semibold" style="background-color: var(--accent-primary);">+ বাজার খরচ যোগ</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="p-4 border rounded-2xl opacity-90 space-y-1" style="border-color: var(--border-color);">
-                            <span class="text-xs opacity-70">আজকের বাজার খরচ</span>
-                            <div class="text-xl font-bold text-rose-500">৳ ৫,২০০</div>
-                        </div>
-                        <div class="p-4 border rounded-2xl opacity-90 space-y-1" style="border-color: var(--border-color);">
-                            <span class="text-xs opacity-70">মজুত চাল (স্টক)</span>
-                            <div class="text-xl font-bold">১২ বস্তা</div>
-                        </div>
-                        <div class="p-4 border rounded-2xl opacity-90 space-y-1" style="border-color: var(--border-color);">
-                            <span class="text-xs opacity-70">বোর্ডিংয়ের নিয়মিত ছাত্র</span>
-                            <div class="text-xl font-bold text-emerald-600">৮৫ জন</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================= 7. SETTINGS & THEMES ================= -->
-            <section id="sec-settings" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-6 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="border-b pb-4" style="border-color: var(--border-color);">
-                        <h2 class="text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-palette text-emerald-600"></i> ইসলামিক থিম ও কাস্টমাইজেশন</h2>
-                        <p class="text-xs opacity-70">আপনার পছন্দমতো যেকোনো প্রিমিয়াম ইসলামিক থিম নির্বাচন করুন এবং তাৎক্ষণিক প্রিভিউ দেখুন।</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Theme Cards Loop -->
-                        <div onclick="previewAndApplyTheme('emerald')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Emerald Royal</span><span class="w-4 h-4 rounded-full bg-[#064E3B] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">ক্লাসিক এবং গম্ভীর সবুজ ও সোনালী সংমিশ্রণ।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('sultan')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Sultan Navy</span><span class="w-4 h-4 rounded-full bg-[#102542] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">রাজকীয় নেভী ব্লু এবং গোল্ডেন থিম।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('sage')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Madani Sage</span><span class="w-4 h-4 rounded-full bg-[#879B78] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">চোখ জুড়ানো প্রশান্তিদায়ক সেজ গ্রিন থিম।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('blackgold')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Black & Gold Heritage</span><span class="w-4 h-4 rounded-full bg-[#171717] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">প্রিমিয়াম ডার্ক ও গোল্ডেন হেরিটেজ লুক।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('turquoise')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Ottoman Turquoise</span><span class="w-4 h-4 rounded-full bg-[#087E8B] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">ঐতিহাসিক উসমানী টারকোয়াইজ কালার প্যালেট।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('maroon')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Royal Maroon</span><span class="w-4 h-4 rounded-full bg-[#6B1839] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">অভিজাত রয়্যাল মেরুন ও ক্রিম কালার।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('noor')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Noor Minimal</span><span class="w-4 h-4 rounded-full bg-[#047857] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">স্বচ্ছ ও পরিষ্কার মিনিমাল লাইট থিম।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('sand')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Andalusian Sand</span><span class="w-4 h-4 rounded-full bg-[#A65D45] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">ঐতিহাসিক আন্দালুসিয়ান উষ্ণ বালুকাময় টোন।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('midnight')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Midnight Crescent</span><span class="w-4 h-4 rounded-full bg-[#111827] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">আধুনিক ডার্ক ক্রিসেন্ট নাইট মোড।</p>
-                        </div>
-                        <div onclick="previewAndApplyTheme('jannat')" class="p-4 rounded-xl border cursor-pointer hover:shadow-md transition space-y-2" style="border-color: var(--border-color);">
-                            <div class="flex justify-between items-center"><span class="font-bold text-xs">Jannat Garden</span><span class="w-4 h-4 rounded-full bg-[#087F5B] inline-block"></span></div>
-                            <p class="text-[11px] opacity-70">সতেজ বাগানের রঙের ছোঁয়া সংবলিত থিম।</p>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 flex items-center justify-between border-t" style="border-color: var(--border-color);">
-                        <span class="text-xs opacity-70">বর্তমান থিম সংরক্ষণ ও স্বয়ংক্রিয় সিংক فعال আছে।</span>
-                        <button onclick="alert('থিম সফলভাবে সংরক্ষিত হয়েছে!')" class="px-5 py-2 text-white rounded-xl text-xs font-bold" style="background-color: var(--accent-primary);">পছন্দ সংরক্ষণ করুন</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================= 8. REPORTS ================= -->
-            <section id="sec-reports" class="page-section space-y-6">
-                <div class="p-6 rounded-2xl shadow-sm border space-y-5 transition-all duration-300" style="background-color: var(--bg-card); border-color: var(--border-color);">
-                    <div class="flex justify-between items-center border-b pb-4" style="border-color: var(--border-color);">
-                        <div>
-                            <h2 class="text-lg font-bold">📑 বার্ষিক আর্থিক অডিট ও কার্য বিবরণী</h2>
-                            <p class="text-xs opacity-70">দুই পৃষ্ঠার সম্পূর্ণ পেশাদার বার্ষিক রিপোর্ট জেনারেটর</p>
-                        </div>
-                        <button onclick="window.print()" class="px-5 py-2.5 text-white font-bold rounded-xl text-xs shadow-lg transition flex items-center gap-2" style="background-color: var(--accent-primary);">
-                            <i class="fa-solid fa-print"></i> প্রিন্ট / PDF প্রস্তুত করুন
-                        </button>
-                    </div>
-
-                    <div class="p-6 rounded-2xl text-white space-y-3 shadow-lg" style="background-color: var(--sidebar-bg);">
-                        <h3 class="text-base font-bold">কাস্টমাইজড আর্থিক প্রতিবেদন (২০২৬)</h3>
-                        <p class="text-xs opacity-90 leading-relaxed max-w-2xl">
-                            প্রথম পৃষ্ঠায় সমস্ত আয়-ব্যয়ের হিসাব ও ব্যালেন্স শিট প্রস্তুত থাকবে। দ্বিতীয় পৃষ্ঠায় মাদ্রাসার পরিচিতি, অর্জন, ভবিষ্যৎ পরিকল্পনা ও মুহতামিম সাহেবের স্বাক্ষর সংযুক্ত হবে। প্রিন্ট করার সময় নির্বাচিত ইসলামিক থিম কালার স্বয়ংক্রিয়ভাবে প্রিণ্ট ফরম্যাটে এডজাস্ট হয়ে যাবে।
-                        </p>
-                    </div>
-                </div>
             </section>
 
         </main>
     </div>
 
-    <!-- JAVASCRIPT CONTROLLERS -->
+    <!-- JAVASCRIPT CONTROLLERS & CHARTS -->
     <script>
         // Tab Navigation Switcher
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.style.backgroundColor = 'transparent';
-                btn.classList.remove('font-semibold', 'shadow-md');
-                btn.classList.add('opacity-90');
+                btn.classList.remove('sidebar-active', 'text-white');
+                btn.classList.add('text-emerald-100');
             });
 
-            document.getElementById('sec-' + tabId).classList.add('active');
+            const targetSection = document.getElementById('sec-' + tabId);
+            if(targetSection) targetSection.classList.add('active');
+
             const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-            activeBtn.classList.add('font-semibold', 'shadow-md');
-            activeBtn.classList.remove('opacity-90');
-        }
-
-        function previewAndApplyTheme(key) {
-            applyTheme(key);
-        }
-
-        // Global Search Strategy
-        function filterGlobalData() {
-            let query = document.getElementById('global-search').value.toLowerCase();
-            let tables = document.querySelectorAll('.searchable-table');
-            tables.forEach(table => {
-                let rows = table.getElementsByTagName('tr');
-                for (let i = 1; i < rows.length; i++) {
-                    let match = rows[i].textContent.toLowerCase().includes(query);
-                    rows[i].style.display = match ? '' : 'none';
-                }
-            });
-        }
-
-        // Add Dynamic Transaction Entry
-        function addTransaction(e) {
-            e.preventDefault();
-            const type = document.getElementById('tx-type').value;
-            const fund = document.getElementById('tx-fund').value;
-            const desc = document.getElementById('tx-desc').value;
-            const amount = document.getElementById('tx-amount').value;
-            const ledger = document.getElementById('live-ledger');
-
-            const row = document.createElement('tr');
-            row.className = "animate-fadeIn";
-            row.innerHTML = `
-                <td class="py-3 opacity-70">আজ</td>
-                <td class="py-3 font-bold">VCH-NEW</td>
-                <td class="py-3"><span class="px-2 py-0.5 ${type==='income'?'bg-emerald-50 text-emerald-800':'bg-rose-50 text-rose-800'} rounded text-[10px] font-bold">${fund}</span></td>
-                <td class="py-3">${desc}</td>
-                <td class="py-3 text-right font-black ${type==='income'?'text-emerald-600':'text-rose-500'}">${type==='income'?'+':'-'}৳ ${amount}</td>
-            `;
-            ledger.prepend(row);
-            e.target.reset();
-            alert('হিসাব সফলভাবে নিবন্ধিত ও সংরক্ষিত হয়েছে!');
-        }
-
-        // Dynamic Student Add Prompt
-        function addStudentPrompt() {
-            const name = prompt('ছাত্রের নাম লিখুন:');
-            const roll = prompt('রোল নম্বর লিখুন:');
-            const dept = prompt('জামাত / বিভাগ লিখুন:');
-            if(name && roll) {
-                const list = document.getElementById('student-list');
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="py-3 font-bold">${roll}</td>
-                    <td class="py-3 font-medium">${name}</td>
-                    <td class="py-3 opacity-80">${dept || 'সাধারণ'}</td>
-                    <td class="py-3 opacity-70">নতুন ভর্তি</td>
-                    <td class="py-3 opacity-90">৳ ১,০০০</td>
-                    <td class="py-3 text-right font-bold text-emerald-600">পরিশোধিত</td>
-                `;
-                list.prepend(row);
+            if(activeBtn) {
+                activeBtn.classList.add('sidebar-active', 'text-white');
+                activeBtn.classList.remove('text-emerald-100');
             }
         }
 
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js');
-            });
+        // Global Search Filter
+        function filterGlobalData() {
+            let query = document.getElementById('global-search').value.toLowerCase();
+            console.log("Searching for:", query);
         }
+
+        // Initialize Charts
+        window.addEventListener('DOMContentLoaded', () => {
+            // Bar Chart (Income vs Expense)
+            const ctx1 = document.getElementById('incomeExpenseChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর'],
+                    datasets: [
+                        { label: 'আয়', data: [220000, 270000, 230000, 280000, 250000, 270000], backgroundColor: '#059669' },
+                        { label: 'ব্যয়', data: [150000, 180000, 150000, 190000, 210000, 180000], backgroundColor: '#F43F5E' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Donut Chart (Category Expense)
+            const ctx2 = document.getElementById('categoryExpenseChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['খাদ্য ও বোর্ডিং (২৮%)', 'বেতন ও ভাতা (২২%)', 'শিক্ষা ও বই (১৫%)', 'ভবন ও রক্ষণাবেক্ষণ (১২%)', 'বিদ্যুৎ ও পানি (৪%)', 'অন্যান্য (১%)'],
+                    datasets: [{
+                        data: [28, 22, 15, 12, 4, 1],
+                        backgroundColor: ['#059669', '#3B82F6', '#F59E0B', '#8B5CF6', '#06B6D4', '#94A3B8']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        });
     </script>
 </body>
 </html>
