@@ -23,6 +23,13 @@
         ::-webkit-scrollbar-thumb { background: #064E3B; border-radius: 10px; }
 
         .app-header { background: linear-gradient(135deg, #04382B 0%, #064E3B 100%); }
+
+        @media print {
+            body * { visibility: hidden; }
+            #sec-students, #sec-students * { visibility: visible; }
+            #sec-students { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-emerald-700 selection:text-white pb-20 md:pb-0">
@@ -227,7 +234,194 @@
 
             <!-- Other placeholders for tabs -->
             <section id="sec-info" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> মাদ্রাসারপরিচিতি ও প্রশাসন পেজ </div></section>
-            <section id="sec-students" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> ছাত্র ব্যবস্থাপনা পেজ </div></section>
+            
+            <!-- ================= STUDENT MANAGEMENT SECTION ================= -->
+            <section id="sec-students" class="page-section space-y-6">
+                <!-- Header Title Bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <div>
+                        <h2 class="text-xl font-bold text-emerald-950 flex items-center gap-2">
+                            <i class="fa-solid fa-user-graduate text-emerald-600"></i> ছাত্র ব্যবস্থাপনা ও তথ্য নিবন্ধন
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">নতুন ছাত্র ভর্তি, তথ্য সংরক্ষণ, ফি, ফলাফল ও যাবতীয় রেকর্ড আপডেট করুন</p>
+                    </div>
+                    <div class="flex gap-2 no-print">
+                        <button onclick="window.print()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold flex items-center gap-2 transition">
+                            <i class="fa-solid fa-print"></i> প্রিন্ট
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ADD / EDIT STUDENT FORM -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 no-print">
+                    <h3 class="text-md font-bold text-slate-800 mb-4 pb-2 border-b flex items-center gap-2">
+                        <i class="fa-solid fa-address-card text-emerald-600"></i> নতুন ছাত্র ভর্তি / তথ্য আপডেট ফরম
+                    </h3>
+                    
+                    <form id="studentForm" onsubmit="handleStudentSubmit(event)" class="space-y-4">
+                        <input type="hidden" id="editIndex" value="-1">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <!-- 1. ভর্তি নম্বর & ছবি -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">ভর্তি নম্বর (Admission No)*</label>
+                                <input type="text" id="admNo" required placeholder="উদা: 2026-001" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">ছাত্রের ছবি URL/লিংক</label>
+                                <input type="text" id="photo" placeholder="https://..." class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 2. নাম & রোল -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">ছাত্রের পুরো নাম*</label>
+                                <input type="text" id="studentName" required placeholder="ছাত্রের নাম লিখুন" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">রোল নম্বর*</label>
+                                <input type="text" id="rollNo" required placeholder="উদা: ১০১" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 3. জামাত & বিভাগ -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">জামাত / শ্রেণী*</label>
+                                <select id="jamat" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                    <option value="">নির্বাচন করুন</option>
+                                    <option value="হিফজুল কুরআন">হিফজুল কুরআন</option>
+                                    <option value="নূরানী & নাজেরা">নূরানী & নাজেরা</option>
+                                    <option value="ইবতেদায়ী">ইবতেদায়ী</option>
+                                    <option value="মুতাওয়াসসিতাহ">মুতাওয়াসসিতাহ</option>
+                                    <option value="সানাবিয়্যাহ">সানাবিয়্যাহ</option>
+                                    <option value="ফযীলত">ফযীলত</option>
+                                    <option value="তাকমীল (দাওরায়ে হাদীস)">তাকমীল (দাওরায়ে হাদীস)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">বিভাগ (Department)</label>
+                                <input type="text" id="department" placeholder="উদা: হিফজ / কিরাত / কিতাব" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 4. আবাসিক/অনাবাসিক অবস্থা -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">আবাসন ও বোর্ডিং ব্যবস্থা</label>
+                                <select id="residenceType" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                    <option value="অনাবাসিক">অনাবাসিক (Day Scholar)</option>
+                                    <option value="আবাসিক">আবাসিক (Residential)</option>
+                                    <option value="লিল্লাহ বোর্ডিং">লিল্লাহ বোর্ডিং (Lillah Resident)</option>
+                                </select>
+                            </div>
+
+                            <!-- 5. অভিভাবক ও যোগাযোগ -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">অভিভাবকের নাম*</label>
+                                <input type="text" id="guardianName" required placeholder="পিতা/অভিভাবকের নাম" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">অভিভাবকের মোবাইল নম্বর*</label>
+                                <input type="tel" id="contactNo" required placeholder="017xxxxxxxx" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 6. ঠিকানা -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">স্থায়ী ও বর্তমান ঠিকানা</label>
+                                <input type="text" id="address" placeholder="গ্রাম, ডাকঘর, উপজেলা, জেলা" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 7. উপস্থিতি status -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">উপস্থিতি স্ট্যাটাস</label>
+                                <select id="attendanceStatus" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                    <option value="উপস্থিত">উপস্থিত (Present)</option>
+                                    <option value="অনুপস্থিত">অনুপস্থিত (Absent)</option>
+                                    <option value="ছুটিতে">ছুটিতে (On Leave)</option>
+                                </select>
+                            </div>
+
+                            <!-- 8. ফি, বেতন, বকেয়া ও অগ্রিম -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">মাসিক ফি/বেতন (টাকা)</label>
+                                <input type="number" id="monthlyFee" placeholder="0.00" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">বকেয়া টাকা (যদি থাকে)</label>
+                                <input type="number" id="dueAmount" placeholder="0.00" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">অগ্রিম পরিশোধ (টাকা)</label>
+                                <input type="number" id="advanceAmount" placeholder="0.00" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 9. পরীক্ষার ফলাফল & ছুটি -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">সর্বশেষ পরীক্ষার ফলাফল/গ্রেড</label>
+                                <input type="text" id="examResult" placeholder="উদা: মুমতাজ (A+)" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">ছুটির আবেদন/অবস্থা</label>
+                                <input type="text" id="leaveStatus" placeholder="উদা: ৩ দিনের মঞ্জুরকৃত ছুটি" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 10. শৃঙ্খলা ও অন্যান্য নোট -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">ছাত্রের শৃঙ্খলা ও প্রয়োজনীয় নোট</label>
+                                <input type="text" id="disciplineNote" placeholder="আচরণ, মান বা বিশৃঙ্খলা সম্পর্কিত নোট" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+
+                            <!-- 11. স্থানাত্তর / ছাড়পত্র -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">জামাত পরিবর্তন/ছাড়পত্র স্ট্যাটাস</label>
+                                <input type="text" id="transferStatus" placeholder="উদা: নিয়মিত / অন্য মাদ্রাসায় স্থানান্তর / ছাড়পত্র গৃহীত" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Form Submit Actions -->
+                        <div class="flex justify-end gap-3 mt-4 pt-2 border-t">
+                            <button type="button" onclick="resetStudentForm()" class="px-5 py-2 border border-slate-300 hover:bg-slate-100 rounded-xl text-sm font-semibold text-slate-600 transition">
+                                রিসেট
+                            </button>
+                            <button type="submit" id="submitBtn" class="px-6 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-bold shadow-md transition flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> তথ্য সংরক্ষণ করুন
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- STUDENT LIST TABLE SECTION -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 no-print">
+                        <h3 class="text-md font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-emerald-600"></i> ভর্তি হওয়া ছাত্রদের তালিকা ও অনুসন্ধান
+                        </h3>
+                        <!-- Search Box -->
+                        <div class="relative w-full sm:w-72">
+                            <input type="text" id="searchStudentInput" onkeyup="renderStudentTable()" placeholder="নাম, রোল বা ভর্তি নং দিয়ে খুঁজুন..." class="w-full pl-9 pr-3 py-1.5 border rounded-xl text-sm focus:ring-2 focus:ring-emerald-600 outline-none">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-emerald-900 text-white font-semibold">
+                                    <th class="p-3 rounded-tl-xl">ছবি/ভর্তি নং</th>
+                                    <th class="p-3">ছাত্রের নাম & জামাত</th>
+                                    <th class="p-3">অভিভাবক ও যোগাযোগ</th>
+                                    <th class="p-3">আবাসন অবস্থা</th>
+                                    <th class="p-3">উপস্থিতি</th>
+                                    <th class="p-3">ফি / বকেয়া / অগ্রিম</th>
+                                    <th class="p-3">ফলাফল / নোট</th>
+                                    <th class="p-3 text-center rounded-tr-xl no-print">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTableBody" class="divide-y divide-slate-100 text-slate-700">
+                                <!-- Data will render via Javascript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
             <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> শিক্ষক ও কর্মচারী পেজ </div></section>
             <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> আয়-ব্যয় হিসাব পেজ </div></section>
             <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> দান-অনুদান পেজ </div></section>
@@ -283,6 +477,215 @@
         function toggleMobileMenu() {
             alert('মোবাইল মেনু ওপেন হয়েছে');
         }
+
+        /* ================= STUDENT MANAGEMENT SYSTEM LOGIC ================= */
+        // Sample Mock Data Array
+        let studentsData = [
+            {
+                admNo: "2026-001",
+                photo: "",
+                studentName: "আব্দুল্লাহ আল মাহমুদ",
+                rollNo: "১০১",
+                jamat: "হিফজুল কুরআন",
+                department: "হিফজ",
+                residenceType: "লিল্লাহ বোর্ডিং",
+                guardianName: "মো: রফিকুল ইসলাম",
+                contactNo: "01712345678",
+                address: "পূর্ব সাহেব নগর, পরশুরাম, ফেনী",
+                attendanceStatus: "উপস্থিত",
+                monthlyFee: 0,
+                dueAmount: 0,
+                advanceAmount: 0,
+                examResult: "মুমতাজ (A+)",
+                leaveStatus: "নাই",
+                disciplineNote: "উত্তম আচরণ",
+                transferStatus: "নিয়মিত"
+            },
+            {
+                admNo: "2026-002",
+                photo: "",
+                studentName: "মুহাম্মাদ সালমান",
+                rollNo: "১০২",
+                jamat: "ইবতেদায়ী",
+                department: "কিতাব",
+                residenceType: "আবাসিক",
+                guardianName: "জালাল উদ্দিন",
+                contactNo: "01887654321",
+                address: "ফেনী সদর, ফেনী",
+                attendanceStatus: "উপস্থিত",
+                monthlyFee: 1200,
+                dueAmount: 500,
+                advanceAmount: 0,
+                examResult: "জায়্যিদ জিদ্দান",
+                leaveStatus: "১ দিন ছুটি",
+                disciplineNote: "নিয়মিত পাঠে মনোযোগী",
+                transferStatus: "নিয়মিত"
+            }
+        ];
+
+        // Function to render Table Data
+        function renderStudentTable() {
+            const tbody = document.getElementById('studentTableBody');
+            const query = document.getElementById('searchStudentInput') ? document.getElementById('searchStudentInput').value.toLowerCase() : '';
+            tbody.innerHTML = '';
+
+            const filteredData = studentsData.filter(s => 
+                s.studentName.toLowerCase().includes(query) || 
+                s.admNo.toLowerCase().includes(query) || 
+                s.rollNo.toLowerCase().includes(query) ||
+                s.jamat.toLowerCase().includes(query)
+            );
+
+            if(filteredData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">কোনো তথ্য পাওয়া যায়নি।</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach((student, index) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+                
+                const photoSrc = student.photo || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.studentName) + "&background=064E3B&color=fff";
+
+                tr.innerHTML = `
+                    <td class="p-3">
+                        <div class="flex items-center gap-2">
+                            <img src="${photoSrc}" class="w-8 h-8 rounded-full object-cover border" alt="Student">
+                            <div>
+                                <div class="font-bold text-slate-800">${student.admNo}</div>
+                                <div class="text-[10px] text-slate-500">রোল: ${student.rollNo}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-3">
+                        <div class="font-bold text-slate-900">${student.studentName}</div>
+                        <div class="text-[10px] text-emerald-700 font-medium">${student.jamat} (${student.department || 'সাধারণ'})</div>
+                    </td>
+                    <td class="p-3">
+                        <div class="font-medium text-slate-800">${student.guardianName}</div>
+                        <div class="text-[10px] text-slate-500"><i class="fa-solid fa-phone text-[9px]"></i> ${student.contactNo}</div>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${student.residenceType === 'লিল্লাহ বোর্ডিং' ? 'bg-amber-100 text-amber-800' : student.residenceType === 'আবাসিক' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-700'}">
+                            ${student.residenceType}
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${student.attendanceStatus === 'উপস্থিত' ? 'bg-emerald-100 text-emerald-800' : student.attendanceStatus === 'অনুপস্থিত' ? 'bg-rose-100 text-rose-800' : 'bg-yellow-100 text-yellow-800'}">
+                            ${student.attendanceStatus}
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <div>ফি: ৳${student.monthlyFee || 0}</div>
+                        <div class="${student.dueAmount > 0 ? 'text-rose-600 font-bold' : 'text-slate-400'}">বকেয়া: ৳${student.dueAmount || 0}</div>
+                    </td>
+                    <td class="p-3">
+                        <div class="font-semibold text-emerald-800">${student.examResult || 'N/A'}</div>
+                        <div class="text-[10px] text-slate-500 truncate max-w-[120px]">${student.disciplineNote || '-'}</div>
+                    </td>
+                    <td class="p-3 text-center no-print">
+                        <div class="flex justify-center gap-1">
+                            <button onclick="editStudent(${index})" class="w-7 h-7 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition flex items-center justify-center">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteStudent(${index})" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition flex items-center justify-center">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Add or Update Student Function
+        function handleStudentSubmit(e) {
+            e.preventDefault();
+            const editIndex = parseInt(document.getElementById('editIndex').value);
+
+            const studentObj = {
+                admNo: document.getElementById('admNo').value,
+                photo: document.getElementById('photo').value,
+                studentName: document.getElementById('studentName').value,
+                rollNo: document.getElementById('rollNo').value,
+                jamat: document.getElementById('jamat').value,
+                department: document.getElementById('department').value,
+                residenceType: document.getElementById('residenceType').value,
+                guardianName: document.getElementById('guardianName').value,
+                contactNo: document.getElementById('contactNo').value,
+                address: document.getElementById('address').value,
+                attendanceStatus: document.getElementById('attendanceStatus').value,
+                monthlyFee: parseFloat(document.getElementById('monthlyFee').value) || 0,
+                dueAmount: parseFloat(document.getElementById('dueAmount').value) || 0,
+                advanceAmount: parseFloat(document.getElementById('advanceAmount').value) || 0,
+                examResult: document.getElementById('examResult').value,
+                leaveStatus: document.getElementById('leaveStatus').value,
+                disciplineNote: document.getElementById('disciplineNote').value,
+                transferStatus: document.getElementById('transferStatus').value
+            };
+
+            if (editIndex === -1) {
+                // New Entry
+                studentsData.push(studentObj);
+                alert('নতুন ছাত্রের তথ্য সফলভাবে তৈরি ও সংরক্ষণ করা হয়েছে!');
+            } else {
+                // Update
+                studentsData[editIndex] = studentObj;
+                alert('ছাত্রের তথ্য সফলভাবে আপডেট করা হয়েছে!');
+            }
+
+            resetStudentForm();
+            renderStudentTable();
+        }
+
+        // Edit Function
+        function editStudent(index) {
+            const s = studentsData[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('admNo').value = s.admNo;
+            document.getElementById('photo').value = s.photo;
+            document.getElementById('studentName').value = s.studentName;
+            document.getElementById('rollNo').value = s.rollNo;
+            document.getElementById('jamat').value = s.jamat;
+            document.getElementById('department').value = s.department;
+            document.getElementById('residenceType').value = s.residenceType;
+            document.getElementById('guardianName').value = s.guardianName;
+            document.getElementById('contactNo').value = s.contactNo;
+            document.getElementById('address').value = s.address;
+            document.getElementById('attendanceStatus').value = s.attendanceStatus;
+            document.getElementById('monthlyFee').value = s.monthlyFee;
+            document.getElementById('dueAmount').value = s.dueAmount;
+            document.getElementById('advanceAmount').value = s.advanceAmount;
+            document.getElementById('examResult').value = s.examResult;
+            document.getElementById('leaveStatus').value = s.leaveStatus;
+            document.getElementById('disciplineNote').value = s.disciplineNote;
+            document.getElementById('transferStatus').value = s.transferStatus;
+
+            document.getElementById('submitBtn').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> তথ্য আপডেট করুন`;
+            
+            // Scroll smoothly to form
+            document.getElementById('studentForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Delete Function
+        function deleteStudent(index) {
+            if (confirm('আপনি কি নিশ্চিত যে এই ছাত্রের তথ্য মুছে ফেলতে চান?')) {
+                studentsData.splice(index, 1);
+                renderStudentTable();
+            }
+        }
+
+        // Reset Form
+        function resetStudentForm() {
+            document.getElementById('studentForm').reset();
+            document.getElementById('editIndex').value = "-1";
+            document.getElementById('submitBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> তথ্য সংরক্ষণ করুন`;
+        }
+
+        // Initial Table Render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStudentTable();
+        });
     </script>
 </body>
 </html>
