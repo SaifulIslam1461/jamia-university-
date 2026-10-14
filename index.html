@@ -13,7 +13,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #F0F4F8; color: #1E293B; }
-        
+
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -35,7 +35,7 @@
 <body class="antialiased selection:bg-emerald-700 selection:text-white pb-20 md:pb-0">
 
     <div class="min-h-screen flex flex-col">
-        
+
         <!-- TOP APP HEADER -->
         <header class="app-header text-white px-4 py-3 shadow-md flex justify-between items-center sticky top-0 z-30">
             <div class="flex items-center gap-3">
@@ -72,10 +72,10 @@
 
         <!-- MAIN WORKSPACE -->
         <main class="flex-1 p-4 md:p-8 space-y-5 max-w-7xl mx-auto w-full">
-            
+
             <!-- ================= HOME / DASHBOARD PAGE ================= -->
             <section id="sec-dashboard" class="page-section active space-y-6">
-                
+
                 <!-- ISLAMIC BANNER -->
                 <div class="relative rounded-3xl overflow-hidden shadow-md border border-emerald-900/20 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white p-6 md:p-8 flex flex-col items-center text-center space-y-3">
                     <div class="text-amber-300 font-serif text-xl tracking-widest opacity-95">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
@@ -85,7 +85,7 @@
 
                 <!-- DASHBOARD MODULE CARDS GRID -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    
+
                     <!-- Card 1: Admin & Info -->
                     <div onclick="switchTab('info')" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center space-y-4 group relative overflow-hidden">
                         <div class="w-20 h-20 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 transition">
@@ -234,7 +234,7 @@
 
             <!-- Other placeholders for tabs -->
             <section id="sec-info" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> মাদ্রাসারপরিচিতি ও প্রশাসন পেজ </div></section>
-            
+
             <!-- ================= STUDENT MANAGEMENT SECTION ================= -->
             <section id="sec-students" class="page-section space-y-6">
                 <!-- Header Title Bar -->
@@ -254,7 +254,7 @@
 
                 <!-- 3 UNIQUE & ATTRACTIVE ACTION BUTTONS -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 no-print">
-                    
+
                     <!-- Button 1: Admission Form -->
                     <button onclick="openModal('modal-admission')" class="relative overflow-hidden group bg-gradient-to-br from-emerald-600 to-teal-800 text-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-left flex items-center justify-between">
                         <div class="space-y-1 z-10">
@@ -351,75 +351,135 @@
 
         </main>
 
-        <!-- MODAL 1: ADMISSION FORM -->
+        <!-- MODAL 1: UPDATED 2-PART ADMISSION FORM -->
         <div id="modal-admission" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-            <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative my-8 animate-fadeIn">
+            <div class="bg-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl relative my-8 animate-fadeIn max-h-[90vh] overflow-y-auto">
                 <button onclick="closeModal('modal-admission')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center text-slate-500 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <h3 class="text-lg font-bold text-emerald-950 mb-4 pb-2 border-b flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus text-emerald-600"></i> ১. নতুন ছাত্র ভর্তি ফরম রেজিস্ট্রেশন
+                    <i class="fa-solid fa-user-plus text-emerald-600"></i> নতুন ছাত্র ভর্তি ফরম রেজিস্ট্রেশন
                 </h3>
-                <form onsubmit="handleAdmissionSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">ভর্তি নম্বর*</label>
-                            <input type="text" id="admNo" required placeholder="উদা: 2026-003" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">ছাত্রের ছবি URL</label>
-                            <input type="text" id="photo" placeholder="https://..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">ছাত্রের নাম*</label>
-                            <input type="text" id="studentName" required placeholder="পুরো নাম লিখুন" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">রোল নম্বর*</label>
-                            <input type="text" id="rollNo" required placeholder="উদা: ১০৩" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">জামাত / শ্রেণী*</label>
-                            <select id="jamat" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
-                                <option value="">নির্বাচন করুন</option>
-                                <option value="হিফজুল কুরআন">হিফজুল কুরআন</option>
-                                <option value="নূরানী & নাজেরা">নূরানী & নাজেরা</option>
-                                <option value="ইবতেদায়ী">ইবতেদায়ী</option>
-                                <option value="মুতাওয়াসসিতাহ">মুতাওয়াসসিতাহ</option>
-                                <option value="সানাবিয়্যাহ">সানাবিয়্যাহ</option>
-                                <option value="ফযীলত">ফযীলত</option>
-                                <option value="তাকমীল">তাকমীল</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">বিভাগ</label>
-                            <input type="text" id="department" placeholder="উদা: হিফজ/কিতাব" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">আবাসন ও বোর্ডিং</label>
-                            <select id="residenceType" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
-                                <option value="অনাবাসিক">অনাবাসিক</option>
-                                <option value="আবাসিক">আবাসিক</option>
-                                <option value="লিল্লাহ বোর্ডিং">লিল্লাহ বোর্ডিং</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">অভিভাবকের নাম*</label>
-                            <input type="text" id="guardianName" required placeholder="পিতার নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">যোগাযোগের মোবাইল*</label>
-                            <input type="tel" id="contactNo" required placeholder="017xxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">মাসিক ফি (টাকা)</label>
-                            <input type="number" id="monthlyFee" placeholder="0.00" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block font-semibold text-slate-700 mb-1">স্থায়ী ঠিকানা</label>
-                            <input type="text" id="address" placeholder="গ্রাম, ডাকঘর, উপজেলা, জেলা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none">
+                
+                <form onsubmit="handleAdmissionSubmit(event)" class="space-y-6">
+                    
+                    <!-- PART 1: STUDENT INFORMATION -->
+                    <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 space-y-4">
+                        <h4 class="font-bold text-emerald-900 text-sm flex items-center gap-2 border-b border-emerald-200 pb-2">
+                            <i class="fa-solid fa-user-graduate"></i> ১. ছাত্রের তথ্য
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">ফরম নাম্বার / ভর্তি নম্বর*</label>
+                                <input type="text" id="admNo" required placeholder="উদা: 2026-003" onkeyup="checkExistingStudent(this.value)" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                <span class="text-[10px] text-slate-500">নম্বর দিলে আগের তথ্য থাকলে অটো পূরণ হবে</span>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">রোল নম্বর*</label>
+                                <input type="text" id="rollNo" required placeholder="উদা: ১০৩" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের পুরো নাম*</label>
+                                <input type="text" id="studentName" required placeholder="নাম লিখুন" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">পিতার নাম*</label>
+                                <input type="text" id="fatherName" required placeholder="পিতার নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">মাতার নাম*</label>
+                                <input type="text" id="motherName" required placeholder="মাতার নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">জন্ম তারিখ</label>
+                                <input type="date" id="dob" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">রক্তের গ্রুপ (অপশনাল)</label>
+                                <select id="bloodGroup" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                    <option value="">নির্বাচন করুন</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">এখন কোন জামায়াতে পড়তে ইচ্ছুক?*</label>
+                                <select id="jamat" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                    <option value="">জামাত নির্বাচন করুন</option>
+                                    <option value="হিফজুল কুরআন">হিফজুল কুরআন</option>
+                                    <option value="নূরানী & নাজেরা">নূরানী & নাজেরা</option>
+                                    <option value="ইবতেদায়ী">ইবতেদায়ী</option>
+                                    <option value="মুতাওয়াসসিতাহ">মুতাওয়াসসিতাহ</option>
+                                    <option value="সানাবিয়্যাহ">সানাবিয়্যাহ</option>
+                                    <option value="ফযীলত">ফযীলত</option>
+                                    <option value="তাকমীল">তাকমীল</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">আগে কোন প্রতিষ্ঠানে পড়েছে?</label>
+                                <input type="text" id="prevInstitute" placeholder="প্রতিষ্ঠানের নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">আগে কোন কিতাব পড়েছে?</label>
+                                <input type="text" id="prevBook" placeholder="সর্বশেষ পঠিত কিতাব" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block font-semibold text-slate-700 mb-1">বর্তমান ঠিকানা*</label>
+                                <textarea id="presentAddress" required rows="2" placeholder="গ্রাম, ডাকঘর, উপজেলা, জেলা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white"></textarea>
+                            </div>
+                            <div class="md:col-span-2">
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="block font-semibold text-slate-700">স্থায়ী ঠিকানা*</label>
+                                    <button type="button" onclick="copyAddress()" class="text-[11px] text-emerald-700 font-bold hover:underline">
+                                        <i class="fa-regular fa-copy"></i> বর্তমান ঠিকানার মতো হুবহু এক করুন
+                                    </button>
+                                </div>
+                                <textarea id="permanentAddress" required rows="2" placeholder="গ্রাম, ডাকঘর, উপজেলা, জেলা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white"></textarea>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের মোবাইল নাম্বার (যদি থাকে)</label>
+                                <input type="tel" id="studentMobile" placeholder="017xxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের ছবি (গ্যালারি থেকে)</label>
+                                <input type="file" id="studentPhotoFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের জন্মনিবন্ধন / আইডি কার্ডের ছবি (গ্যালারি থেকে)</label>
+                                <input type="file" id="studentIdCardFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                            </div>
                         </div>
                     </div>
+
+                    <!-- PART 2: GUARDIAN INFORMATION -->
+                    <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-100 space-y-4">
+                        <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2 border-b border-amber-200 pb-2">
+                            <i class="fa-solid fa-user-shield"></i> ২. অভিভাবক তথ্য ও যোগাযোগ
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">অভিভাবকের নাম*</label>
+                                <input type="text" id="guardianName" required placeholder="পিতা/অভিভাবকের নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">যোগাযোগের নম্বর ও WhatsApp (একাধিক নম্বরসহ)*</label>
+                                <input type="text" id="guardianContact" required placeholder="উদা: 017xxxxxxxx (WhatsApp), 018xxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block font-semibold text-slate-700 mb-1">অভিভাবকের এনআইডি / আইডি কার্ডের ছবি (গ্যালারি থেকে)</label>
+                                <input type="file" id="guardianIdCardFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex justify-end gap-2 pt-3 border-t">
                         <button type="button" onclick="closeModal('modal-admission')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">বাতিল</button>
                         <button type="submit" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
@@ -555,7 +615,7 @@
 
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('text-emerald-800', 'font-bold'));
             document.querySelectorAll('nav button').forEach(b => b.classList.add('text-slate-500', 'font-medium'));
-            
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -573,19 +633,52 @@
             document.getElementById(modalId).classList.add('hidden');
         }
 
+        /* Address Copy Helper */
+        function copyAddress() {
+            const present = document.getElementById('presentAddress').value;
+            document.getElementById('permanentAddress').value = present;
+        }
+
+        /* Check Existing Student by Form No */
+        function checkExistingStudent(admNoVal) {
+            const found = studentsData.find(s => s.admNo === admNoVal);
+            if(found) {
+                document.getElementById('rollNo').value = found.rollNo || '';
+                document.getElementById('studentName').value = found.studentName || '';
+                document.getElementById('fatherName').value = found.fatherName || '';
+                document.getElementById('motherName').value = found.motherName || '';
+                document.getElementById('dob').value = found.dob || '';
+                document.getElementById('bloodGroup').value = found.bloodGroup || '';
+                document.getElementById('jamat').value = found.jamat || '';
+                document.getElementById('prevInstitute').value = found.prevInstitute || '';
+                document.getElementById('prevBook').value = found.prevBook || '';
+                document.getElementById('presentAddress').value = found.presentAddress || '';
+                document.getElementById('permanentAddress').value = found.permanentAddress || '';
+                document.getElementById('studentMobile').value = found.studentMobile || '';
+                document.getElementById('guardianName').value = found.guardianName || '';
+                document.getElementById('guardianContact').value = found.guardianContact || '';
+            }
+        }
+
         /* ================= STUDENT MANAGEMENT SYSTEM LOGIC ================= */
         let studentsData = [
             {
                 admNo: "2026-001",
                 photo: "",
                 studentName: "আব্দুল্লাহ আল মাহমুদ",
+                fatherName: "মো: রফিকুল ইসলাম",
+                motherName: "ফাতিমা বেগম",
+                dob: "2012-05-10",
+                bloodGroup: "A+",
                 rollNo: "১০১",
                 jamat: "হিফজুল কুরআন",
-                department: "হিফজ",
-                residenceType: "লিল্লাহ বোর্ডিং",
+                prevInstitute: "নূরানী মাদ্রাসা",
+                prevBook: "নাজেরা",
+                presentAddress: "পূর্ব সাহেব নগর, পরশুরাম, ফেনী",
+                permanentAddress: "পূর্ব সাহেব নগর, পরশুরাম, ফেনী",
+                studentMobile: "",
                 guardianName: "মো: রফিকুল ইসলাম",
-                contactNo: "01712345678",
-                address: "পূর্ব সাহেব নগর, পরশুরাম, ফেনী",
+                guardianContact: "01712345678 (WhatsApp)",
                 attendanceStatus: "উপস্থিত",
                 monthlyFee: 0,
                 dueAmount: 0,
@@ -598,13 +691,19 @@
                 admNo: "2026-002",
                 photo: "",
                 studentName: "মুহাম্মাদ সালমান",
+                fatherName: "জালাল উদ্দিন",
+                motherName: "आयশা খাতুন",
+                dob: "2013-08-15",
+                bloodGroup: "B+",
                 rollNo: "১০২",
                 jamat: "ইবতেদায়ী",
-                department: "কিতাব",
-                residenceType: "আবাসিক",
+                prevInstitute: "মক্তব",
+                prevBook: "কায়দা",
+                presentAddress: "ফেনী সদর, ফেনী",
+                permanentAddress: "ফেনী সদর, ফেনী",
+                studentMobile: "01887654321",
                 guardianName: "জালাল উদ্দিন",
-                contactNo: "01887654321",
-                address: "ফেনী সদর, ফেনী",
+                guardianContact: "01887654321",
                 attendanceStatus: "উপস্থিত",
                 monthlyFee: 1200,
                 dueAmount: 500,
@@ -618,7 +717,7 @@
         function populateStudentDropdowns() {
             const resultSelect = document.getElementById('resultStudentSelect');
             const othersSelect = document.getElementById('othersStudentSelect');
-            
+
             let optionsHtml = '<option value="">ছাত্র নির্বাচন করুন...</option>';
             studentsData.forEach((s, idx) => {
                 optionsHtml += `<option value="${idx}">${s.studentName} (${s.admNo} - ${s.jamat})</option>`;
@@ -649,7 +748,7 @@
             filteredData.forEach((student, index) => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
-                
+
                 const photoSrc = student.photo || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.studentName) + "&background=064E3B&color=fff";
 
                 tr.innerHTML = `
@@ -664,19 +763,19 @@
                     </td>
                     <td class="p-3">
                         <div class="font-bold text-slate-900">${student.studentName}</div>
-                        <div class="text-[10px] text-emerald-700 font-medium">${student.jamat} (${student.department || 'সাধারণ'})</div>
+                        <div class="text-[10px] text-emerald-700 font-medium">${student.jamat} (পিতা: ${student.fatherName})</div>
                     </td>
                     <td class="p-3">
                         <div class="font-medium text-slate-800">${student.guardianName}</div>
-                        <div class="text-[10px] text-slate-500"><i class="fa-solid fa-phone text-[9px]"></i> ${student.contactNo}</div>
+                        <div class="text-[10px] text-slate-500"><i class="fa-solid fa-phone text-[9px]"></i> ${student.guardianContact}</div>
                     </td>
                     <td class="p-3">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${student.residenceType === 'লিল্লাহ বোর্ডিং' ? 'bg-amber-100 text-amber-800' : student.residenceType === 'আবাসিক' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-700'}">
-                            ${student.residenceType}
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                            ${student.bloodGroup ? 'গ্রুপ: ' + student.bloodGroup : 'সাধারণ'}
                         </span>
                     </td>
                     <td class="p-3">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${student.attendanceStatus === 'উপস্থিত' ? 'bg-emerald-100 text-emerald-800' : student.attendanceStatus === 'অনুপস্থিত' ? 'bg-rose-100 text-rose-800' : 'bg-yellow-100 text-yellow-800'}">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${student.attendanceStatus === 'উপস্থিত' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
                             ${student.attendanceStatus || 'উপস্থিত'}
                         </span>
                     </td>
@@ -705,17 +804,23 @@
             e.preventDefault();
             const studentObj = {
                 admNo: document.getElementById('admNo').value,
-                photo: document.getElementById('photo').value,
-                studentName: document.getElementById('studentName').value,
                 rollNo: document.getElementById('rollNo').value,
+                studentName: document.getElementById('studentName').value,
+                fatherName: document.getElementById('fatherName').value,
+                motherName: document.getElementById('motherName').value,
+                dob: document.getElementById('dob').value,
+                bloodGroup: document.getElementById('bloodGroup').value,
                 jamat: document.getElementById('jamat').value,
-                department: document.getElementById('department').value,
-                residenceType: document.getElementById('residenceType').value,
+                prevInstitute: document.getElementById('prevInstitute').value,
+                prevBook: document.getElementById('prevBook').value,
+                presentAddress: document.getElementById('presentAddress').value,
+                permanentAddress: document.getElementById('permanentAddress').value,
+                studentMobile: document.getElementById('studentMobile').value,
                 guardianName: document.getElementById('guardianName').value,
-                contactNo: document.getElementById('contactNo').value,
-                address: document.getElementById('address').value,
-                monthlyFee: parseFloat(document.getElementById('monthlyFee').value) || 0,
+                guardianContact: document.getElementById('guardianContact').value,
+                photo: "",
                 attendanceStatus: "উপস্থিত",
+                monthlyFee: 0,
                 dueAmount: 0,
                 examResult: "N/A",
                 leaveStatus: "নাই",
