@@ -266,11 +266,7 @@
                 </div>
             </section>
 
-            <!-- STAFF MANAGEMENT SECTION -->
-            <section id="sec-staff" class="page-section space-y-6">
-                <!-- Dynamic Staff Section Rendered via JS -->
-            </section>
-
+            <section id="sec-staff" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> শিক্ষক ও কর্মচারী পেজ </div></section>
             <section id="sec-accounting" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> আয়-ব্যয় হিসাব পেজ </div></section>
             <section id="sec-donations" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> দান-অনুদান পেজ </div></section>
             <section id="sec-lillah" class="page-section space-y-4"><div class="bg-white p-6 rounded-2xl shadow"> লিল্লাহ বোর্ডিং পেজ </div></section>
@@ -283,7 +279,7 @@
 
         </main>
 
-        <!-- MODAL 1: ADMISSION FORM -->
+        <!-- MODAL 1: UPDATED 2-PART ADMISSION FORM -->
         <div id="modal-admission" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
             <div class="bg-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl relative my-8 animate-fadeIn max-h-[90vh] overflow-y-auto">
                 <button onclick="closeModal('modal-admission')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center text-slate-500 transition">
@@ -294,14 +290,18 @@
                 </h3>
                 
                 <form onsubmit="handleAdmissionSubmit(event)" class="space-y-6">
+                    
+                    <!-- PART 1: STUDENT INFORMATION -->
                     <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 space-y-4">
                         <h4 class="font-bold text-emerald-900 text-sm flex items-center gap-2 border-b border-emerald-200 pb-2">
                             <i class="fa-solid fa-user-graduate"></i> ১. ছাত্রের তথ্য
                         </h4>
+                        
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                             <div>
                                 <label class="block font-semibold text-slate-700 mb-1">ফরম নাম্বার / ভর্তি নম্বর*</label>
                                 <input type="text" id="admNo" required placeholder="উদা: 2026-003" onkeyup="checkExistingStudent(this.value)" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                                <span class="text-[10px] text-slate-500">নম্বর দিলে আগের তথ্য থাকলে অটো পূরণ হবে</span>
                             </div>
                             <div>
                                 <label class="block font-semibold text-slate-700 mb-1">রোল নম্বর*</label>
@@ -324,17 +324,21 @@
                                 <input type="date" id="dob" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
                             </div>
                             <div>
-                                <label class="block font-semibold text-slate-700 mb-1">রক্তের গ্রুপ</label>
+                                <label class="block font-semibold text-slate-700 mb-1">রক্তের গ্রুপ (অপশনাল)</label>
                                 <select id="bloodGroup" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
                                     <option value="">নির্বাচন করুন</option>
-                                    <option value="A+">A+</option><option value="A-">A-</option>
-                                    <option value="B+">B+</option><option value="B-">B-</option>
-                                    <option value="O+">O+</option><option value="O-">O-</option>
-                                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block font-semibold text-slate-700 mb-1">জামাত*</label>
+                                <label class="block font-semibold text-slate-700 mb-1">এখন কোন জামায়াতে পড়তে ইচ্ছুক?*</label>
                                 <select id="jamat" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
                                     <option value="">জামাত নির্বাচন করুন</option>
                                     <option value="হিফজুল কুরআন">হিফজুল কুরআন</option>
@@ -347,11 +351,11 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block font-semibold text-slate-700 mb-1">আগের প্রতিষ্ঠান</label>
+                                <label class="block font-semibold text-slate-700 mb-1">আগে কোন প্রতিষ্ঠানে পড়েছে?</label>
                                 <input type="text" id="prevInstitute" placeholder="প্রতিষ্ঠানের নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
                             </div>
                             <div>
-                                <label class="block font-semibold text-slate-700 mb-1">আগের পঠিত কিতাব</label>
+                                <label class="block font-semibold text-slate-700 mb-1">আগে কোন কিতাব পড়েছে?</label>
                                 <input type="text" id="prevBook" placeholder="সর্বশেষ পঠিত কিতাব" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
                             </div>
                             <div class="md:col-span-2">
@@ -368,24 +372,38 @@
                                 <textarea id="permanentAddress" required rows="2" placeholder="গ্রাম, ডাকঘর, উপজেলা, জেলা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white"></textarea>
                             </div>
                             <div>
-                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের মোবাইল</label>
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের মোবাইল নাম্বার (যদি থাকে)</label>
                                 <input type="tel" id="studentMobile" placeholder="017xxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-600 outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের ছবি (গ্যালারি থেকে)</label>
+                                <input type="file" id="studentPhotoFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block font-semibold text-slate-700 mb-1">ছাত্রের জন্মনিবন্ধন / আইডি কার্ডের ছবি (গ্যালারি থেকে)</label>
+                                <input type="file" id="studentIdCardFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
                             </div>
                         </div>
                     </div>
 
+                    <!-- PART 2: GUARDIAN INFORMATION -->
                     <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-100 space-y-4">
                         <h4 class="font-bold text-amber-900 text-sm flex items-center gap-2 border-b border-amber-200 pb-2">
                             <i class="fa-solid fa-user-shield"></i> ২. অভিভাবক তথ্য ও যোগাযোগ
                         </h4>
+                        
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                             <div>
                                 <label class="block font-semibold text-slate-700 mb-1">অভিভাবকের নাম*</label>
                                 <input type="text" id="guardianName" required placeholder="পিতা/অভিভাবকের নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white">
                             </div>
                             <div>
-                                <label class="block font-semibold text-slate-700 mb-1">যোগাযোগ ও WhatsApp নম্বর*</label>
-                                <input type="text" id="guardianContact" required placeholder="017xxxxxxxx (WhatsApp)" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white">
+                                <label class="block font-semibold text-slate-700 mb-1">যোগাযোগের নম্বর ও WhatsApp (একাধিক নম্বরসহ)*</label>
+                                <input type="text" id="guardianContact" required placeholder="উদা: 017xxxxxxxx (WhatsApp), 018xxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block font-semibold text-slate-700 mb-1">অভিভাবকের এনআইডি / আইডি কার্ডের ছবি (গ্যালারি থেকে)</label>
+                                <input type="file" id="guardianIdCardFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
                             </div>
                         </div>
                     </div>
@@ -394,65 +412,6 @@
                         <button type="button" onclick="closeModal('modal-admission')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">বাতিল</button>
                         <button type="submit" id="btnSubmitAdmission" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
                             <i class="fa-solid fa-floppy-disk"></i> ভর্তি সম্পন্ন করুন
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- MODAL: STAFF REGISTRATION -->
-        <div id="modal-staff" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-            <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative my-8 animate-fadeIn max-h-[90vh] overflow-y-auto">
-                <button onclick="closeModal('modal-staff')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center text-slate-500 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <h3 class="text-lg font-bold text-purple-950 mb-4 pb-2 border-b flex items-center gap-2">
-                    <i class="fa-solid fa-chalkboard-user text-purple-600"></i> নতুন শিক্ষক / কর্মকর্তা রেজিস্ট্রেশন
-                </h3>
-                
-                <form onsubmit="handleStaffSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">আইডি / স্টাফ নম্বর*</label>
-                            <input type="text" id="staffId" required placeholder="উদা: T-2026-01" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">পূর্ণ নাম*</label>
-                            <input type="text" id="staffName" required placeholder="শিক্ষক/কর্মকর্তার নাম" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">পদবি*</label>
-                            <input type="text" id="staffDesignation" required placeholder="উদা: প্রধান শিক্ষক / ক্বারী" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">বিভাগ / জামাত</label>
-                            <input type="text" id="staffDepartment" placeholder="উদা: হিফজ বিভাগ" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">মোবাইল নম্বর*</label>
-                            <input type="tel" id="staffMobile" required placeholder="017xxxxxxxx" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">এনআইডি (NID) নম্বর</label>
-                            <input type="text" id="staffNid" placeholder="জাতীয় পরিচয়পত্র নম্বর" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">যোগদানের তারিখ</label>
-                            <input type="date" id="staffJoiningDate" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">মাসিক বেতন (টাকা)</label>
-                            <input type="number" id="staffSalary" placeholder="0.00" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block font-semibold text-slate-700 mb-1">স্থায়ী ঠিকানা</label>
-                            <textarea id="staffAddress" rows="2" placeholder="গ্রাম, ডাকঘর, উপজেলা, জেলা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-purple-600 outline-none"></textarea>
-                        </div>
-                    </div>
-                    <div class="flex justify-end gap-2 pt-3 border-t">
-                        <button type="button" onclick="closeModal('modal-staff')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">বাতিল</button>
-                        <button type="submit" id="btnSubmitStaff" class="px-5 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
-                            <i class="fa-solid fa-floppy-disk"></i> শিক্ষক সংরক্ষণ করুন
                         </button>
                     </div>
                 </form>
@@ -472,15 +431,17 @@
                     <div class="space-y-3 text-xs">
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">ছাত্র নির্বাচন করুন*</label>
-                            <select id="resultStudentSelect" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white"></select>
+                            <select id="resultStudentSelect" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none bg-white">
+                                <!-- Options populated by JavaScript -->
+                            </select>
                         </div>
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">পরীক্ষার নাম*</label>
-                            <input type="text" id="examName" required placeholder="উদা: ১ম সাময়িক পরীক্ষা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none">
+                            <input type="text" id="examName" required placeholder="উদা: ১ম সাময়িক / বার্ষিক পরীক্ষা" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none">
                         </div>
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">ফলাফল / গ্রেড / মার্কস*</label>
-                            <input type="text" id="examResult" required placeholder="উদা: মুমতাজ (A+)" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none">
+                            <input type="text" id="examResult" required placeholder="উদা: মুমতাজ (A+) / মোট নম্বর: ৪৫০" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none">
                         </div>
                     </div>
                     <div class="flex justify-end gap-2 pt-3 border-t">
@@ -506,7 +467,9 @@
                     <div class="space-y-3 text-xs">
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">ছাত্র নির্বাচন করুন*</label>
-                            <select id="othersStudentSelect" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white"></select>
+                            <select id="othersStudentSelect" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none bg-white">
+                                <!-- Options populated by JavaScript -->
+                            </select>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
@@ -522,6 +485,18 @@
                                 <input type="number" id="dueAmount" placeholder="0.00" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none">
                             </div>
                         </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">ছুটির আবেদন/বিবরণ</label>
+                            <input type="text" id="leaveStatus" placeholder="উদা: ৩ দিনের ছুটির আবেদন মঞ্জুর" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">শৃঙ্খলা ও আচরণ নোট</label>
+                            <input type="text" id="disciplineNote" placeholder="উদা: নিয়মিত পড়াশোনায় মনোযোগ প্রয়োজন" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">স্থানান্তর / ছাড়পত্র স্ট্যাটাস</label>
+                            <input type="text" id="transferStatus" placeholder="উদা: নিয়মিত / অন্য শাখায় স্থানান্তরিত" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-600 outline-none">
+                        </div>
                     </div>
                     <div class="flex justify-end gap-2 pt-3 border-t">
                         <button type="button" onclick="closeModal('modal-others')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">বাতিল</button>
@@ -536,19 +511,24 @@
         <!-- BOTTOM MOBILE NAVIGATION BAR -->
         <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-2.5 flex justify-between items-center z-40 md:hidden shadow-lg">
             <button onclick="switchTab('dashboard')" id="nav-home" class="flex flex-col items-center text-emerald-800 text-[11px] font-bold gap-0.5">
-                <i class="fa-solid fa-house text-base"></i><span>হোম</span>
+                <i class="fa-solid fa-house text-base"></i>
+                <span>হোম</span>
             </button>
             <button onclick="switchTab('search')" id="nav-search" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-magnifying-glass text-base"></i><span>সার্চ</span>
+                <i class="fa-solid fa-magnifying-glass text-base"></i>
+                <span>সার্চ</span>
             </button>
             <button onclick="switchTab('reports')" id="nav-reports" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-file-lines text-base"></i><span>রিপোর্ট</span>
+                <i class="fa-solid fa-file-lines text-base"></i>
+                <span>রিপোর্ট</span>
             </button>
             <button onclick="switchTab('notices')" id="nav-notices" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-bell text-base"></i><span>নোটিশ</span>
+                <i class="fa-solid fa-bell text-base"></i>
+                <span>নোটিশ</span>
             </button>
             <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center text-slate-500 text-[11px] font-medium gap-0.5">
-                <i class="fa-solid fa-gears text-base"></i><span>সেটিংস</span>
+                <i class="fa-solid fa-gears text-base"></i>
+                <span>সেটিংস</span>
             </button>
         </nav>
 
@@ -558,20 +538,18 @@
     <script>
         // SUPABASE CLIENT INITIALIZATION
         const SUPABASE_URL = "https://zwpoxufpeluqtdooeekr.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3cG94dWZwZWx1cXRkb29lZWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyNjgyMzIsImV4cCI6MjE0Njg0NDIzMn0.oEwsRjnoXe5hNI7Iw4-UAOUMyA3mVc_ybZ48rHi4Uks";
+        const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3cG94dWZwZWx1cXRkb29lZWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyNjgyMzIsImV4cCI6MjE0Njg0NDIzMn0.oEwsRjnoXe5hNI7Iw4-UAOUMyA3mVc_ybZ48rHi4Uks";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let studentsData = [];
-        let staffData = [];
 
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             const target = document.getElementById('sec-' + tabId);
             if(target) target.classList.add('active');
 
-            if(tabId === 'staff') {
-                fetchStaffFromSupabase();
-            }
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('text-emerald-800', 'font-bold'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.add('text-slate-500', 'font-medium'));
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -580,6 +558,7 @@
             alert('মোবাইল মেনু ওপেন হয়েছে');
         }
 
+        /* Modal Toggle Functions */
         function openModal(modalId) {
             populateStudentDropdowns();
             document.getElementById(modalId).classList.remove('hidden');
@@ -589,11 +568,13 @@
             document.getElementById(modalId).classList.add('hidden');
         }
 
+        /* Address Copy Helper */
         function copyAddress() {
             const present = document.getElementById('presentAddress').value;
             document.getElementById('permanentAddress').value = present;
         }
 
+        /* Check Existing Student by Form No */
         function checkExistingStudent(admNoVal) {
             const found = studentsData.find(s => s.admNo === admNoVal);
             if(found) {
@@ -614,11 +595,16 @@
             }
         }
 
-        /* ================= STUDENTS FUNCTIONS ================= */
+        /* ================= FETCH & RENDER FROM SUPABASE ================= */
         async function fetchStudentsFromSupabase() {
             try {
-                const { data, error } = await _supabase.from('students').select('*').order('id', { ascending: false });
+                const { data, error } = await _supabase
+                    .from('students')
+                    .select('*')
+                    .order('id', { ascending: false });
+
                 if (error) throw error;
+
                 if (data) {
                     studentsData = data;
                     renderStudentTable();
@@ -641,10 +627,10 @@
             if(othersSelect) othersSelect.innerHTML = optionsHtml;
         }
 
+        // Render Table Data
         function renderStudentTable() {
             const tbody = document.getElementById('studentTableBody');
             const query = document.getElementById('searchStudentInput') ? document.getElementById('searchStudentInput').value.toLowerCase() : '';
-            if(!tbody) return;
             tbody.innerHTML = '';
 
             const filteredData = studentsData.filter(s => 
@@ -662,7 +648,8 @@
             filteredData.forEach((student) => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
-                const photoSrc = "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.studentName || 'Student') + "&background=064E3B&color=fff";
+
+                const photoSrc = student.studentPhoto || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.studentName || 'Student') + "&background=064E3B&color=fff";
 
                 tr.innerHTML = `
                     <td class="p-3">
@@ -687,19 +674,32 @@
                             ${student.bloodGroup ? 'গ্রুপ: ' + student.bloodGroup : 'সাধারণ'}
                         </span>
                     </td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">উপস্থিত</span></td>
-                    <td class="p-3"><div>ফি: ৳০</div><div class="text-slate-400">বকেয়া: ৳০</div></td>
-                    <td class="p-3"><div class="font-semibold text-emerald-800">N/A</div></td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                            উপস্থিত
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <div>ফি: ৳০</div>
+                        <div class="text-slate-400">বকেয়া: ৳০</div>
+                    </td>
+                    <td class="p-3">
+                        <div class="font-semibold text-emerald-800">N/A</div>
+                        <div class="text-[10px] text-slate-500 truncate max-w-[120px]">-</div>
+                    </td>
                     <td class="p-3 text-center no-print">
-                        <button onclick="deleteStudent(${student.id})" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition inline-flex items-center justify-center">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        <div class="flex justify-center gap-1">
+                            <button onclick="deleteStudent(${student.id})" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition flex items-center justify-center">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
+        /* Submissions to Supabase */
         async function handleAdmissionSubmit(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('btnSubmitAdmission');
@@ -725,8 +725,13 @@
             };
 
             try {
-                const { error } = await _supabase.from('students').insert([studentObj]);
+                const { data, error } = await _supabase
+                    .from('students')
+                    .insert([studentObj])
+                    .select();
+
                 if (error) throw error;
+
                 alert('ভর্তি ফরম সফলভাবে Supabase ডাটাবেসে সংরক্ষিত হয়েছে!');
                 closeModal('modal-admission');
                 e.target.reset();
@@ -736,143 +741,6 @@
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> ভর্তি সম্পন্ন করুন';
-            }
-        }
-
-        async function deleteStudent(id) {
-            if (confirm('আপনি কি এই ছাত্রের তথ্য মুছে ফেলতে চান?')) {
-                try {
-                    const { error } = await _supabase.from('students').delete().eq('id', id);
-                    if (error) throw error;
-                    fetchStudentsFromSupabase();
-                } catch (err) {
-                    alert('মুছে ফেলতে সমস্যা হয়েছে: ' + err.message);
-                }
-            }
-        }
-
-        /* ================= STAFF FUNCTIONS ================= */
-        async function fetchStaffFromSupabase() {
-            try {
-                const { data, error } = await _supabase.from('staff').select('*').order('id', { ascending: false });
-                if (error) throw error;
-                if (data) {
-                    staffData = data;
-                    renderStaffTable();
-                }
-            } catch (err) {
-                console.error("Error fetching staff:", err.message);
-            }
-        }
-
-        function renderStaffTable() {
-            const section = document.getElementById('sec-staff');
-            if (!section) return;
-
-            let html = `
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                    <div>
-                        <h2 class="text-xl font-bold text-purple-950 flex items-center gap-2">
-                            <i class="fa-solid fa-chalkboard-user text-purple-600"></i> শিক্ষক ও কর্মকর্তা ব্যবস্থাপনা
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-1">মাদ্রাসার সকল শিক্ষক ও স্টাফদের তালিকা এবং তথ্যসংগ্রহ</p>
-                    </div>
-                    <button onclick="openModal('modal-staff')" class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow transition">
-                        <i class="fa-solid fa-user-plus"></i> নতুন শিক্ষক যুক্ত করুন
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-purple-900 text-white font-semibold">
-                                    <th class="p-3 rounded-tl-xl">আইডি/নাম</th>
-                                    <th class="p-3">পদবি & বিভাগ</th>
-                                    <th class="p-3">মোবাইল</th>
-                                    <th class="p-3">যোগদানের তারিখ</th>
-                                    <th class="p-3">বেতন</th>
-                                    <th class="p-3">স্ট্যাটাস</th>
-                                    <th class="p-3 text-center rounded-tr-xl no-print">অ্যাকশন</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-100 text-slate-700">
-            `;
-
-            if (staffData.length === 0) {
-                html += `<tr><td colspan="7" class="p-4 text-center text-slate-400">কোনো শিক্ষকের তথ্য পাওয়া যায়নি।</td></tr>`;
-            } else {
-                staffData.forEach(st => {
-                    html += `
-                        <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-                            <td class="p-3">
-                                <div class="font-bold text-slate-800">${st.name || '-'}</div>
-                                <div class="text-[10px] text-slate-500">ID: ${st.staffId || '-'}</div>
-                            </td>
-                            <td class="p-3">
-                                <div class="font-semibold text-purple-900">${st.designation || '-'}</div>
-                                <div class="text-[10px] text-slate-500">${st.department || 'সাধারণ'}</div>
-                            </td>
-                            <td class="p-3">${st.mobile || '-'}</td>
-                            <td class="p-3">${st.joiningDate || '-'}</td>
-                            <td class="p-3 font-semibold text-emerald-700">৳${st.salary || 0}</td>
-                            <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">${st.status || 'সক্রিয়'}</span></td>
-                            <td class="p-3 text-center no-print">
-                                <button onclick="deleteStaff(${st.id})" class="w-7 h-7 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition inline-flex items-center justify-center">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `</tbody></table></div></div>`;
-            section.innerHTML = html;
-        }
-
-        async function handleStaffSubmit(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmitStaff');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> সেভ হচ্ছে...';
-
-            const newStaff = {
-                staffId: document.getElementById('staffId').value,
-                name: document.getElementById('staffName').value,
-                designation: document.getElementById('staffDesignation').value,
-                department: document.getElementById('staffDepartment').value,
-                mobile: document.getElementById('staffMobile').value,
-                nidNo: document.getElementById('staffNid').value,
-                joiningDate: document.getElementById('staffJoiningDate').value,
-                salary: parseFloat(document.getElementById('staffSalary').value) || 0,
-                address: document.getElementById('staffAddress').value
-            };
-
-            try {
-                const { error } = await _supabase.from('staff').insert([newStaff]);
-                if (error) throw error;
-                alert('শিক্ষকের তথ্য সফলভাবে সেভ হয়েছে!');
-                closeModal('modal-staff');
-                e.target.reset();
-                fetchStaffFromSupabase();
-            } catch (err) {
-                alert('ত্রুটি: ' + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> শিক্ষক সংরক্ষণ করুন';
-            }
-        }
-
-        async function deleteStaff(id) {
-            if (confirm('আপনি কি এই শিক্ষকের তথ্য মুছে ফেলতে চান?')) {
-                try {
-                    const { error } = await _supabase.from('staff').delete().eq('id', id);
-                    if (error) throw error;
-                    fetchStaffFromSupabase();
-                } catch (err) {
-                    alert('ডিলিট করতে সমস্যা হয়েছে: ' + err.message);
-                }
             }
         }
 
@@ -888,6 +756,23 @@
             alert('অন্যান্য তথ্য সফলভাবে আপডেট হয়েছে!');
             closeModal('modal-others');
             e.target.reset();
+        }
+
+        async function deleteStudent(id) {
+            if (confirm('আপনি কি এই ছাত্রের তথ্য ডাটাবেস থেকে মুছে ফেলতে চান?')) {
+                try {
+                    const { error } = await _supabase
+                        .from('students')
+                        .delete()
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    fetchStudentsFromSupabase();
+                } catch (err) {
+                    alert('মুছে ফেলতে সমস্যা হয়েছে: ' + err.message);
+                }
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
