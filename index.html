@@ -189,7 +189,7 @@
                     </div>
                 </div>
 
-                <!-- 2ND IMAGE: REDESIGNED UNIQUE 3 ACTION BUTTONS -->
+                <!-- UNIQUE DESIGNED BUTTONS -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 no-print">
                     <!-- Button 1: Admission -->
                     <button onclick="openModal('modal-admission')" class="relative overflow-hidden group bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 text-white p-6 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1.5 text-left flex items-center justify-between border border-emerald-700/40">
@@ -550,10 +550,15 @@
     <!-- JAVASCRIPT CONTROLLERS -->
     <script>
         // SUPABASE CLIENT INITIALIZATION
-        // [নোট: আপনার Supabase প্রজেক্টের সঠিক URL এবং সঠিক anon/public API Key এখানে বসিয়ে নিন]
         const SUPABASE_URL = "https://zwpoxufpeluqtdooeekr.supabase.co";
-        const SUPABASE_KEY = "আপনার_সঠিক_অনন_এপিআই_কী_এখানে_বসান"; 
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3cG94dWZwZWx1cXRkb29lZWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyNjgyMzIsImV4cCI6MjE0Njg0NDIzMn0.oEwsRjnoXe5hNI7Iw4-UAOUMyA3mVc_ybZ48rHi4Uks"; 
+        
+        let _supabase;
+        try {
+            _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } catch(e) {
+            console.error("Supabase Client Init Error:", e);
+        }
 
         let studentsData = [];
 
@@ -611,6 +616,7 @@
 
         /* ================= FETCH & RENDER FROM SUPABASE ================= */
         async function fetchStudentsFromSupabase() {
+            if(!_supabase) return;
             try {
                 const { data, error } = await _supabase
                     .from('students')
